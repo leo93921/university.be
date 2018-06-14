@@ -45,7 +45,7 @@ import org.hibernate.gradle.tools.*
 
 database{
     catalog =  [ "university_se": new Schema()]
-    basePackage = "it.unisalento.se.saw.dao"
+    basePackage = "it.unisalento.se.dao"
     port = 8889
     url = "jdbc:mysql://127.0.0.1"
     user = "root"

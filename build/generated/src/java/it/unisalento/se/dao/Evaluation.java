@@ -1,5 +1,5 @@
-package it.unisalento.se.saw.dao;
-// Generated 20-mag-2018 10.52.48 by Hibernate Tools 5.2.0.Final
+package it.unisalento.se.dao;
+// Generated 14-giu-2018 10.05.29 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.Column;
@@ -26,19 +26,22 @@ public class Evaluation  implements java.io.Serializable {
      private User user;
      private int score;
      private String note;
+     private int recipient;
 
     public Evaluation() {
     }
 
 	
-    public Evaluation(User user, int score) {
+    public Evaluation(User user, int score, int recipient) {
         this.user = user;
         this.score = score;
+        this.recipient = recipient;
     }
-    public Evaluation(User user, int score, String note) {
+    public Evaluation(User user, int score, String note, int recipient) {
        this.user = user;
        this.score = score;
        this.note = note;
+       this.recipient = recipient;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -81,6 +84,16 @@ public class Evaluation  implements java.io.Serializable {
     
     public void setNote(String note) {
         this.note = note;
+    }
+
+    
+    @Column(name="recipient", nullable=false)
+    public int getRecipient() {
+        return this.recipient;
+    }
+    
+    public void setRecipient(int recipient) {
+        this.recipient = recipient;
     }
 
 

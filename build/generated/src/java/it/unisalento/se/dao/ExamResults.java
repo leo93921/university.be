@@ -1,5 +1,5 @@
-package it.unisalento.se.saw.dao;
-// Generated 20-mag-2018 10.52.48 by Hibernate Tools 5.2.0.Final
+package it.unisalento.se.dao;
+// Generated 14-giu-2018 10.05.29 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.Date;
@@ -29,14 +29,16 @@ public class ExamResults  implements java.io.Serializable {
      private User user;
      private int vote;
      private Date date;
+     private int exam;
 
     public ExamResults() {
     }
 
-    public ExamResults(User user, int vote, Date date) {
+    public ExamResults(User user, int vote, Date date, int exam) {
        this.user = user;
        this.vote = vote;
        this.date = date;
+       this.exam = exam;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -79,6 +81,16 @@ public class ExamResults  implements java.io.Serializable {
     
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    
+    @Column(name="exam", nullable=false)
+    public int getExam() {
+        return this.exam;
+    }
+    
+    public void setExam(int exam) {
+        this.exam = exam;
     }
 
 
