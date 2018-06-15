@@ -1,5 +1,6 @@
 package it.unisalento.se.configuration;
 
+import it.unisalento.se.common.CommonUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +18,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/templates/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
+        return CommonUtils.getCommonUtils().getCommonResolver();
     }
 
     @Override

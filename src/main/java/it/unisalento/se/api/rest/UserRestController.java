@@ -14,10 +14,6 @@ public class UserRestController {
     @Autowired
     private IUserService userService;
 
-    public UserRestController(IUserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserModel getUserById(@PathVariable("id") Integer ID) throws UserTypeNotSupported, UserNotFoundException {
         return userService.getUserByID(ID);
