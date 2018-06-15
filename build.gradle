@@ -33,7 +33,7 @@ dependencies {
 }
 
 war {
-    baseName = 'SpringApp'
+    baseName = 'university.be'
     version = '1.0.0'
 }
 

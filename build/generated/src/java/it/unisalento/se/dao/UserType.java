@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 14-giu-2018 10.05.29 by Hibernate Tools 5.2.0.Final
+// Generated 15-giu-2018 9.20.57 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.HashSet;
