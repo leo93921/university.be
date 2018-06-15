@@ -77,3 +77,6 @@ hs_err_pid*
 
 .gradle/
 .DS_Store
+build/gretty_ports.properties
+build/inplaceWebapp/
+build/resources/
