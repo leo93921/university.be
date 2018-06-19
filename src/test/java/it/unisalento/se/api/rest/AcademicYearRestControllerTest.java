@@ -54,7 +54,7 @@ public class AcademicYearRestControllerTest {
         when(academicYearServiceMock.getAcademicYearByID(1)).thenReturn(y);
 
         // Do call and test
-        mockMvc.perform(get("/academicyear/{id}", 1))
+        mockMvc.perform(get("/academic-year/{id}", 1))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
@@ -70,7 +70,7 @@ public class AcademicYearRestControllerTest {
 
         when(academicYearServiceMock.getAcademicYearByID(13)).thenThrow(new AcademicYearNotFoundException());
 
-        mockMvc.perform(get("/academicyear/{id}", 13))
+        mockMvc.perform(get("/academic-year/{id}", 13))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
 
         verify(academicYearServiceMock, times(1)).getAcademicYearByID(13);
@@ -89,7 +89,7 @@ public class AcademicYearRestControllerTest {
                 .thenReturn(y);
 
         mockMvc.perform(
-                post("/academicyear")
+                post("/academic-year")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(TestUtils.toJson(y))
         )
