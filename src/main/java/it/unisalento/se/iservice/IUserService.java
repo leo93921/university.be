@@ -8,5 +8,4 @@ public interface IUserService {
 
     UserModel createUser(UserModel user) throws UserTypeNotSupported;
     UserModel getUserByID(Integer ID) throws UserTypeNotSupported, UserNotFoundException;
-
 }

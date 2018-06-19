@@ -1,11 +1,11 @@
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.CommonUtils;
-import it.unisalento.se.exceptions.UserNotFoundException;
-import it.unisalento.se.test.utils.TestUtils;
 import it.unisalento.se.dto.UserModel;
 import it.unisalento.se.dto.UserTypeModel;
+import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.iservice.IUserService;
+import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,11 +16,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

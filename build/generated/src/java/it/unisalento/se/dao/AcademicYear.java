@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 15-giu-2018 9.20.57 by Hibernate Tools 5.2.0.Final
+// Generated 19-giu-2018 15.18.59 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.HashSet;
@@ -25,18 +25,18 @@ public class AcademicYear  implements java.io.Serializable {
 
      private Integer id;
      private int startYear;
-     private String endYear;
+     private int endYear;
      private Set<CourseOfStudy> courseOfStudies = new HashSet<CourseOfStudy>(0);
 
     public AcademicYear() {
     }
 
 	
-    public AcademicYear(int startYear, String endYear) {
+    public AcademicYear(int startYear, int endYear) {
         this.startYear = startYear;
         this.endYear = endYear;
     }
-    public AcademicYear(int startYear, String endYear, Set<CourseOfStudy> courseOfStudies) {
+    public AcademicYear(int startYear, int endYear, Set<CourseOfStudy> courseOfStudies) {
        this.startYear = startYear;
        this.endYear = endYear;
        this.courseOfStudies = courseOfStudies;
@@ -65,12 +65,12 @@ public class AcademicYear  implements java.io.Serializable {
     }
 
     
-    @Column(name="end_year", nullable=false, length=45)
-    public String getEndYear() {
+    @Column(name="end_year", nullable=false)
+    public int getEndYear() {
         return this.endYear;
     }
     
-    public void setEndYear(String endYear) {
+    public void setEndYear(int endYear) {
         this.endYear = endYear;
     }
 

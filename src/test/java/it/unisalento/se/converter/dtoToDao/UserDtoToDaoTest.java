@@ -7,8 +7,6 @@ import it.unisalento.se.dto.UserTypeModel;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class UserDtoToDaoTest {
 
     @Test

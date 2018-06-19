@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="it.unisalento.se.api.rest.AcademicYearRestControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-06-19T15:55:59" hostname="PC-FISSO-GIANLUCA" time="0.619">
+  <properties/>
+  <testcase name="findByAcademicYearIdWithInvalidId" classname="it.unisalento.se.api.rest.AcademicYearRestControllerTest" time="0.477"/>
+  <testcase name="saveAcademicYear" classname="it.unisalento.se.api.rest.AcademicYearRestControllerTest" time="0.127"/>
+  <testcase name="findAcademicYearById" classname="it.unisalento.se.api.rest.AcademicYearRestControllerTest" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+]]></system-err>
+</testsuite>

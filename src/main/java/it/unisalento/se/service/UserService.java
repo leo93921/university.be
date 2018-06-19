@@ -24,7 +24,7 @@ public class UserService implements IUserService {
     @Autowired private IUserTypeService userTypeService;
 
 
-    @Override @Transactional
+    @Override
     public UserModel createUser(UserModel user) throws UserTypeNotSupported {
         UserType type = userTypeService.getUserTypeDaoByName(user.getUserType().name());
         User dao = UserDtoToDao.convert(user, type);

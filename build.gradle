@@ -41,13 +41,13 @@ gretty {
     servletContainer 'tomcat8'
 }
 
-import org.hibernate.gradle.tools.*
+import org.hibernate.gradle.tools.Schema
 
 database{
     catalog =  [ "university_se": new Schema()]
     basePackage = "it.unisalento.se.dao"
     port = 8889
-    url = "jdbc:mysql://127.0.0.1"
+    url = "jdbc:mysql://localhost"
     user = "root"
     password = "root"
     dialect = "org.hibernate.dialect.MySQLDialect"

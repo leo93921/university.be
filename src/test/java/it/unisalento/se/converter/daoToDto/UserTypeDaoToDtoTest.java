@@ -3,10 +3,9 @@ package it.unisalento.se.converter.daoToDto;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.dto.UserTypeModel;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class UserTypeDaoToDtoTest {
 
