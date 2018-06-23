@@ -1,5 +1,6 @@
 package it.unisalento.se.converter.daoToDto;
 
+import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.dto.UserModel;
@@ -15,7 +16,7 @@ public class UserDaoToDtoTest {
     public void convert() throws UserTypeNotSupported {
         UserType t = new UserType();
         t.setId(2);
-        t.setName("PROFESSOR");
+        t.setName(Constants.PROFESSOR);
 
         User u = new User();
         u.setId(1);

@@ -1,6 +1,7 @@
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.CommonUtils;
+import it.unisalento.se.common.Constants;
 import it.unisalento.se.dto.UserModel;
 import it.unisalento.se.dto.UserTypeModel;
 import it.unisalento.se.exceptions.UserNotFoundException;
@@ -58,7 +59,7 @@ public class UserRestControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Mario")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("mario.rossi@test.it")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userType", Matchers.is("STUDENT")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userType", Matchers.is(Constants.STUDENT)));
 
         verify(userServiceMock, times(1)).getUserByID(1);
         verifyNoMoreInteractions(userServiceMock);
@@ -99,7 +100,7 @@ public class UserRestControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Mario")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("mario.rossi@test.it")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userType", Matchers.is("SECRETARIAT")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userType", Matchers.is(Constants.SECRETARIAT)));
 
 
         verify(userServiceMock, times(1)).createUser(refEq(u));

@@ -1,5 +1,6 @@
 package it.unisalento.se.converter.dtoToDao;
 
+import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.dto.UserModel;
@@ -18,7 +19,7 @@ public class UserDtoToDaoTest {
         model.setSurname("Rossi");
         model.setUserType(UserTypeModel.SECRETARIAT);
         UserType type = new UserType();
-        type.setName("SECRETARIAT");
+        type.setName(Constants.SECRETARIAT);
         type.setId(3);
 
         User dao = UserDtoToDao.convert(model, type);
@@ -28,7 +29,7 @@ public class UserDtoToDaoTest {
         Assert.assertEquals("Rossi", dao.getSurname());
         Assert.assertEquals("mario.rossi@test.it", dao.getEmail());
         Assert.assertEquals(new Integer(3), dao.getUserType().getId());
-        Assert.assertEquals("SECRETARIAT", dao.getUserType().getName());
+        Assert.assertEquals(Constants.SECRETARIAT, dao.getUserType().getName());
 
     }
 }
