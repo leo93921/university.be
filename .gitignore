@@ -80,6 +80,6 @@ hs_err_pid*
 build/gretty_ports.properties
 build/inplaceWebapp/
 build/resources/
-build/test-results
-build/reports
-build/tmp
+build/test-results/
+build/reports/
+build/tmp/
