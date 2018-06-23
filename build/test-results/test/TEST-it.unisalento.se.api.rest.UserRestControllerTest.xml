@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="it.unisalento.se.api.rest.UserRestControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-06-19T15:55:59" hostname="PC-FISSO-GIANLUCA" time="0.065">
-  <properties/>
-  <testcase name="saveUser" classname="it.unisalento.se.api.rest.UserRestControllerTest" time="0.021"/>
-  <testcase name="findByUserIdWithInvalidId" classname="it.unisalento.se.api.rest.UserRestControllerTest" time="0.025"/>
-  <testcase name="findUserById" classname="it.unisalento.se.api.rest.UserRestControllerTest" time="0.015"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
