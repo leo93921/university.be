@@ -2,9 +2,9 @@ package it.unisalento.se.api.rest;
 
 
 import it.unisalento.se.common.CommonUtils;
-import it.unisalento.se.dto.AcademicYearModel;
+import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.exceptions.AcademicYearNotFoundException;
-import it.unisalento.se.iservice.IAcademicYearService;
+import it.unisalento.se.iservices.IAcademicYearService;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -22,8 +22,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class AcademicYearRestControllerTest {

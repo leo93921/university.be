@@ -1,9 +1,9 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.dto.UserModel;
+import it.unisalento.se.models.UserModel;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.iservice.IUserService;
+import it.unisalento.se.iservices.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

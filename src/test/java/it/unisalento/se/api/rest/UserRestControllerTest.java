@@ -2,10 +2,10 @@ package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.common.Constants;
-import it.unisalento.se.dto.UserModel;
-import it.unisalento.se.dto.UserTypeModel;
+import it.unisalento.se.models.UserModel;
+import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.exceptions.UserNotFoundException;
-import it.unisalento.se.iservice.IUserService;
+import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;

@@ -2,9 +2,9 @@ package it.unisalento.se.api.rest;
 
 
 import it.unisalento.se.common.CommonUtils;
-import it.unisalento.se.dto.ClassroomModel;
+import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
-import it.unisalento.se.iservice.IClassroomService;
+import it.unisalento.se.iservices.IClassroomService;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;

@@ -1,9 +1,9 @@
 package it.unisalento.se.api.rest;
 
 
-import it.unisalento.se.dto.AcademicYearModel;
+import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.exceptions.AcademicYearNotFoundException;
-import it.unisalento.se.iservice.IAcademicYearService;
+import it.unisalento.se.iservices.IAcademicYearService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
