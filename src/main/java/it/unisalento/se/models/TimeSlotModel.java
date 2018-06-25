@@ -2,17 +2,19 @@ package it.unisalento.se.models;
 
 import java.util.Date;
 
-public class TimeSlotModel {
+public class TimeSlotModel implements CourseOfStudyNode {
 
     private Integer ID;
     private Date startTime;
     private Date endTime;
 
-    public Integer getID() {
+    @Override
+    public Integer getId() {
         return ID;
     }
 
-    public void setID(Integer ID) {
+    @Override
+    public void setId(Integer ID) {
         this.ID = ID;
     }
 

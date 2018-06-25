@@ -1,16 +1,17 @@
 package it.unisalento.se.models;
 
-public class AcademicYearModel {
-
+public class AcademicYearModel implements CourseOfStudyNode {
 
     private Integer id;
     private Integer startYear;
     private Integer endYear;
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
