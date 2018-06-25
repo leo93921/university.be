@@ -4,11 +4,11 @@ import it.unisalento.se.converters.daoToDto.UserDaoToDto;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.dao.UserType;
-import it.unisalento.se.models.UserModel;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.iservices.IUserTypeService;
+import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ public class UserService implements IUserService {
 
 
     @Override
+    @Transactional
     public UserModel createUser(UserModel user) throws UserTypeNotSupported {
         UserType type = userTypeService.getUserTypeDaoByName(user.getUserType().name());
         User dao = UserDtoToDao.convert(user, type);
