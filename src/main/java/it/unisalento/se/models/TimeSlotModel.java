@@ -9,12 +9,12 @@ public class TimeSlotModel implements CourseOfStudyNode {
     private Date endTime;
 
     @Override
-    public Integer getId() {
+    public Integer getID() {
         return ID;
     }
 
     @Override
-    public void setId(Integer ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

@@ -9,7 +9,7 @@ public class AcademicYearDtoToDao {
     public static AcademicYear convert(AcademicYearModel model){
 
         AcademicYear dao = new AcademicYear();
-        dao.setId(model.getId());
+        dao.setId(model.getID());
         dao.setStartYear(model.getStartYear());
         dao.setEndYear(model.getEndYear());
         return dao;

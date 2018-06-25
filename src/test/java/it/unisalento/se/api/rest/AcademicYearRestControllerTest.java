@@ -2,9 +2,9 @@ package it.unisalento.se.api.rest;
 
 
 import it.unisalento.se.common.CommonUtils;
-import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.exceptions.AcademicYearNotFoundException;
 import it.unisalento.se.iservices.IAcademicYearService;
+import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -44,7 +44,7 @@ public class AcademicYearRestControllerTest {
     public void findAcademicYearById() throws Exception {
         AcademicYearModel y = new AcademicYearModel();
 
-        y.setId(1);
+        y.setID(1);
         y.setStartYear(2016);
         y.setEndYear(2017);
 
@@ -79,7 +79,7 @@ public class AcademicYearRestControllerTest {
     public void saveAcademicYear() throws Exception {
         AcademicYearModel y = new AcademicYearModel();
 
-        y.setId(1);
+        y.setID(1);
         y.setStartYear(1998);
         y.setEndYear(1999);
 

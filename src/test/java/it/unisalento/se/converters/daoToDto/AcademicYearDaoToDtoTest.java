@@ -19,7 +19,7 @@ public class AcademicYearDaoToDtoTest {
 
         AcademicYearModel m = AcademicYearDaoToDto.convert(y);
 
-        assertEquals(new Integer(1), m.getId());
+        assertEquals(new Integer(1), m.getID());
         assertEquals(new Integer(2023), m.getStartYear());
         assertEquals(new Integer(2024), m.getEndYear());
 

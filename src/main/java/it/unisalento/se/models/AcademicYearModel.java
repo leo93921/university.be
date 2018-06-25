@@ -7,12 +7,12 @@ public class AcademicYearModel implements CourseOfStudyNode {
     private Integer endYear;
 
     @Override
-    public Integer getId() {
+    public Integer getID() {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setID(Integer id) {
         this.id = id;
     }
 

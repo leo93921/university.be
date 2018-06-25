@@ -13,7 +13,7 @@ public class AcademicYearDtoToDaoTest {
     @Test
     public void convert() {
         AcademicYearModel model = new AcademicYearModel();
-        model.setId(1);
+        model.setID(1);
         model.setStartYear(1938);
         model.setEndYear(1946);
 

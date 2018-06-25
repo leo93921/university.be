@@ -2,8 +2,8 @@ package it.unisalento.se.models;
 
 public interface CourseOfStudyNode {
 
-    Integer getId();
+    Integer getID();
 
-    void setId(Integer ID);
+    void setID(Integer ID);
 
 }
