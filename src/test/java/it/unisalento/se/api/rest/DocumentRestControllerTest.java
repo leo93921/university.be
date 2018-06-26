@@ -1,6 +1,5 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.exceptions.DocumentNotFoundException;
 import it.unisalento.se.iservices.IDocumentService;
 import it.unisalento.se.models.DocumentModel;
@@ -15,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Date;
 
@@ -37,11 +35,9 @@ public class DocumentRestControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(controller)
-                .setViewResolvers(CommonUtils.getCommonUtils().getCommonResolver())
-                .build();
+        mockMvc = TestUtils.getMockMvc(controller);
     }
+
 
     @Test
     public void getDocumentByID_404() throws Exception {

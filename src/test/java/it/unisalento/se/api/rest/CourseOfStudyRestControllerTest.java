@@ -1,6 +1,5 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.exceptions.CourseOfStudyNotFound;
 import it.unisalento.se.iservices.ICourseOfStudyService;
 import it.unisalento.se.models.AcademicYearModel;
@@ -16,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -36,10 +34,7 @@ public class CourseOfStudyRestControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(controller)
-                .setViewResolvers(CommonUtils.getCommonUtils().getCommonResolver())
-                .build();
+        mockMvc = TestUtils.getMockMvc(controller);
     }
 
     @Test

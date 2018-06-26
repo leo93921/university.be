@@ -1,10 +1,9 @@
 package it.unisalento.se.api.rest;
 
 
-import it.unisalento.se.common.CommonUtils;
-import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
 import it.unisalento.se.iservices.IClassroomService;
+import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -17,7 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,10 +32,7 @@ public class ClassroomRestControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(controller)
-                .setViewResolvers(CommonUtils.getCommonUtils().getCommonResolver())
-                .build();
+        mockMvc = TestUtils.getMockMvc(controller);
     }
 
     @Test
