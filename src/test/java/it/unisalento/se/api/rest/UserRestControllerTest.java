@@ -1,11 +1,10 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.common.Constants;
-import it.unisalento.se.models.UserModel;
-import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.iservices.IUserService;
+import it.unisalento.se.models.UserModel;
+import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -18,7 +17,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,10 +32,7 @@ public class UserRestControllerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(controller)
-                .setViewResolvers(CommonUtils.getCommonUtils().getCommonResolver())
-                .build();
+        mockMvc = TestUtils.getMockMvc(controller);
     }
 
     @Test

@@ -3,7 +3,6 @@ package it.unisalento.se.services;
 import it.unisalento.se.converters.daoToDto.UserDaoToDto;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
 import it.unisalento.se.dao.User;
-import it.unisalento.se.dao.UserType;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
@@ -27,8 +26,8 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserModel createUser(UserModel user) throws UserTypeNotSupported {
-        UserType type = userTypeService.getUserTypeDaoByName(user.getUserType().name());
-        User dao = UserDtoToDao.convert(user, type);
+        //UserType type = userTypeService.getUserTypeDaoByName(user.getUserType().name());
+        User dao = UserDtoToDao.convert(user);
         dao = userRepository.save(dao);
         return UserDaoToDto.convert(dao);
     }

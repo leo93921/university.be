@@ -3,6 +3,7 @@ package it.unisalento.se.converters.dtoToDao;
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.dao.UserType;
+import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.models.UserTypeModel;
 import org.junit.Assert;
@@ -11,7 +12,7 @@ import org.junit.Test;
 public class UserDtoToDaoTest {
 
     @Test
-    public void convert() {
+    public void convert() throws UserTypeNotSupported {
         UserModel model = new UserModel();
         model.setId(1);
         model.setEmail("mario.rossi@test.it");
@@ -22,7 +23,7 @@ public class UserDtoToDaoTest {
         type.setName(Constants.SECRETARIAT);
         type.setId(3);
 
-        User dao = UserDtoToDao.convert(model, type);
+        User dao = UserDtoToDao.convert(model);
 
         Assert.assertEquals(new Integer(1), dao.getId());
         Assert.assertEquals("Mario", dao.getName());
