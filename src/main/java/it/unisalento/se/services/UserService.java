@@ -3,10 +3,12 @@ package it.unisalento.se.services;
 import it.unisalento.se.converters.daoToDto.UserDaoToDto;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
 import it.unisalento.se.dao.User;
+import it.unisalento.se.exceptions.InvalidCredentialsException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.iservices.IUserTypeService;
+import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,13 @@ public class UserService implements IUserService {
         } catch (EntityNotFoundException e) {
             throw new UserNotFoundException();
         }
+    }
 
+    @Override
+    public UserModel checkCredentials(UserCredentials credentials) throws InvalidCredentialsException, UserTypeNotSupported {
+        User user = userRepository.findByCredentials(credentials.getUsername(), credentials.getPassword());
+        if (user == null)
+            throw new InvalidCredentialsException();
+        return UserDaoToDto.convert(user);
     }
 }

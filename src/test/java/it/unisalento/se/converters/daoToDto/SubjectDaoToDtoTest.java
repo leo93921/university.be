@@ -26,7 +26,7 @@ public class SubjectDaoToDtoTest {
         dao.setYear(3);
         dao.setCfu(9);
         dao.setName("Software Engineering");
-        dao.setUser(new User(profType, "Mario", "Rossi", "mario.rossi@example.it"));
+        dao.setUser(new User(profType, "Mario", "Rossi", "mario.rossi@example.it", "test"));
         dao.setCourseOfStudy(new CourseOfStudy(y, "Computer Engineering"));
 
         SubjectModel model = SubjectDaoToDto.convert(dao);

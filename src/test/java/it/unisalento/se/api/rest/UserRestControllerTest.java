@@ -1,8 +1,10 @@
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.Constants;
+import it.unisalento.se.exceptions.InvalidCredentialsException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.iservices.IUserService;
+import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.test.utils.TestUtils;
@@ -21,6 +23,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserRestControllerTest {
@@ -48,7 +52,7 @@ public class UserRestControllerTest {
 
         // Do call and test
         mockMvc.perform(get("/user/{id}", 1))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.surname", Matchers.is("Rossi")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Mario")))
@@ -66,7 +70,7 @@ public class UserRestControllerTest {
         when(userServiceMock.getUserByID(10)).thenThrow(new UserNotFoundException());
 
         mockMvc.perform(get("/user/{id}", 10))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
 
         verify(userServiceMock, times(1)).getUserByID(10);
         verifyNoMoreInteractions(userServiceMock);
@@ -89,7 +93,7 @@ public class UserRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(TestUtils.toJson(u))
         )
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.surname", Matchers.is("Rossi")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Mario")))
@@ -103,4 +107,54 @@ public class UserRestControllerTest {
 
     }
 
+    @Test
+    public void login_withValidCredentials() throws Exception {
+        UserCredentials credentials = new UserCredentials();
+        credentials.setUsername("valid");
+        credentials.setPassword("test");
+
+        UserModel u = new UserModel();
+        u.setUserType(UserTypeModel.SECRETARIAT);
+        u.setSurname("Rossi");
+        u.setName("Mario");
+        u.setEmail("mario.rossi@test.it");
+        u.setId(1);
+
+        when(userServiceMock.checkCredentials(any(UserCredentials.class))).thenReturn(u);
+
+        mockMvc.perform(
+                post("/user/login")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(TestUtils.toJson(credentials))
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.surname", Matchers.is("Rossi")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Mario")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("mario.rossi@test.it")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userType", Matchers.is(Constants.SECRETARIAT)));
+
+        verify(userServiceMock, times(1)).checkCredentials(refEq(credentials));
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    @Test
+    public void login_withInvalidCredentials() throws Exception {
+        UserCredentials credentials = new UserCredentials();
+        credentials.setUsername("invalid");
+        credentials.setPassword("test");
+
+        when(userServiceMock.checkCredentials(any(UserCredentials.class))).thenThrow(new InvalidCredentialsException());
+
+        mockMvc.perform(
+                post("/user/login")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(TestUtils.toJson(credentials))
+        )
+                .andExpect(status().isForbidden());
+
+        verify(userServiceMock, times(1)).checkCredentials(refEq(credentials));
+        verifyNoMoreInteractions(userServiceMock);
+    }
 }

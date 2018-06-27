@@ -33,7 +33,8 @@ public class DocumentDaoToDtoTest {
                                 new UserType(Constants.PROFESSOR),
                                 "Mario",
                                 "Rossi",
-                                "mario.rossi@example.it"
+                                "mario.rossi@example.it",
+                                "password"
                         ),
                         "Software Engineering",
                         9,
