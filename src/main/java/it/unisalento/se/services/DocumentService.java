@@ -4,6 +4,7 @@ import it.unisalento.se.converters.daoToDto.DocumentDaoToDto;
 import it.unisalento.se.converters.dtoToDao.DocumentDtoToDao;
 import it.unisalento.se.dao.Document;
 import it.unisalento.se.exceptions.DocumentNotFoundException;
+import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IDocumentService;
 import it.unisalento.se.models.DocumentModel;
 import it.unisalento.se.repositories.DocumentRepository;
@@ -21,7 +22,7 @@ public class DocumentService implements IDocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public DocumentModel getDocumentByID(Integer ID) throws DocumentNotFoundException {
+    public DocumentModel getDocumentByID(Integer ID) throws DocumentNotFoundException, UserTypeNotSupported {
         try {
             Document dao = repository.getOne(ID);
             return DocumentDaoToDto.convert(dao);
@@ -33,7 +34,7 @@ public class DocumentService implements IDocumentService {
 
     @Override
     @Transactional
-    public DocumentModel saveDocument(DocumentModel document) {
+    public DocumentModel saveDocument(DocumentModel document) throws UserTypeNotSupported {
         Document dao = DocumentDtoToDao.convert(document);
         Document saved = repository.save(dao);
         return DocumentDaoToDto.convert(saved);

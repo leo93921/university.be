@@ -8,6 +8,8 @@ public class DocumentModel implements CourseOfStudyNode {
     private String name;
     private String note;
     private Date publishDate;
+    private LessonModel lesson;
+    private String link;
 
     @Override
     public Integer getID() {
@@ -41,5 +43,21 @@ public class DocumentModel implements CourseOfStudyNode {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public LessonModel getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(LessonModel lesson) {
+        this.lesson = lesson;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }

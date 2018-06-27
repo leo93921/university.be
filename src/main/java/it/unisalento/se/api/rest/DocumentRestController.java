@@ -1,6 +1,7 @@
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.exceptions.DocumentNotFoundException;
+import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IDocumentService;
 import it.unisalento.se.models.DocumentModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,12 @@ public class DocumentRestController {
     private IDocumentService service;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public DocumentModel getDocumentByID(@PathVariable("id") Integer ID) throws DocumentNotFoundException {
+    public DocumentModel getDocumentByID(@PathVariable("id") Integer ID) throws DocumentNotFoundException, UserTypeNotSupported {
         return service.getDocumentByID(ID);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public DocumentModel saveDocument(@RequestBody DocumentModel model) {
+    public DocumentModel saveDocument(@RequestBody DocumentModel model) throws UserTypeNotSupported {
         return service.saveDocument(model);
     }
 }

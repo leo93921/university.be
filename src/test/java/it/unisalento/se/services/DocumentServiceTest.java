@@ -1,8 +1,10 @@
 package it.unisalento.se.services;
 
-import it.unisalento.se.dao.Document;
+import it.unisalento.se.common.Constants;
+import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.DocumentNotFoundException;
-import it.unisalento.se.models.DocumentModel;
+import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.DocumentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,25 +28,47 @@ public class DocumentServiceTest {
     private DocumentService service;
 
     @Test
-    public void getDocumentByID() throws DocumentNotFoundException {
-        Document document = new Document();
-        document.setId(1);
-        document.setName("A test document");
-        document.setNote("A note on document");
-        document.setPublishDate(new Date());
+    public void getDocumentByID() throws DocumentNotFoundException, UserTypeNotSupported {
+        Document dao = new Document();
+        dao.setId(1);
+        dao.setNote("A note");
+        dao.setName("A name");
+        dao.setPublishDate(new Date());
+        dao.setLink("A new linlk");
 
-        when(repository.getOne(any(Integer.class))).thenReturn(document);
+        Lesson lesson = new Lesson(
+                new Classroom("01", 1.1, 2.3, null, null, null, null),
+                new Subject(
+                        new CourseOfStudy(
+                                new AcademicYear(2017, 2018),
+                                "Computer Engineering"
+                        ),
+                        new User(
+                                new UserType(Constants.PROFESSOR),
+                                "Mario",
+                                "Rossi",
+                                "mario.rossi@example.it"
+                        ),
+                        "Software Engineering",
+                        9,
+                        1
+                ),
+                new Timeslot(new Date(), new Date())
+        );
+        dao.setLesson(lesson);
+
+        when(repository.getOne(any(Integer.class))).thenReturn(dao);
 
         DocumentModel model = service.getDocumentByID(1);
 
-        assertEquals(document.getId(), model.getID());
-        assertEquals(document.getName(), model.getName());
-        assertEquals(document.getNote(), model.getNote());
-        assertEquals(document.getPublishDate(), model.getPublishDate());
+        assertEquals(dao.getId(), model.getID());
+        assertEquals(dao.getName(), model.getName());
+        assertEquals(dao.getNote(), model.getNote());
+        assertEquals(dao.getPublishDate(), model.getPublishDate());
     }
 
     @Test(expected = DocumentNotFoundException.class)
-    public void getDocumentByID_shouldFail() throws DocumentNotFoundException {
+    public void getDocumentByID_shouldFail() throws DocumentNotFoundException, UserTypeNotSupported {
 
         when(repository.getOne(any(Integer.class))).thenThrow(new EntityNotFoundException());
 
@@ -53,20 +77,89 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void saveDocument() {
+    public void saveDocument() throws UserTypeNotSupported {
         Document saved = new Document();
         saved.setId(1);
         saved.setNote("A note");
         saved.setName("A name");
         saved.setPublishDate(new Date());
+        saved.setLink("A new linlk");
+
+        Classroom classroom = new Classroom("01", 1.1, 2.3, null, null, null, null);
+        classroom.setId(2);
+        Subject subject = new Subject(
+                new CourseOfStudy(
+                        new AcademicYear(2017, 2018),
+                        "Computer Engineering"
+                ),
+                new User(
+                        new UserType(Constants.PROFESSOR),
+                        "Mario",
+                        "Rossi",
+                        "mario.rossi@example.it"
+                ),
+                "Software Engineering",
+                9,
+                1
+        );
+        subject.setId(23);
+        Lesson lesson = new Lesson(
+                classroom,
+                subject,
+                new Timeslot(new Date(), new Date())
+        );
+        lesson.setId(24);
+        saved.setLesson(lesson);
 
         when(repository.save(any(Document.class))).thenReturn(saved);
 
-        DocumentModel model = service.saveDocument(new DocumentModel());
+        UserModel professor = new UserModel();
+        professor.setId(1);
+        professor.setEmail("mario.rossi@test.it");
+        professor.setName("Mario");
+        professor.setSurname("Rossi");
+        professor.setUserType(UserTypeModel.PROFESSOR);
+        UserType type = new UserType();
+        type.setName(Constants.PROFESSOR);
+        type.setId(3);
 
-        assertEquals(saved.getId(), model.getID());
-        assertEquals(saved.getName(), model.getName());
-        assertEquals(saved.getNote(), model.getNote());
-        assertEquals(saved.getPublishDate(), model.getPublishDate());
+        AcademicYearModel academicYear = new AcademicYearModel();
+        academicYear.setID(1);
+        academicYear.setStartYear(2017);
+        academicYear.setEndYear(2018);
+
+        CourseOfStudyModel cs = new CourseOfStudyModel();
+        cs.setName("Computer Engineering");
+        cs.setID(25);
+        cs.setAcademicYear(academicYear);
+
+
+        LessonModel lesson1 = new LessonModel();
+        lesson1.setID(1);
+        lesson1.setTimeSlot(new TimeSlotModel());
+        SubjectModel subject1 = new SubjectModel();
+        subject1.setID(1);
+
+        subject1.setProfessor(professor);
+        subject1.setCourseOfStudy(cs);
+        subject1.setCFU(8);
+        subject1.setTeachingYear(1);
+        lesson1.setSubject(subject1);
+        lesson1.setClassroom(new ClassroomModel());
+
+        DocumentModel model = new DocumentModel();
+        model.setPublishDate(new Date());
+        model.setNote("A note");
+        model.setName("A name");
+        model.setID(12);
+        model.setLink("a.link");
+        model.setLesson(lesson1);
+
+        DocumentModel model1 = service.saveDocument(model);
+
+        assertEquals(saved.getId(), model1.getID());
+        assertEquals(saved.getName(), model1.getName());
+        assertEquals(saved.getNote(), model1.getNote());
+        assertEquals(saved.getPublishDate(), model1.getPublishDate());
     }
 }
