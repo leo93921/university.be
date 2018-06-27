@@ -100,7 +100,7 @@ public class LessonRestControllerTest {
 
         LessonModel lesson = new LessonModel();
         lesson.setID(1);
-        lesson.setTimeslot(timeSlotModel);
+        lesson.setTimeSlot(timeSlotModel);
         lesson.setClassroom(classroomModel);
         lesson.setSubject(sub);
 

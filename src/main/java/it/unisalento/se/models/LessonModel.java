@@ -4,7 +4,7 @@ public class LessonModel implements CourseOfStudyNode {
 
     private Integer ID;
     private ClassroomModel classroom;
-    private TimeSlotModel timeslot;
+    private TimeSlotModel timeSlot;
     private SubjectModel subject;
 
 
@@ -27,12 +27,12 @@ public class LessonModel implements CourseOfStudyNode {
         this.classroom = classroom;
     }
 
-    public TimeSlotModel getTimeslot() {
-        return timeslot;
+    public TimeSlotModel getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setTimeslot(TimeSlotModel timeslot) {
-        this.timeslot = timeslot;
+    public void setTimeSlot(TimeSlotModel timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
     public SubjectModel getSubject() {

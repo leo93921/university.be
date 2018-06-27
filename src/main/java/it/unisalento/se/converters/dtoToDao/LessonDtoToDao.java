@@ -10,7 +10,7 @@ public class LessonDtoToDao {
 
         dao.setId(model.getID());
         dao.setClassroom(ClassroomDtoToDao.convert(model.getClassroom()));
-        dao.setTimeslot(TimeSlotDtoToDao.convert(model.getTimeslot()));
+        dao.setTimeslot(TimeSlotDtoToDao.convert(model.getTimeSlot()));
         dao.setSubject(SubjectDtoToDao.convert(model.getSubject()));
         return dao;
     }
