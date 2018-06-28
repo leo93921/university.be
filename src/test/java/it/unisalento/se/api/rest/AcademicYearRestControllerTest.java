@@ -17,9 +17,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AcademicYearRestControllerTest {
@@ -48,7 +52,7 @@ public class AcademicYearRestControllerTest {
 
         // Do call and test
         mockMvc.perform(get("/academic-year/{id}", 1))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.startYear", Matchers.is(2016)))
@@ -64,7 +68,7 @@ public class AcademicYearRestControllerTest {
         when(academicYearServiceMock.getAcademicYearByID(13)).thenThrow(new AcademicYearNotFoundException());
 
         mockMvc.perform(get("/academic-year/{id}", 13))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
+                .andExpect(status().isNotFound());
 
         verify(academicYearServiceMock, times(1)).getAcademicYearByID(13);
         verifyNoMoreInteractions(academicYearServiceMock);
@@ -86,7 +90,7 @@ public class AcademicYearRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(TestUtils.toJson(y))
         )
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.startYear", Matchers.is(1998)))
@@ -98,6 +102,35 @@ public class AcademicYearRestControllerTest {
 
     }
 
+    @Test
+    public void getAllAcademicYears() throws Exception {
+        AcademicYearModel y1 = new AcademicYearModel();
+        y1.setID(1);
+        y1.setStartYear(1998);
+        y1.setEndYear(1999);
+        AcademicYearModel y2 = new AcademicYearModel();
+        y2.setID(2);
+        y2.setStartYear(1999);
+        y2.setEndYear(2000);
+        List<AcademicYearModel> models = new ArrayList<>();
+        models.add(y1);
+        models.add(y2);
+
+        when(academicYearServiceMock.getAll()).thenReturn(models);
+
+        mockMvc.perform(get("/academic-year"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[0].id", Matchers.is(1)))
+                .andExpect(jsonPath("$[0].startYear", Matchers.is(1998)))
+                .andExpect(jsonPath("$[0].endYear", Matchers.is(1999)))
+                .andExpect(jsonPath("$[1].id", Matchers.is(2)))
+                .andExpect(jsonPath("$[1].startYear", Matchers.is(1999)))
+                .andExpect(jsonPath("$[1].endYear", Matchers.is(2000)));
+
+        verify(academicYearServiceMock, times(1)).getAll();
+        verifyNoMoreInteractions(academicYearServiceMock);
 
 
+    }
 }
