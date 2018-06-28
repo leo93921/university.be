@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/course-of-study")
 public class CourseOfStudyRestController {
@@ -24,4 +26,8 @@ public class CourseOfStudyRestController {
         return service.saveCourseOfStudy(model);
     }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<CourseOfStudyModel> getAll() {
+        return service.getAllCourses();
+    }
 }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CourseOfStudyService implements ICourseOfStudyService {
@@ -38,4 +40,13 @@ public class CourseOfStudyService implements ICourseOfStudyService {
         return CourseOfStudyDaoToDto.convert(saved);
     }
 
+    @Override
+    public List<CourseOfStudyModel> getAllCourses() {
+        List<CourseOfStudy> daos = repository.findAll();
+        List<CourseOfStudyModel> models = new ArrayList<>();
+        for (CourseOfStudy dao : daos) {
+            models.add(CourseOfStudyDaoToDto.convert(dao));
+        }
+        return models;
+    }
 }

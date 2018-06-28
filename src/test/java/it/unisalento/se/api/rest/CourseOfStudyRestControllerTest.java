@@ -16,6 +16,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -103,6 +105,49 @@ public class CourseOfStudyRestControllerTest {
                 .andExpect(jsonPath("$.academicYear.endYear", Matchers.is(model.getAcademicYear().getEndYear())));
 
         verify(service, times(1)).saveCourseOfStudy(refEq(model, "academicYear"));
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void getAllCoursesOfStudy() throws Exception {
+        CourseOfStudyModel model1 = new CourseOfStudyModel();
+        model1.setID(10);
+        model1.setName("Comp. Eng.");
+        AcademicYearModel academicYear1 = new AcademicYearModel();
+        academicYear1.setID(123);
+        academicYear1.setStartYear(2017);
+        academicYear1.setEndYear(2018);
+        model1.setAcademicYear(academicYear1);
+
+        CourseOfStudyModel model2 = new CourseOfStudyModel();
+        model2.setID(11);
+        model2.setName("Mechanical Eng.");
+        AcademicYearModel academicYear2 = new AcademicYearModel();
+        academicYear2.setID(123);
+        academicYear2.setStartYear(2017);
+        academicYear2.setEndYear(2018);
+        model2.setAcademicYear(academicYear2);
+
+        ArrayList<CourseOfStudyModel> models = new ArrayList<>();
+        models.add(model1);
+        models.add(model2);
+        when(service.getAllCourses()).thenReturn(models);
+
+        mockMvc.perform(get("/course-of-study"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[0].id", Matchers.is(model1.getID())))
+                .andExpect(jsonPath("$[0].name", Matchers.is(model1.getName())))
+                .andExpect(jsonPath("$[0].academicYear.id", Matchers.is(model1.getAcademicYear().getID())))
+                .andExpect(jsonPath("$[0].academicYear.startYear", Matchers.is(model1.getAcademicYear().getStartYear())))
+                .andExpect(jsonPath("$[0].academicYear.endYear", Matchers.is(model1.getAcademicYear().getEndYear())))
+                .andExpect(jsonPath("$[1].id", Matchers.is(model2.getID())))
+                .andExpect(jsonPath("$[1].name", Matchers.is(model2.getName())))
+                .andExpect(jsonPath("$[1].academicYear.id", Matchers.is(model2.getAcademicYear().getID())))
+                .andExpect(jsonPath("$[1].academicYear.startYear", Matchers.is(model2.getAcademicYear().getStartYear())))
+                .andExpect(jsonPath("$[1].academicYear.endYear", Matchers.is(model2.getAcademicYear().getEndYear())));
+
+        verify(service, times(1)).getAllCourses();
         verifyNoMoreInteractions(service);
     }
 }
