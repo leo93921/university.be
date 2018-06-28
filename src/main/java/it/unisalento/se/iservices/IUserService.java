@@ -6,10 +6,14 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
 
+import java.util.List;
+
 public interface IUserService {
 
     UserModel createUser(UserModel user) throws UserTypeNotSupported;
     UserModel getUserByID(Integer ID) throws UserTypeNotSupported, UserNotFoundException;
-
     UserModel checkCredentials(UserCredentials credentials) throws InvalidCredentialsException, UserTypeNotSupported;
+
+    List<UserModel> getAllProfessors() throws UserTypeNotSupported;
+
 }

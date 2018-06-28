@@ -6,6 +6,7 @@ import it.unisalento.se.dao.Subject;
 import it.unisalento.se.exceptions.SubjectNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.ISubjectService;
+import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.models.SubjectModel;
 import it.unisalento.se.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SubjectService implements ISubjectService {
@@ -40,4 +43,15 @@ public class SubjectService implements ISubjectService {
         return SubjectDaoToDto.convert(saved);
     }
 
+    @Override
+    public List<SubjectModel> getAllSubjectsByCourseOfStudy(CourseOfStudyModel model) throws UserTypeNotSupported {
+        List<Subject> daos = repository.findByCourseOfStudy(model.getID());
+        List<SubjectModel> models = new ArrayList<>();
+
+        for (Subject dao : daos) {
+            models.add(SubjectDaoToDto.convert(dao));
+        }
+
+        return models;
+    }
 }
