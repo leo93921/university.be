@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController @RequestMapping("/user")
 public class UserRestController {
 
@@ -34,5 +36,10 @@ public class UserRestController {
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public UserModel login(@RequestBody UserCredentials credentials) throws InvalidCredentialsException, UserTypeNotSupported {
         return userService.checkCredentials(credentials);
+    }
+
+    @GetMapping(value = "/all-professors", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<UserModel> getAllProfessors() throws UserTypeNotSupported {
+        return userService.getAllProfessors();
     }
 }

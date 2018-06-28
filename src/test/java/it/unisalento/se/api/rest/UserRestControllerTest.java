@@ -20,6 +20,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -155,6 +158,35 @@ public class UserRestControllerTest {
                 .andExpect(status().isForbidden());
 
         verify(userServiceMock, times(1)).checkCredentials(refEq(credentials));
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    @Test
+    public void getAllProfessors() throws Exception {
+        UserModel u = new UserModel();
+        u.setUserType(UserTypeModel.STUDENT);
+        u.setSurname("Rossi");
+        u.setName("Mario");
+        u.setId(1);
+        u.setEmail("mario.rossi@test.it");
+        List<UserModel> models = new ArrayList<>();
+        models.add(u);
+
+        when(userServiceMock.getAllProfessors()).thenReturn(models);
+
+
+        // Do call and test
+        mockMvc.perform(get("/user/all-professors", 1))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].surname", Matchers.is("Rossi")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Mario")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].email", Matchers.is("mario.rossi@test.it")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].userType", Matchers.is(Constants.STUDENT)));
+
+
+        verify(userServiceMock, times(1)).getAllProfessors();
         verifyNoMoreInteractions(userServiceMock);
     }
 }

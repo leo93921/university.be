@@ -1,5 +1,6 @@
 package it.unisalento.se.services;
 
+import it.unisalento.se.common.Constants;
 import it.unisalento.se.converters.daoToDto.UserDaoToDto;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
 import it.unisalento.se.dao.User;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -50,5 +53,15 @@ public class UserService implements IUserService {
         if (user == null)
             throw new InvalidCredentialsException();
         return UserDaoToDto.convert(user);
+    }
+
+    @Override
+    public List<UserModel> getAllProfessors() throws UserTypeNotSupported {
+        List<User> daos = userRepository.findByUserType(Constants.PROFESSOR_VALUE);
+        List<UserModel> models = new ArrayList<>();
+        for (User user : daos) {
+            models.add(UserDaoToDto.convert(user));
+        }
+        return models;
     }
 }

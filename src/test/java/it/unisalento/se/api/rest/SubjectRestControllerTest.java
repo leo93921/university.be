@@ -13,6 +13,8 @@ import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,6 +31,8 @@ public class SubjectRestControllerTest {
 
     @Captor
     private ArgumentCaptor<SubjectModel> savedSubject;
+    @Captor
+    private ArgumentCaptor<CourseOfStudyModel> courseOfStudy;
 
     @Before
     public void setUp() {
@@ -155,6 +159,66 @@ public class SubjectRestControllerTest {
                 .andExpect(jsonPath("$.courseOfStudy.academicYear.endYear", Matchers.is(academicYear.getEndYear())));
 
         verify(service, times(1)).saveSubject(savedSubject.capture());
+        verifyNoMoreInteractions(service);
+    }
+
+    @Test
+    public void getAllSubjectsByCourseOfStudy() throws Exception {
+        ArrayList<SubjectModel> models = new ArrayList<>();
+        SubjectModel m = new SubjectModel();
+        UserModel model = new UserModel();
+        model.setId(1);
+        model.setEmail("mario.rossi@test.it");
+        model.setName("Mario");
+        model.setSurname("Rossi");
+        model.setUserType(UserTypeModel.PROFESSOR);
+        UserType type = new UserType();
+        type.setName(Constants.PROFESSOR);
+        type.setId(2);
+
+        AcademicYearModel academicYear = new AcademicYearModel();
+        academicYear.setID(1);
+        academicYear.setStartYear(2017);
+        academicYear.setEndYear(2018);
+
+        CourseOfStudyModel cs = new CourseOfStudyModel();
+        cs.setName("Computer Engineering");
+        cs.setID(25);
+        cs.setAcademicYear(academicYear);
+
+        SubjectModel sub = new SubjectModel();
+        sub.setID(24);
+        sub.setCFU(8);
+        sub.setName("A new name");
+        sub.setTeachingYear(3);
+        sub.setProfessor(model);
+        sub.setCourseOfStudy(cs);
+        models.add(sub);
+
+        when(service.getAllSubjectsByCourseOfStudy(any(CourseOfStudyModel.class))).thenReturn(models);
+
+        mockMvc.perform(
+                post("/subject/find-by-course")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(TestUtils.toJson(cs)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[0].id", Matchers.is(sub.getID())))
+                .andExpect(jsonPath("$[0].cfu", Matchers.is(sub.getCFU())))
+                .andExpect(jsonPath("$[0].name", Matchers.is(sub.getName())))
+                .andExpect(jsonPath("$[0].teachingYear", Matchers.is(sub.getTeachingYear())))
+                .andExpect(jsonPath("$[0].professor.id", Matchers.is(model.getId())))
+                .andExpect(jsonPath("$[0].professor.email", Matchers.is(model.getEmail())))
+                .andExpect(jsonPath("$[0].professor.name", Matchers.is(model.getName())))
+                .andExpect(jsonPath("$[0].professor.surname", Matchers.is(model.getSurname())))
+                .andExpect(jsonPath("$[0].professor.userType", Matchers.is(Constants.PROFESSOR)))
+                .andExpect(jsonPath("$[0].courseOfStudy.id", Matchers.is(cs.getID())))
+                .andExpect(jsonPath("$[0].courseOfStudy.name", Matchers.is(cs.getName())))
+                .andExpect(jsonPath("$[0].courseOfStudy.academicYear.id", Matchers.is(academicYear.getID())))
+                .andExpect(jsonPath("$[0].courseOfStudy.academicYear.startYear", Matchers.is(academicYear.getStartYear())))
+                .andExpect(jsonPath("$[0].courseOfStudy.academicYear.endYear", Matchers.is(academicYear.getEndYear())));
+
+        verify(service, times(1)).getAllSubjectsByCourseOfStudy(courseOfStudy.capture());
         verifyNoMoreInteractions(service);
     }
 }
