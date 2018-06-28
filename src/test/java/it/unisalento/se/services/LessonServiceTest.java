@@ -1,10 +1,6 @@
+package it.unisalento.se.services;
 
-package it.unisalento.se.converters.daoToDto;
 
-import it.unisalento.se.converters.daoToDto.TimeSlotDaoToDto;
-import it.unisalento.se.dao.*;
-import it.unisalento.se.models.TimeSlotModel;
-import org.junit.Test;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
@@ -37,13 +33,19 @@ import static org.mockito.Mockito.when;
 
 import static org.mockito.Mockito.when;
 
-import java.util.Date;
+@RunWith(MockitoJUnitRunner.class)
+public class LessonServiceTest {
 
-import static org.junit.Assert.assertEquals;
 
-public class LessonDaoToDtoTest {
+    @Mock
+    private LessonRepository lessonRepository;
+    @InjectMocks
+    private LessonService lessonService;
+
+
+
     @Test
-    public void convert_OK() throws UserTypeNotSupported {
+    public void getLesson_OK() throws LessonNotFoundException, UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -98,10 +100,30 @@ public class LessonDaoToDtoTest {
         l.setTimeslot(ts);
         l.setSubject(s);
 
-        LessonModel model = LessonDaoToDto.convert(l);
-        assertEquals(new Integer(1), model.getID());
+        when(lessonRepository.getOne(1)).thenReturn(l);
+
+        LessonModel model = lessonService.getLessonByID(1);
+
+        assertEquals(new Integer  (1), model.getID());
         assertEquals(cr.getName(), model.getClassroom().getName());
         assertEquals(ts.getStartTime(), model.getTimeSlot().getStartTime());
         assertEquals(s.getName(), model.getSubject().getName());
     }
+
+
+    @Test(expected = LessonNotFoundException.class)
+    public void getLesson_shouldFail() throws LessonNotFoundException, UserTypeNotSupported {
+        when(lessonRepository.getOne(10)).thenThrow(new EntityNotFoundException());
+
+        LessonModel model = lessonService.getLessonByID(10);
+    }
+
+
+    /*
+    @Test
+    public void createLesson() throws UserTypeNotSupported {
+
+    }
+    */
+
 }
