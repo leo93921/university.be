@@ -4,15 +4,17 @@ package it.unisalento.se.services;
 import it.unisalento.se.converters.daoToDto.ClassroomDaoToDto;
 import it.unisalento.se.converters.dtoToDao.ClassroomDtoToDao;
 import it.unisalento.se.dao.Classroom;
-import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
 import it.unisalento.se.iservices.IClassroomService;
+import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.repositories.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ClassroomService implements IClassroomService {
@@ -37,7 +39,17 @@ public class ClassroomService implements IClassroomService {
             throw new ClassroomNotFoundException();
 
         }
+    }
 
+    @Override
+    public List<ClassroomModel> getAllClassrooms() {
+        List<Classroom> daos = classroomRepository.findAll();
+
+        List<ClassroomModel> models = new ArrayList<>();
+        for (Classroom dao : daos) {
+            models.add(ClassroomDaoToDto.convert(dao));
+        }
+        return models;
     }
 }
 

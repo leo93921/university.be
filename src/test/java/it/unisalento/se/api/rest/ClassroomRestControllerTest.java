@@ -17,6 +17,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -101,4 +104,40 @@ public class ClassroomRestControllerTest {
 
     }
 
+    @Test
+    public void getAllClassrooms() throws Exception {
+        ClassroomModel c1 = new ClassroomModel();
+        c1.setId(1);
+        c1.setName("Y1");
+        c1.setLatitude(100.5);
+        c1.setLongitude(200.88);
+
+        ClassroomModel c2 = new ClassroomModel();
+        c2.setId(2);
+        c2.setName("Y2");
+        c2.setLatitude(150.86);
+        c2.setLongitude(300.36);
+
+        List<ClassroomModel> models = new ArrayList<>();
+        models.add(c1);
+        models.add(c2);
+
+        when(classroomServiceMock.getAllClassrooms()).thenReturn(models);
+
+        // Do call and test
+        mockMvc.perform(get("/classroom"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Y1")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].latitude", Matchers.is(100.5)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].longitude", Matchers.is(200.88)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", Matchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name", Matchers.is("Y2")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].latitude", Matchers.is(150.86)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].longitude", Matchers.is(300.36)));
+
+        verify(classroomServiceMock, times(1)).getAllClassrooms();
+        verifyNoMoreInteractions(classroomServiceMock);
+    }
 }

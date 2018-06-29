@@ -1,12 +1,14 @@
 package it.unisalento.se.api.rest;
 
 
-import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
 import it.unisalento.se.iservices.IClassroomService;
+import it.unisalento.se.models.ClassroomModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/classroom")
@@ -27,5 +29,8 @@ public class ClassroomRestController {
         return classroomService.createClassroom(classroom);
     }
 
-
+    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<ClassroomModel> getAllClassrooms() {
+        return classroomService.getAllClassrooms();
+    }
 }
