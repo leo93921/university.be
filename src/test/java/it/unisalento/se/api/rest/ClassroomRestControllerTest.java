@@ -30,7 +30,8 @@ public class ClassroomRestControllerTest {
 
     @Mock
     private IClassroomService classroomServiceMock;
-    @InjectMocks private ClassroomRestController controller;
+    @InjectMocks
+    private ClassroomRestController controller;
 
     @Before
     public void setUp() {

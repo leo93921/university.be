@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface IClassroomService {
 
-    ClassroomModel createClassroom(ClassroomModel classroom) ;
+    ClassroomModel createClassroom(ClassroomModel classroom);
+
     ClassroomModel getClassroomByID(Integer ID) throws ClassroomNotFoundException;
 
     List<ClassroomModel> getAllClassrooms();

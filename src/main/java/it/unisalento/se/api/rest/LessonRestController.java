@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 public class LessonRestController {
 
 
-
     @Autowired
     private ILessonService lessonService;
 
@@ -28,8 +27,6 @@ public class LessonRestController {
     public LessonModel saveLesson(@RequestBody LessonModel model) throws UserTypeNotSupported {
         return lessonService.saveLesson(model);
     }
-
-
 
 
 }

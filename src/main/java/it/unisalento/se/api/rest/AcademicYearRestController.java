@@ -26,7 +26,7 @@ public class AcademicYearRestController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public AcademicYearModel saveAcademicYear(@RequestBody AcademicYearModel academicyear){
+    public AcademicYearModel saveAcademicYear(@RequestBody AcademicYearModel academicyear) {
         return academicYearService.createAcademicYear(academicyear);
     }
 

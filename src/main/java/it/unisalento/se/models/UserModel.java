@@ -7,6 +7,7 @@ public class UserModel {
     private String name;
     private String surname;
     private String email;
+    private String password;
 
     public String getPassword() {
         return password;
@@ -15,8 +16,6 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private String password;
 
     public Integer getId() {
         return id;

@@ -8,7 +8,8 @@ public class CommonUtils {
 
     private static CommonUtils istance = null;
 
-    private CommonUtils() {}
+    private CommonUtils() {
+    }
 
     public static synchronized CommonUtils getCommonUtils() {
         if (istance == null) {

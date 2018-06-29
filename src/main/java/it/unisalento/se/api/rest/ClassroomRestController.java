@@ -25,7 +25,7 @@ public class ClassroomRestController {
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ClassroomModel saveClass(@RequestBody ClassroomModel classroom)  {
+    public ClassroomModel saveClass(@RequestBody ClassroomModel classroom) {
         return classroomService.createClassroom(classroom);
     }
 

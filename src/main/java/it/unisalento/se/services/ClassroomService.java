@@ -18,9 +18,11 @@ import java.util.List;
 
 @Service
 public class ClassroomService implements IClassroomService {
-    @Autowired private ClassroomRepository classroomRepository;
+    @Autowired
+    private ClassroomRepository classroomRepository;
 
-    @Override @Transactional
+    @Override
+    @Transactional
     public ClassroomModel createClassroom(ClassroomModel classroom) {
         Classroom dao = ClassroomDtoToDao.convert(classroom);
         dao = classroomRepository.save(dao);
@@ -28,8 +30,8 @@ public class ClassroomService implements IClassroomService {
     }
 
 
-
-    @Override @Transactional(readOnly=true)
+    @Override
+    @Transactional(readOnly = true)
     public ClassroomModel getClassroomByID(Integer ID) throws ClassroomNotFoundException {
 
         try {

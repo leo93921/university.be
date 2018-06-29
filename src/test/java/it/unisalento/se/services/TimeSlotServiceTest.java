@@ -1,8 +1,8 @@
 package it.unisalento.se.services;
 
 import it.unisalento.se.dao.Timeslot;
-import it.unisalento.se.models.TimeSlotModel;
 import it.unisalento.se.exceptions.TimeSlotNotFoundException;
+import it.unisalento.se.models.TimeSlotModel;
 import it.unisalento.se.repositories.TimeSlotRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
