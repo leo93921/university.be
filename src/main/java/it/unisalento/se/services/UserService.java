@@ -9,6 +9,7 @@ import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.iservices.IUserTypeService;
+import it.unisalento.se.models.RegistrationRequest;
 import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.UserRepository;
@@ -63,5 +64,14 @@ public class UserService implements IUserService {
             models.add(UserDaoToDto.convert(user));
         }
         return models;
+    }
+
+    @Override
+    public UserModel register(RegistrationRequest request) throws UserTypeNotSupported {
+        // TODO check if email is already present
+        User dao = UserDtoToDao.convert(request);
+        dao.setPassword(request.getPassword());
+        User saved = userRepository.save(dao);
+        return UserDaoToDto.convert(saved);
     }
 }

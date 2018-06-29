@@ -4,6 +4,7 @@ import it.unisalento.se.common.Constants;
 import it.unisalento.se.exceptions.InvalidCredentialsException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.iservices.IUserService;
+import it.unisalento.se.models.RegistrationRequest;
 import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.models.UserTypeModel;
@@ -187,6 +188,42 @@ public class UserRestControllerTest {
 
 
         verify(userServiceMock, times(1)).getAllProfessors();
+        verifyNoMoreInteractions(userServiceMock);
+    }
+
+    @Test
+    public void registerUser() throws Exception {
+        UserModel u = new UserModel();
+        u.setUserType(UserTypeModel.PROFESSOR);
+        u.setSurname("Rossi");
+        u.setName("Mario");
+        u.setId(1);
+        u.setEmail("mario.rossi@test.it");
+
+        RegistrationRequest req = new RegistrationRequest();
+        req.setUserType(UserTypeModel.PROFESSOR);
+        req.setSurname("Rossi");
+        req.setName("Mario");
+        req.setId(1);
+        req.setEmail("mario.rossi@test.it");
+        req.setPassword("Password");
+
+        when(userServiceMock.register(any(RegistrationRequest.class))).thenReturn(u);
+
+        mockMvc.perform(
+                post("/user/register")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .content(TestUtils.toJson(req))
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.surname", Matchers.is("Rossi")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Mario")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is("mario.rossi@test.it")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.userType", Matchers.is(Constants.PROFESSOR)));
+
+        verify(userServiceMock, times(1)).register(refEq(req));
         verifyNoMoreInteractions(userServiceMock);
     }
 }
