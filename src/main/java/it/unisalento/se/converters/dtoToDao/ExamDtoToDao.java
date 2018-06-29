@@ -1,11 +1,8 @@
 package it.unisalento.se.converters.dtoToDao;
 
-import it.unisalento.se.converters.daoToDto.TimeSlotDaoToDto;
 import it.unisalento.se.dao.Exam;
-import it.unisalento.se.dao.Lesson;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.ExamModel;
-import it.unisalento.se.models.LessonModel;
 
 public class ExamDtoToDao {
 

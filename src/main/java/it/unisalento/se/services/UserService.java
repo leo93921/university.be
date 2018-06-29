@@ -25,8 +25,10 @@ import java.util.List;
 @Service
 public class UserService implements IUserService {
 
-    @Autowired private UserRepository userRepository;
-    @Autowired private IUserTypeService userTypeService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private IUserTypeService userTypeService;
 
 
     @Override
@@ -38,7 +40,8 @@ public class UserService implements IUserService {
         return UserDaoToDto.convert(dao);
     }
 
-    @Override @Transactional(readOnly=true)
+    @Override
+    @Transactional(readOnly = true)
     public UserModel getUserByID(Integer ID) throws UserTypeNotSupported, UserNotFoundException {
         try {
             User user = userRepository.getOne(ID);

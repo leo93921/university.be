@@ -1,42 +1,9 @@
 package it.unisalento.se.converters.daoToDto;
 
-import it.unisalento.se.converters.daoToDto.TimeSlotDaoToDto;
-import it.unisalento.se.converters.dtoToDao.ExamDtoToDao;
-import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.dao.*;
-import it.unisalento.se.models.TimeSlotModel;
-import org.junit.Test;
-import it.unisalento.se.dao.*;
-import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.*;
-import it.unisalento.se.repositories.LessonRepository;
-import it.unisalento.se.repositories.TimeSlotRepository;
+import it.unisalento.se.models.ExamModel;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import java.util.Date;
-
-import it.unisalento.se.dao.Timeslot;
-import it.unisalento.se.exceptions.TimeSlotNotFoundException;
-import it.unisalento.se.repositories.TimeSlotRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.persistence.EntityNotFoundException;
-import java.util.Date;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-
-import static org.mockito.Mockito.when;
 
 import java.util.Date;
 
@@ -57,7 +24,6 @@ public class ExamDaoToDtoTest {
         cs.setId(1);
         cs.setName("Engineering");
         cs.setAcademicYear(ay);
-
 
 
         UserType ut = new UserType();
@@ -111,7 +77,6 @@ public class ExamDaoToDtoTest {
         assertEquals(cr.getName(), model.getClassroom().getName());
         assertEquals(ts.getStartTime(), model.getTimeslot().getStartTime());
         assertEquals(s.getName(), model.getSubject().getName());
-
 
 
     }

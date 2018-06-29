@@ -1,7 +1,6 @@
 package it.unisalento.se.converters.dtoToDao;
 
-import it.unisalento.se.common.Constants;
-import it.unisalento.se.dao.*;
+import it.unisalento.se.dao.Lesson;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 
@@ -21,7 +20,6 @@ public class LessonDtoToDaoTest {
         cs.setID(1);
         cs.setName("Engineering");
         cs.setAcademicYear(ay);
-
 
 
         UserModel u = new UserModel();

@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-
 public class AcademicYearDtoToDaoTest {
 
 
@@ -18,13 +17,11 @@ public class AcademicYearDtoToDaoTest {
         model.setEndYear(1946);
 
 
-
         AcademicYear dao = AcademicYearDtoToDao.convert(model);
 
         Assert.assertEquals(new Integer(1), dao.getId());
         Assert.assertEquals(1938, dao.getStartYear());
         Assert.assertEquals(1946, dao.getEndYear());
-
 
 
     }

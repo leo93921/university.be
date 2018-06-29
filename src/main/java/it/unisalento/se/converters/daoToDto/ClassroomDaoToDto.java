@@ -5,7 +5,7 @@ import it.unisalento.se.models.ClassroomModel;
 
 public class ClassroomDaoToDto {
 
-    public static ClassroomModel convert (Classroom c) {
+    public static ClassroomModel convert(Classroom c) {
         ClassroomModel classroom = new ClassroomModel();
 
         classroom.setId(c.getId());
@@ -16,7 +16,6 @@ public class ClassroomDaoToDto {
         return classroom;
 
     }
-
 
 
 }

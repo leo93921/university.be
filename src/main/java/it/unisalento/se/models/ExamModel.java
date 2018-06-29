@@ -4,7 +4,7 @@ public class ExamModel {
 
 
     private Integer ID;
-    private  String description;
+    private String description;
     private SubjectModel subject;
     private ClassroomModel classroom;
     private TimeSlotModel timeslot;

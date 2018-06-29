@@ -4,19 +4,8 @@ package it.unisalento.se.services;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.*;
+import it.unisalento.se.models.LessonModel;
 import it.unisalento.se.repositories.LessonRepository;
-import it.unisalento.se.repositories.TimeSlotRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-import java.util.Date;
-
-import it.unisalento.se.dao.Timeslot;
-import it.unisalento.se.exceptions.TimeSlotNotFoundException;
-import it.unisalento.se.repositories.TimeSlotRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -27,10 +16,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -41,7 +26,6 @@ public class LessonServiceTest {
     private LessonRepository lessonRepository;
     @InjectMocks
     private LessonService lessonService;
-
 
 
     @Test
@@ -104,7 +88,7 @@ public class LessonServiceTest {
 
         LessonModel model = lessonService.getLessonByID(1);
 
-        assertEquals(new Integer  (1), model.getID());
+        assertEquals(new Integer(1), model.getID());
         assertEquals(cr.getName(), model.getClassroom().getName());
         assertEquals(ts.getStartTime(), model.getTimeSlot().getStartTime());
         assertEquals(s.getName(), model.getSubject().getName());

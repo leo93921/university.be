@@ -31,7 +31,8 @@ public class AcademicYearRestControllerTest {
 
     @Mock
     private IAcademicYearService academicYearServiceMock;
-    @InjectMocks private AcademicYearRestController controller;
+    @InjectMocks
+    private AcademicYearRestController controller;
 
     @Before
     public void setUp() {

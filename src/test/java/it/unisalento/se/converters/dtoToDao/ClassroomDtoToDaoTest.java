@@ -21,8 +21,8 @@ public class ClassroomDtoToDaoTest {
 
         Assert.assertEquals(new Integer(1), dao.getId());
         Assert.assertEquals("M1", dao.getName());
-        Assert.assertEquals(123.4, dao.getLatitude(),0);
-        Assert.assertEquals(567.8, dao.getLongitude(),0);
+        Assert.assertEquals(123.4, dao.getLatitude(), 0);
+        Assert.assertEquals(567.8, dao.getLongitude(), 0);
 
 
     }

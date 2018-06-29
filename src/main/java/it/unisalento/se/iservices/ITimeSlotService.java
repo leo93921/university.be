@@ -1,7 +1,7 @@
 package it.unisalento.se.iservices;
 
-import it.unisalento.se.models.TimeSlotModel;
 import it.unisalento.se.exceptions.TimeSlotNotFoundException;
+import it.unisalento.se.models.TimeSlotModel;
 
 public interface ITimeSlotService {
 

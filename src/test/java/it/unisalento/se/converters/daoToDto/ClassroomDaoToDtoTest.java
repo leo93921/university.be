@@ -10,7 +10,7 @@ public class ClassroomDaoToDtoTest {
 
 
     @Test
-    public void convert()  {
+    public void convert() {
 
 
         Classroom c = new Classroom();
@@ -23,8 +23,8 @@ public class ClassroomDaoToDtoTest {
 
         assertEquals(new Integer(1), m.getId());
         assertEquals("O1", m.getName());
-        assertEquals(88.6, m.getLatitude(),0);
-        assertEquals(95.8, m.getLongitude(),0);
+        assertEquals(88.6, m.getLatitude(), 0);
+        assertEquals(95.8, m.getLongitude(), 0);
 
 
     }

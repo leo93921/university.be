@@ -6,7 +6,7 @@ import it.unisalento.se.models.AcademicYearModel;
 
 public class AcademicYearDtoToDao {
 
-    public static AcademicYear convert(AcademicYearModel model){
+    public static AcademicYear convert(AcademicYearModel model) {
 
         AcademicYear dao = new AcademicYear();
         dao.setId(model.getID());

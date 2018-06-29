@@ -16,7 +16,7 @@ public class UserModel {
         this.password = password;
     }
 
-    private  String password;
+    private String password;
 
     public Integer getId() {
         return id;

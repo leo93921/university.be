@@ -1,12 +1,9 @@
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.Constants;
-import it.unisalento.se.dao.Classroom;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.exceptions.LessonNotFoundException;
-import it.unisalento.se.exceptions.SubjectNotFoundException;
 import it.unisalento.se.iservices.ILessonService;
-import it.unisalento.se.iservices.ISubjectService;
 import it.unisalento.se.models.*;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
@@ -15,7 +12,6 @@ import org.junit.Test;
 import org.mockito.*;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
@@ -192,7 +188,7 @@ public class LessonRestControllerTest {
                 .andExpect(jsonPath("$.id", Matchers.is(l.getID())))
                 .andExpect(jsonPath("$.classroom.name", Matchers.is(cr.getName())))
                 .andExpect(jsonPath("$.subject.name", Matchers.is(sub.getName())))
-                ;
+        ;
 
 
         verify(service, times(1)).saveLesson(savedLesson.capture());

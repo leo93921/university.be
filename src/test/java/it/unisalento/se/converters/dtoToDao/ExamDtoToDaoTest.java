@@ -1,16 +1,13 @@
 package it.unisalento.se.converters.dtoToDao;
 
-import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.AcademicYearModel;
-
-import it.unisalento.se.common.Constants;
-import it.unisalento.se.dao.*;
+import it.unisalento.se.dao.Exam;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+
 public class ExamDtoToDaoTest {
 
 
@@ -59,7 +56,7 @@ public class ExamDtoToDaoTest {
         cr.setLongitude(1.0);
 
 
-        ExamModel exam  = new ExamModel();
+        ExamModel exam = new ExamModel();
         exam.setID(1);
         exam.setDescription("Terzo appello");
         exam.setSubject(s);

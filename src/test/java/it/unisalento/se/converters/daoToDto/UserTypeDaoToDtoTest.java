@@ -2,8 +2,8 @@ package it.unisalento.se.converters.daoToDto;
 
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.UserType;
-import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.models.UserTypeModel;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

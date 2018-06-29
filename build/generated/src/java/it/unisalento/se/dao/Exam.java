@@ -1,7 +1,9 @@
 package it.unisalento.se.dao;
-// Generated 19-giu-2018 15.18.59 by Hibernate Tools 5.2.0.Final
+// Generated 29-giu-2018 14.59.05 by Hibernate Tools 5.2.0.Final
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,6 +30,7 @@ public class Exam  implements java.io.Serializable {
      private Subject subject;
      private Timeslot timeslot;
      private String description;
+     private Set<ExamResults> examResultses = new HashSet<ExamResults>(0);
 
     public Exam() {
     }
@@ -37,11 +41,12 @@ public class Exam  implements java.io.Serializable {
         this.subject = subject;
         this.timeslot = timeslot;
     }
-    public Exam(Classroom classroom, Subject subject, Timeslot timeslot, String description) {
+    public Exam(Classroom classroom, Subject subject, Timeslot timeslot, String description, Set<ExamResults> examResultses) {
        this.classroom = classroom;
        this.subject = subject;
        this.timeslot = timeslot;
        this.description = description;
+       this.examResultses = examResultses;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -94,6 +99,15 @@ public class Exam  implements java.io.Serializable {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="exam")
+    public Set<ExamResults> getExamResultses() {
+        return this.examResultses;
+    }
+    
+    public void setExamResultses(Set<ExamResults> examResultses) {
+        this.examResultses = examResultses;
     }
 
 

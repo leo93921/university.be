@@ -34,8 +34,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserRestControllerTest {
 
     private MockMvc mockMvc;
-    @Mock private IUserService userServiceMock;
-    @InjectMocks private UserRestController controller;
+    @Mock
+    private IUserService userServiceMock;
+    @InjectMocks
+    private UserRestController controller;
 
     @Before
     public void setUp() {

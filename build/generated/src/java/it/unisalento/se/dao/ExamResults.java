@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 19-giu-2018 15.18.59 by Hibernate Tools 5.2.0.Final
+// Generated 29-giu-2018 14.59.05 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.Date;
@@ -26,19 +26,19 @@ public class ExamResults  implements java.io.Serializable {
 
 
      private Integer id;
+     private Exam exam;
      private User user;
      private int vote;
      private Date date;
-     private int exam;
 
     public ExamResults() {
     }
 
-    public ExamResults(User user, int vote, Date date, int exam) {
+    public ExamResults(Exam exam, User user, int vote, Date date) {
+       this.exam = exam;
        this.user = user;
        this.vote = vote;
        this.date = date;
-       this.exam = exam;
     }
    
      @Id @GeneratedValue(strategy=IDENTITY)
@@ -51,6 +51,16 @@ public class ExamResults  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="exam", nullable=false)
+    public Exam getExam() {
+        return this.exam;
+    }
+    
+    public void setExam(Exam exam) {
+        this.exam = exam;
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
@@ -81,16 +91,6 @@ public class ExamResults  implements java.io.Serializable {
     
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    
-    @Column(name="exam", nullable=false)
-    public int getExam() {
-        return this.exam;
-    }
-    
-    public void setExam(int exam) {
-        this.exam = exam;
     }
 
 

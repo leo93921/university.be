@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AcademicYearDaoToDtoTest {
     @Test
-    public void convert()  {
+    public void convert() {
 
 
         AcademicYear y = new AcademicYear();

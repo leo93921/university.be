@@ -18,24 +18,26 @@ import java.util.List;
 @Service
 public class AcademicYearService implements IAcademicYearService {
 
-    @Autowired private AcademicYearRepository academicYearRepository;
+    @Autowired
+    private AcademicYearRepository academicYearRepository;
 
-    @Override @Transactional
+    @Override
+    @Transactional
     public AcademicYearModel createAcademicYear(AcademicYearModel academicYear) {
         AcademicYear dao = AcademicYearDtoToDao.convert(academicYear);
         dao = academicYearRepository.save(dao);
         return AcademicYearDaoToDto.convert(dao);
     }
 
-    @Override @Transactional(readOnly=true)
+    @Override
+    @Transactional(readOnly = true)
     public AcademicYearModel getAcademicYearByID(Integer ID) throws AcademicYearNotFoundException {
-       try {
-           AcademicYear academicYear = academicYearRepository.getOne(ID);
-           return AcademicYearDaoToDto.convert(academicYear);
-       }
-       catch (EntityNotFoundException e){
-           throw  new AcademicYearNotFoundException();
-       }
+        try {
+            AcademicYear academicYear = academicYearRepository.getOne(ID);
+            return AcademicYearDaoToDto.convert(academicYear);
+        } catch (EntityNotFoundException e) {
+            throw new AcademicYearNotFoundException();
+        }
     }
 
     @Override
