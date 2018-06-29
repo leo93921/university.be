@@ -43,8 +43,8 @@ gretty {
 
 import org.hibernate.gradle.tools.Schema
 
-database{
-    catalog =  [ "university_se": new Schema()]
+database {
+    catalog = ["university_se": new Schema()]
     basePackage = "it.unisalento.se.dao"
     port = 8889
     url = "jdbc:mysql://localhost"
