@@ -2,9 +2,11 @@ package it.unisalento.se.services;
 
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.ExamNotFoundException;
+import it.unisalento.se.exceptions.ExamResultNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.ExamRepository;
+import it.unisalento.se.repositories.ExamResultRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -19,14 +21,14 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExamServiceTest {
+public class ExamResultServiceTest {
     @Mock
-    private ExamRepository examRepository;
+    private ExamResultRepository examResultRepository;
     @InjectMocks
-    private ExamService examService;
+    private ExamResultService examResultService;
 
     @Test
-    public void getExam_OK() throws ExamNotFoundException, UserTypeNotSupported {
+    public void getExamResult_OK() throws ExamNotFoundException, UserTypeNotSupported, ExamResultNotFoundException {
 
 
         AcademicYear ay = new AcademicYear();
@@ -51,6 +53,19 @@ public class ExamServiceTest {
         u.setEmail("mario.luigi@n.jp");
         u.setUserType(ut);
         u.setPassword("peach");
+
+        UserType ut2 = new UserType();
+        ut2.setId(2);
+        ut2.setName("STUDENT");
+
+        User u2 = new User();
+        u2.setId(2);
+        u2.setName("Tom");
+        u2.setSurname("Nook");
+        u2.setEmail("tom.nook@n.jp");
+        u2.setUserType(ut2);
+        u2.setPassword("money");
+
 
         Subject s = new Subject();
         s.setId(1);
@@ -83,28 +98,38 @@ public class ExamServiceTest {
         exam.setClassroom(cr);
         exam.setTimeslot(ts);
 
-        when(examRepository.getOne(1)).thenReturn(exam);
+        Date examDate = new Date();
+        ExamResults examResult = new ExamResults();
+        examResult.setId(1);
+        examResult.setVote(18);
+        examResult.setUser(u2);
+        examResult.setDate(examDate);
+        examResult.setExam(exam);
 
-        ExamModel model = examService.getExamByID(1);
+
+        when(examResultRepository.getOne(1)).thenReturn(examResult);
+
+        ExamResultModel model = examResultService.getExamResultByID(1);
         assertEquals(new Integer(1), model.getID());
-        assertEquals(exam.getDescription(), model.getDescription());
-        assertEquals(s.getName(), model.getSubject().getName());
-        assertEquals(cr.getName(), model.getClassroom().getName());
-        assertEquals(ts.getStartTime(), model.getTimeslot().getStartTime());
+        assertEquals(new Integer(18), model.getVote());
+        assertEquals(u2.getName(), model.getStudent().getName());
+        assertEquals(examDate, model.getDate());
+        assertEquals(exam.getDescription(), model.getExam().getDescription());
     }
 
 
-    @Test(expected = ExamNotFoundException.class)
-    public void getExam_shouldFail() throws ExamNotFoundException, UserTypeNotSupported {
-        when(examRepository.getOne(10)).thenThrow(new EntityNotFoundException());
+    @Test(expected = ExamResultNotFoundException.class)
+    public void getExam_shouldFail() throws ExamResultNotFoundException, UserTypeNotSupported {
+        when(examResultRepository.getOne(10)).thenThrow(new EntityNotFoundException());
 
-        ExamModel model = examService.getExamByID(10);
+        ExamResultModel model = examResultService.getExamResultByID(10);
     }
+
 
 
 
     @Test
-    public void createExam() throws UserTypeNotSupported {
+    public void createExamResult() throws UserTypeNotSupported {
 
 
         //NORMALE
@@ -175,7 +200,13 @@ public class ExamServiceTest {
         exam.setClassroom(cr);
         exam.setTimeslot(ts);
 
-
+        Date examDate = new Date();
+        ExamResults examResult = new ExamResults();
+        examResult.setId(1);
+        examResult.setVote(18);
+        examResult.setUser(u2);
+        examResult.setDate(examDate);
+        examResult.setExam(exam);
 
         //FINE NORMALE
 
@@ -241,19 +272,25 @@ public class ExamServiceTest {
         examM.setTimeslot(tsM);
 
 
+        ExamResultModel examResultM = new ExamResultModel();
+        examResultM.setID(1);
+        examResultM.setVote(18);
+        examResultM.setStudent(u2M);
+        examResultM.setDate(examDate);
+        examResultM.setExam(examM);
 
-        when(examRepository.save(any(Exam.class))).thenReturn(exam);
+        when(examResultRepository.save(any(ExamResults.class))).thenReturn(examResult);
 
-        ExamModel model1 = examService.saveExam(examM);
+        ExamResultModel model1 = examResultService.saveExamResult(examResultM);
 
 
-        assertEquals(exam.getId(), model1.getID());
-        assertEquals(exam.getDescription(), model1.getDescription());
-        assertEquals(exam.getSubject().getName(), model1.getSubject().getName());
-
+        assertEquals(examResult.getId(), model1.getID());
+        assertEquals(new Integer (18), model1.getVote());
+        assertEquals(examResult.getUser().getName(), model1.getStudent().getName());
 
 
     }
+
 
 
 }

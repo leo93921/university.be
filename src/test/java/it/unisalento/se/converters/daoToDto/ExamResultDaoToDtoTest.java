@@ -3,17 +3,20 @@ package it.unisalento.se.converters.daoToDto;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.ExamModel;
+import it.unisalento.se.models.ExamResultModel;
 import org.junit.Test;
 
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
+public class ExamResultDaoToDtoTest {
 
-public class ExamDaoToDtoTest {
 
     @Test
     public void convert_OK() throws UserTypeNotSupported {
+
+
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -37,6 +40,19 @@ public class ExamDaoToDtoTest {
         u.setEmail("mario.luigi@n.jp");
         u.setUserType(ut);
         u.setPassword("peach");
+
+
+        UserType ut2 = new UserType();
+        ut2.setId(2);
+        ut2.setName("STUDENT");
+
+        User u2 = new User();
+        u2.setId(2);
+        u2.setName("Tom");
+        u2.setSurname("Nook");
+        u2.setEmail("tom.nook@n.jp");
+        u2.setUserType(ut2);
+        u2.setPassword("money");
 
 
         Subject s = new Subject();
@@ -71,17 +87,28 @@ public class ExamDaoToDtoTest {
         exam.setClassroom(cr);
         exam.setTimeslot(ts);
 
+        Date examDate = new Date();
+        ExamResults examResult = new ExamResults();
+        examResult.setId(1);
+        examResult.setVote(18);
+        examResult.setUser(u2);
+        examResult.setDate(examDate);
+        examResult.setExam(exam);
 
-        ExamModel model = ExamDaoToDto.convert(exam);
+
+
+        ExamResultModel model = ExamResultDaoToDto.convert(examResult);
         assertEquals(new Integer(1), model.getID());
-        assertEquals(exam.getDescription(), model.getDescription());
-        assertEquals(cr.getName(), model.getClassroom().getName());
-        assertEquals(ts.getStartTime(), model.getTimeslot().getStartTime());
-        assertEquals(ts.getEndTime(), model.getTimeslot().getEndTime());
-        assertEquals(s.getName(), model.getSubject().getName());
-        assertEquals(new Integer(12), model.getSubject().getCFU());
+        assertEquals(new Integer (18), model.getVote());
+        assertEquals(u2.getName(), model.getStudent().getName());
+        assertEquals(examDate, model.getDate());
+        assertEquals(exam.getDescription(), model.getExam().getDescription());
+
+
+
 
 
     }
+
 
 }

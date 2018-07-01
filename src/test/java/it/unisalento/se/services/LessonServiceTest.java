@@ -4,7 +4,7 @@ package it.unisalento.se.services;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.LessonModel;
+import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.LessonRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +16,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -103,11 +104,156 @@ public class LessonServiceTest {
     }
 
 
-    /*
+
     @Test
     public void createLesson() throws UserTypeNotSupported {
 
+        //NORMALE
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("PROFESSOR");
+
+        User u = new User();
+        u.setId(1);
+        u.setName("Luigi");
+        u.setSurname("Mario");
+        u.setEmail("mario.luigi@n.jp");
+        u.setUserType(ut);
+        u.setPassword("peach");
+
+        UserType ut2 = new UserType();
+        ut2.setId(2);
+        ut2.setName("STUDENT");
+
+        User u2 = new User();
+        u2.setId(2);
+        u2.setName("Tom");
+        u2.setSurname("Nook");
+        u2.setEmail("tom.nook@n.jp");
+        u2.setUserType(ut2);
+        u2.setPassword("money");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(u);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+
+
+
+        Lesson lesson = new Lesson();
+        lesson.setId(1);
+        lesson.setClassroom(cr);
+        lesson.setTimeslot(ts);
+        lesson.setSubject(s);
+
+
+
+        //FINE NORMALE
+
+        //MODEL
+        AcademicYearModel ayM = new AcademicYearModel();
+        ayM.setID(1);
+        ayM.setStartYear(2017);
+        ayM.setEndYear(2018);
+
+
+        CourseOfStudyModel csM = new CourseOfStudyModel();
+        csM.setID(1);
+        csM.setName("Engineering");
+        csM.setAcademicYear(ayM);
+
+
+
+        UserModel uM = new UserModel();
+        uM.setId(1);
+        uM.setName("Luigi");
+        uM.setSurname("Mario");
+        uM.setEmail("mario.luigi@n.jp");
+        uM.setUserType(UserTypeModel.PROFESSOR);
+        uM.setPassword("peach");
+
+
+        UserModel u2M = new UserModel();
+        u2M.setId(2);
+        u2M.setName("Tom");
+        u2M.setSurname("Nook");
+        u2M.setEmail("tom.nook@n.jp");
+        u2M.setUserType(UserTypeModel.STUDENT);
+        u2M.setPassword("money");
+
+
+        SubjectModel sM = new SubjectModel();
+        sM.setID(1);
+        sM.setName("Software");
+        sM.setCFU(12);
+        sM.setProfessor(uM);
+        sM.setCourseOfStudy(csM);
+        sM.setTeachingYear(2018);
+
+
+        TimeSlotModel tsM = new TimeSlotModel();
+        tsM.setID(1);
+        tsM.setStartTime(startDate);
+        tsM.setEndTime(endDate);
+
+
+        ClassroomModel crM = new ClassroomModel();
+        crM.setId(1);
+        crM.setName("Y1");
+        crM.setLatitude(1.0);
+        crM.setLongitude(1.0);
+
+
+        LessonModel lessonM = new LessonModel();
+        lessonM.setID(1);
+        lessonM.setClassroom(crM);
+        lessonM.setTimeSlot(tsM);
+        lessonM.setSubject(sM);
+
+
+        when(lessonRepository.save(any(Lesson.class))).thenReturn(lesson);
+
+        LessonModel model1 = lessonService.saveLesson(lessonM);
+
+
+        assertEquals(lesson.getId(), model1.getID());
+        assertEquals(lesson.getClassroom().getName(), model1.getClassroom().getName());
+        assertEquals(lesson.getSubject().getName(), model1.getSubject().getName());
+
+
+
     }
-    */
+
 
 }

@@ -11,7 +11,7 @@ public class ExamDtoToDao {
 
         Exam dao = new Exam();
         dao.setId(model.getID());
-        dao.setDescription(dao.getDescription());
+        dao.setDescription(model.getDescription());
         dao.setSubject(SubjectDtoToDao.convert(model.getSubject()));
         dao.setClassroom(ClassroomDtoToDao.convert(model.getClassroom()));
         dao.setTimeslot(TimeSlotDtoToDao.convert(model.getTimeslot()));

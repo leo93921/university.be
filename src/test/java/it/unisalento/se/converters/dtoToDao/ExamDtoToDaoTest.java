@@ -3,14 +3,14 @@ package it.unisalento.se.converters.dtoToDao;
 import it.unisalento.se.dao.Exam;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
-
+import org.junit.Test;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
 public class ExamDtoToDaoTest {
 
-
+    @Test
     public void convert() throws UserTypeNotSupported {
         AcademicYearModel ay = new AcademicYearModel();
         ay.setID(1);
@@ -65,9 +65,20 @@ public class ExamDtoToDaoTest {
 
         Exam dao = ExamDtoToDao.convert(exam);
         assertEquals(new Integer(1), dao.getId());
-        assertEquals(cr.getName(), dao.getClassroom().getName());
-        assertEquals(ts.getStartTime(), dao.getTimeslot().getStartTime());
+
+        assertEquals(exam.getDescription(), dao.getDescription());
+
         assertEquals(s.getName(), dao.getSubject().getName());
+        assertEquals(12, dao.getSubject().getCfu());
+        assertEquals(u.getName(),dao.getSubject().getUser().getName());
+        assertEquals(u.getSurname(),dao.getSubject().getUser().getSurname());
+        assertEquals(u.getEmail(),dao.getSubject().getUser().getEmail());
+        assertEquals(cr.getId(), dao.getClassroom().getId());
+        assertEquals(cr.getName(), dao.getClassroom().getName());
+        assertEquals(new Double(1.0), dao.getClassroom().getLongitude());
+        assertEquals(ts.getStartTime(), dao.getTimeslot().getStartTime());
+
+
 
     }
 }

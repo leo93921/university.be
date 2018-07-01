@@ -1,23 +1,25 @@
 package it.unisalento.se.converters.dtoToDao;
 
-import it.unisalento.se.dao.Lesson;
+import it.unisalento.se.dao.Exam;
+import it.unisalento.se.dao.ExamResults;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import org.junit.Test;
-import org.junit.Test;
+
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
-public class LessonDtoToDaoTest {
-
+public class ExamResultDtoToDaoTest {
     @Test
     public void convert() throws UserTypeNotSupported {
+
+
+
         AcademicYearModel ay = new AcademicYearModel();
         ay.setID(1);
         ay.setStartYear(2017);
         ay.setEndYear(2018);
-
 
         CourseOfStudyModel cs = new CourseOfStudyModel();
         cs.setID(1);
@@ -33,6 +35,14 @@ public class LessonDtoToDaoTest {
         u.setUserType(UserTypeModel.PROFESSOR);
         u.setPassword("peach");
 
+
+        UserModel u2 = new UserModel();
+        u2.setId(2);
+        u2.setName("Tom");
+        u2.setSurname("nook");
+        u2.setEmail("tom.nook@n.jp");
+        u2.setUserType(UserTypeModel.STUDENT);
+        u2.setPassword("money");
 
         SubjectModel s = new SubjectModel();
         s.setID(1);
@@ -58,20 +68,34 @@ public class LessonDtoToDaoTest {
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);
 
-        LessonModel l = new LessonModel();
-        l.setID(1);
-        l.setClassroom(cr);
-        l.setTimeSlot(ts);
-        l.setSubject(s);
+
+        ExamModel exam = new ExamModel();
+        exam.setID(1);
+        exam.setDescription("Descrizione generica di un esame");
+        exam.setSubject(s);
+        exam.setClassroom(cr);
+        exam.setTimeslot(ts);
+
+        Date examDate = new Date();
 
 
-        Lesson dao = LessonDtoToDao.convert(l);
+        ExamResultModel examResult = new ExamResultModel();
+        examResult.setID(1);
+        examResult.setVote(18);
+        examResult.setStudent(u2);
+        examResult.setDate(examDate);
+        examResult.setExam(exam);
+
+
+        ExamResults dao = ExamResultDtoToDao.convert(examResult);
         assertEquals(new Integer(1), dao.getId());
-        assertEquals(cr.getName(), dao.getClassroom().getName());
-        assertEquals(ts.getStartTime(), dao.getTimeslot().getStartTime());
-        assertEquals(ts.getEndTime(), dao.getTimeslot().getEndTime());
-        assertEquals(s.getName(), dao.getSubject().getName());
-        assertEquals(12, dao.getSubject().getCfu());
+        assertEquals(18, dao.getVote());
+        assertEquals(u2.getName(), dao.getUser().getName());
+        assertEquals(examDate, dao.getDate());
+        assertEquals(exam.getDescription(),dao.getExam().getDescription());
+
 
     }
+
+
 }

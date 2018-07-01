@@ -1,13 +1,12 @@
+
 package it.unisalento.se.api.rest;
-
-
+/*
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.UserType;
-import it.unisalento.se.exceptions.ExamNotFoundException;
-import it.unisalento.se.iservices.IExamService;
+import it.unisalento.se.exceptions.ExamResultNotFoundException;
+import it.unisalento.se.iservices.IExamResultService;
 import it.unisalento.se.models.*;
 import it.unisalento.se.test.utils.TestUtils;
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
@@ -20,19 +19,23 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Matchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class ExamRestControllerTest {
+public class ExamResultRestControllerTest {
 
     private MockMvc mockMvc;
     @Mock
-    private IExamService service;
+    private IExamResultService service;
     @InjectMocks
-    private ExamRestController controller;
+    private ExamResultRestControllerTest controller;
 
     @Captor
-    private ArgumentCaptor<ExamModel> savedExam;
+    private ArgumentCaptor<ExamResultModel> savedExamResult;
 
     @Before
     public void setUp() {
@@ -40,21 +43,18 @@ public class ExamRestControllerTest {
         mockMvc = TestUtils.getMockMvc(controller);
     }
 
-
     @Test
-    public void getExamByID_Fail() throws Exception {
-        when(service.getExamByID(any(Integer.class))).thenThrow(new ExamNotFoundException());
+    public void getExamResultByID_Fail() throws Exception {
+        when(service.getExamResultByID(any(Integer.class))).thenThrow(new ExamResultNotFoundException());
+        mockMvc.perform(get("/examresult/{id}", 20)).andExpect(status().isNotFound());
 
-        mockMvc.perform(get("/exam/{id}", 19))
-                .andExpect(status().isNotFound());
-
-        verify(service, times(1)).getExamByID(19);
+        verify(service, times(1)).getExamResultByID(20);
         verifyNoMoreInteractions(service);
     }
 
-
     @Test
-    public void getExamByID_OK() throws Exception {
+    public void getExamResultByID_OK() throws Exception{
+
         UserModel model = new UserModel();
         model.setId(1);
         model.setEmail("mario.rossi@test.it");
@@ -64,6 +64,17 @@ public class ExamRestControllerTest {
         UserType type = new UserType();
         type.setName(Constants.PROFESSOR);
         type.setId(2);
+
+
+        UserModel model2 = new UserModel();
+        model2.setId(2);
+        model2.setEmail("mario.rossi@test.it");
+        model2.setName("Mario");
+        model2.setSurname("Rossi");
+        model2.setUserType(UserTypeModel.STUDENT);
+        UserType type2 = new UserType();
+        type2.setName(Constants.STUDENT);
+        type2.setId(3);
 
         AcademicYearModel academicYear = new AcademicYearModel();
         academicYear.setID(1);
@@ -106,26 +117,32 @@ public class ExamRestControllerTest {
         exam.setClassroom(cr);
         exam.setSubject(sub);
 
-        when(service.getExamByID(any(Integer.class))).thenReturn(exam);
+        Date examDate = new Date();
 
-        mockMvc.perform(get("/exam/{id}", 1))
+        ExamResultModel examResult = new ExamResultModel();
+        examResult.setID(1);
+        examResult.setVote(18);
+        examResult.setStudent(model2);
+        examResult.setDate(examDate);
+        examResult.setExam(exam);
+
+        when(service.getExamResultByID(any(Integer.class))).thenReturn(examResult);
+
+        mockMvc.perform(get("/examresult/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id", Matchers.is(exam.getID())))
-                .andExpect(jsonPath("$.classroom.name", Matchers.is(cr.getName())))
-                .andExpect(jsonPath("$.subject.name", Matchers.is(sub.getName())))
+                .andExpect(jsonPath("$.id", org.hamcrest.Matchers.is(examResult.getID())))
+                .andExpect(jsonPath("$.vote", org.hamcrest.Matchers.is(examResult.getVote())))
+                .andExpect(jsonPath("$.date", org.hamcrest.Matchers.is(examResult.getDate())))
 
         ;
 
-        verify(service, times(1)).getExamByID(1);
+        verify(service, times(1)).getExamResultByID(1);
         verifyNoMoreInteractions(service);
 
-
     }
-
-
     @Test
-    public void saveExam() throws Exception {
+    public void saveExamResult() throws Exception {
         UserModel model = new UserModel();
         model.setId(1);
         model.setEmail("mario.rossi@test.it");
@@ -135,6 +152,16 @@ public class ExamRestControllerTest {
         UserType type = new UserType();
         type.setName(Constants.PROFESSOR);
         type.setId(2);
+
+        UserModel model2 = new UserModel();
+        model2.setId(2);
+        model2.setEmail("mario.rossi@test.it");
+        model2.setName("Mario");
+        model2.setSurname("Rossi");
+        model2.setUserType(UserTypeModel.STUDENT);
+        UserType type2 = new UserType();
+        type2.setName(Constants.STUDENT);
+        type2.setId(3);
 
         AcademicYearModel academicYear = new AcademicYearModel();
         academicYear.setID(1);
@@ -177,24 +204,36 @@ public class ExamRestControllerTest {
         exam.setClassroom(cr);
         exam.setSubject(sub);
 
-        when(service.saveExam(any(ExamModel.class))).thenReturn(exam);
+        Date examDate = new Date();
+
+
+        ExamResultModel examResult = new ExamResultModel();
+        examResult.setID(1);
+        examResult.setVote(18);
+        examResult.setStudent(model2);
+        examResult.setDate(examDate);
+        examResult.setExam(exam);
+
+        when(service.saveExamResult(any(ExamResultModel.class))).thenReturn(examResult);
 
 
         mockMvc.perform(
-                post("/exam")
+                post("/examresult")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(TestUtils.toJson(exam)))
                 .andExpect(status().isOk())
 
-                .andExpect(jsonPath("$.id", Matchers.is(exam.getID())))
-                .andExpect(jsonPath("$.classroom.name", Matchers.is(cr.getName())))
-                .andExpect(jsonPath("$.subject.name", Matchers.is(sub.getName())))
+                .andExpect(jsonPath("$.id", org.hamcrest.Matchers.is(exam.getID())))
+                .andExpect(jsonPath("$.vote", org.hamcrest.Matchers.is(examResult.getVote())))
+                .andExpect(jsonPath("$.date", org.hamcrest.Matchers.is(examResult.getDate())))
         ;
 
 
-        verify(service, times(1)).saveExam(savedExam.capture());
+        verify(service, times(1)).saveExamResult(savedExamResult.capture());
         verifyNoMoreInteractions(service);
 
     }
-
 }
+
+
+*/
