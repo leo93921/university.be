@@ -1,6 +1,6 @@
 
 package it.unisalento.se.api.rest;
-/*
+
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.exceptions.ExamResultNotFoundException;
@@ -9,7 +9,9 @@ import it.unisalento.se.models.*;
 import it.unisalento.se.test.utils.TestUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -19,20 +21,16 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.mockito.Matchers.any;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class ExamResultRestControllerTest {
 
     private MockMvc mockMvc;
     @Mock
     private IExamResultService service;
     @InjectMocks
-    private ExamResultRestControllerTest controller;
+    private ExamResultRestController controller;
 
     @Captor
     private ArgumentCaptor<ExamResultModel> savedExamResult;
@@ -45,8 +43,8 @@ public class ExamResultRestControllerTest {
 
     @Test
     public void getExamResultByID_Fail() throws Exception {
-        when(service.getExamResultByID(any(Integer.class))).thenThrow(new ExamResultNotFoundException());
-        mockMvc.perform(get("/examresult/{id}", 20)).andExpect(status().isNotFound());
+        when(service.getExamResultByID(20)).thenThrow(new ExamResultNotFoundException());
+        mockMvc.perform(get("/exam-result/{id}", 20)).andExpect(status().isNotFound());
 
         verify(service, times(1)).getExamResultByID(20);
         verifyNoMoreInteractions(service);
@@ -128,12 +126,12 @@ public class ExamResultRestControllerTest {
 
         when(service.getExamResultByID(any(Integer.class))).thenReturn(examResult);
 
-        mockMvc.perform(get("/examresult/{id}", 1))
+        mockMvc.perform(get("/exam-result/{id}", 1))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", org.hamcrest.Matchers.is(examResult.getID())))
                 .andExpect(jsonPath("$.vote", org.hamcrest.Matchers.is(examResult.getVote())))
-                .andExpect(jsonPath("$.date", org.hamcrest.Matchers.is(examResult.getDate())))
+                .andExpect(jsonPath("$.date", org.hamcrest.Matchers.is(examResult.getDate().getTime())))
 
         ;
 
@@ -218,14 +216,14 @@ public class ExamResultRestControllerTest {
 
 
         mockMvc.perform(
-                post("/examresult")
+                post("/exam-result")
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content(TestUtils.toJson(exam)))
                 .andExpect(status().isOk())
 
                 .andExpect(jsonPath("$.id", org.hamcrest.Matchers.is(exam.getID())))
                 .andExpect(jsonPath("$.vote", org.hamcrest.Matchers.is(examResult.getVote())))
-                .andExpect(jsonPath("$.date", org.hamcrest.Matchers.is(examResult.getDate())))
+                .andExpect(jsonPath("$.date", org.hamcrest.Matchers.is(examResult.getDate().getTime())))
         ;
 
 
@@ -234,6 +232,3 @@ public class ExamResultRestControllerTest {
 
     }
 }
-
-
-*/
