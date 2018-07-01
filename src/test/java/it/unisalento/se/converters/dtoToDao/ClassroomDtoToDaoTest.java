@@ -11,7 +11,7 @@ public class ClassroomDtoToDaoTest {
     @Test
     public void convert() {
         ClassroomModel model = new ClassroomModel();
-        model.setId(1);
+        model.setID(1);
         model.setName("M1");
         model.setLatitude(123.4);
         model.setLongitude(567.8);

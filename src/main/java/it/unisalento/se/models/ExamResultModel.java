@@ -2,17 +2,19 @@ package it.unisalento.se.models;
 
 import java.util.Date;
 
-public class ExamResultModel {
+public class ExamResultModel implements CourseOfStudyNode {
     private Integer ID;
     private Integer vote;
     private UserModel student;
     private Date date;
     private ExamModel exam;
 
+    @Override
     public Integer getID() {
         return ID;
     }
 
+    @Override
     public void setID(Integer ID) {
         this.ID = ID;
     }

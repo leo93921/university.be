@@ -1,4 +1,3 @@
-
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.Constants;
@@ -51,7 +50,7 @@ public class ExamResultRestControllerTest {
     }
 
     @Test
-    public void getExamResultByID_OK() throws Exception{
+    public void getExamResultByID_OK() throws Exception {
 
         UserModel model = new UserModel();
         model.setId(1);
@@ -102,7 +101,7 @@ public class ExamResultRestControllerTest {
         ts.setEndTime(endTime);
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);
@@ -139,6 +138,7 @@ public class ExamResultRestControllerTest {
         verifyNoMoreInteractions(service);
 
     }
+
     @Test
     public void saveExamResult() throws Exception {
         UserModel model = new UserModel();
@@ -189,7 +189,7 @@ public class ExamResultRestControllerTest {
         ts.setEndTime(endTime);
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);

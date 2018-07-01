@@ -1,6 +1,5 @@
 package it.unisalento.se.converters.dtoToDao;
 
-import it.unisalento.se.dao.Exam;
 import it.unisalento.se.dao.ExamResults;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
@@ -13,7 +12,6 @@ import static org.junit.Assert.assertEquals;
 public class ExamResultDtoToDaoTest {
     @Test
     public void convert() throws UserTypeNotSupported {
-
 
 
         AcademicYearModel ay = new AcademicYearModel();
@@ -63,7 +61,7 @@ public class ExamResultDtoToDaoTest {
 
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);
@@ -92,7 +90,7 @@ public class ExamResultDtoToDaoTest {
         assertEquals(18, dao.getVote());
         assertEquals(u2.getName(), dao.getUser().getName());
         assertEquals(examDate, dao.getDate());
-        assertEquals(exam.getDescription(),dao.getExam().getDescription());
+        assertEquals(exam.getDescription(), dao.getExam().getDescription());
 
 
     }

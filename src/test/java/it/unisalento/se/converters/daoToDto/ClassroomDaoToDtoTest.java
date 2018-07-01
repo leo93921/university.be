@@ -21,7 +21,7 @@ public class ClassroomDaoToDtoTest {
 
         ClassroomModel m = ClassroomDaoToDto.convert(c);
 
-        assertEquals(new Integer(1), m.getId());
+        assertEquals(new Integer(1), m.getID());
         assertEquals("O1", m.getName());
         assertEquals(88.6, m.getLatitude(), 0);
         assertEquals(95.8, m.getLongitude(), 0);

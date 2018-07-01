@@ -1,6 +1,6 @@
 package it.unisalento.se.models;
 
-public class ExamModel {
+public class ExamModel implements CourseOfStudyNode {
 
 
     private Integer ID;
@@ -9,10 +9,12 @@ public class ExamModel {
     private ClassroomModel classroom;
     private TimeSlotModel timeslot;
 
+    @Override
     public Integer getID() {
         return ID;
     }
 
+    @Override
     public void setID(Integer ID) {
         this.ID = ID;
     }

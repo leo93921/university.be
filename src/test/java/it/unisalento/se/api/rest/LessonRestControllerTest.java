@@ -91,7 +91,7 @@ public class LessonRestControllerTest {
         ts.setEndTime(endTime);
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);
@@ -164,7 +164,7 @@ public class LessonRestControllerTest {
         ts.setEndTime(endTime);
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);

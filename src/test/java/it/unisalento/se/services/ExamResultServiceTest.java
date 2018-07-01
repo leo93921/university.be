@@ -5,7 +5,6 @@ import it.unisalento.se.exceptions.ExamNotFoundException;
 import it.unisalento.se.exceptions.ExamResultNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
-import it.unisalento.se.repositories.ExamRepository;
 import it.unisalento.se.repositories.ExamResultRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -126,8 +125,6 @@ public class ExamResultServiceTest {
     }
 
 
-
-
     @Test
     public void createExamResult() throws UserTypeNotSupported {
 
@@ -223,7 +220,6 @@ public class ExamResultServiceTest {
         csM.setAcademicYear(ayM);
 
 
-
         UserModel uM = new UserModel();
         uM.setId(1);
         uM.setName("Luigi");
@@ -258,7 +254,7 @@ public class ExamResultServiceTest {
 
 
         ClassroomModel crM = new ClassroomModel();
-        crM.setId(1);
+        crM.setID(1);
         crM.setName("Y1");
         crM.setLatitude(1.0);
         crM.setLongitude(1.0);
@@ -285,12 +281,11 @@ public class ExamResultServiceTest {
 
 
         assertEquals(examResult.getId(), model1.getID());
-        assertEquals(new Integer (18), model1.getVote());
+        assertEquals(new Integer(18), model1.getVote());
         assertEquals(examResult.getUser().getName(), model1.getStudent().getName());
 
 
     }
-
 
 
 }

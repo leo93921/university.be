@@ -43,7 +43,7 @@ public class ClassroomRestControllerTest {
     public void findClassroomById() throws Exception {
         ClassroomModel c = new ClassroomModel();
 
-        c.setId(1);
+        c.setID(1);
         c.setName("Y1");
         c.setLatitude(100.5);
         c.setLongitude(200.88);
@@ -79,7 +79,7 @@ public class ClassroomRestControllerTest {
     public void saveClassroom() throws Exception {
         ClassroomModel c = new ClassroomModel();
 
-        c.setId(1);
+        c.setID(1);
         c.setName("Y2");
         c.setLatitude(150.86);
         c.setLongitude(300.36);
@@ -108,13 +108,13 @@ public class ClassroomRestControllerTest {
     @Test
     public void getAllClassrooms() throws Exception {
         ClassroomModel c1 = new ClassroomModel();
-        c1.setId(1);
+        c1.setID(1);
         c1.setName("Y1");
         c1.setLatitude(100.5);
         c1.setLongitude(200.88);
 
         ClassroomModel c2 = new ClassroomModel();
-        c2.setId(2);
+        c2.setID(2);
         c2.setName("Y2");
         c2.setLatitude(150.86);
         c2.setLongitude(300.36);

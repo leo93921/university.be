@@ -4,6 +4,7 @@ import it.unisalento.se.dao.Exam;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import org.junit.Test;
+
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -50,7 +51,7 @@ public class ExamDtoToDaoTest {
 
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);
@@ -70,14 +71,13 @@ public class ExamDtoToDaoTest {
 
         assertEquals(s.getName(), dao.getSubject().getName());
         assertEquals(12, dao.getSubject().getCfu());
-        assertEquals(u.getName(),dao.getSubject().getUser().getName());
-        assertEquals(u.getSurname(),dao.getSubject().getUser().getSurname());
-        assertEquals(u.getEmail(),dao.getSubject().getUser().getEmail());
-        assertEquals(cr.getId(), dao.getClassroom().getId());
+        assertEquals(u.getName(), dao.getSubject().getUser().getName());
+        assertEquals(u.getSurname(), dao.getSubject().getUser().getSurname());
+        assertEquals(u.getEmail(), dao.getSubject().getUser().getEmail());
+        assertEquals(cr.getID(), dao.getClassroom().getId());
         assertEquals(cr.getName(), dao.getClassroom().getName());
         assertEquals(new Double(1.0), dao.getClassroom().getLongitude());
         assertEquals(ts.getStartTime(), dao.getTimeslot().getStartTime());
-
 
 
     }

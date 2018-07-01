@@ -102,7 +102,6 @@ public class ExamServiceTest {
     }
 
 
-
     @Test
     public void createExam() throws UserTypeNotSupported {
 
@@ -176,7 +175,6 @@ public class ExamServiceTest {
         exam.setTimeslot(ts);
 
 
-
         //FINE NORMALE
 
         //MODEL
@@ -190,7 +188,6 @@ public class ExamServiceTest {
         csM.setID(1);
         csM.setName("Engineering");
         csM.setAcademicYear(ayM);
-
 
 
         UserModel uM = new UserModel();
@@ -227,7 +224,7 @@ public class ExamServiceTest {
 
 
         ClassroomModel crM = new ClassroomModel();
-        crM.setId(1);
+        crM.setID(1);
         crM.setName("Y1");
         crM.setLatitude(1.0);
         crM.setLongitude(1.0);
@@ -241,7 +238,6 @@ public class ExamServiceTest {
         examM.setTimeslot(tsM);
 
 
-
         when(examRepository.save(any(Exam.class))).thenReturn(exam);
 
         ExamModel model1 = examService.saveExam(examM);
@@ -250,7 +246,6 @@ public class ExamServiceTest {
         assertEquals(exam.getId(), model1.getID());
         assertEquals(exam.getDescription(), model1.getDescription());
         assertEquals(exam.getSubject().getName(), model1.getSubject().getName());
-
 
 
     }

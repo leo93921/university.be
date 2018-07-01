@@ -1,16 +1,18 @@
 package it.unisalento.se.models;
 
-public class ClassroomModel {
+public class ClassroomModel implements CourseOfStudyNode {
     private Integer id;
     private String name;
     private double latitude;
     private double longitude;
 
-    public Integer getId() {
+    @Override
+    public Integer getID() {
         return id;
     }
 
-    public void setId(Integer id) {
+    @Override
+    public void setID(Integer id) {
         this.id = id;
     }
 

@@ -2,7 +2,6 @@ package it.unisalento.se.converters.daoToDto;
 
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.ExamModel;
 import it.unisalento.se.models.ExamResultModel;
 import org.junit.Test;
 
@@ -96,16 +95,12 @@ public class ExamResultDaoToDtoTest {
         examResult.setExam(exam);
 
 
-
         ExamResultModel model = ExamResultDaoToDto.convert(examResult);
         assertEquals(new Integer(1), model.getID());
-        assertEquals(new Integer (18), model.getVote());
+        assertEquals(new Integer(18), model.getVote());
         assertEquals(u2.getName(), model.getStudent().getName());
         assertEquals(examDate, model.getDate());
         assertEquals(exam.getDescription(), model.getExam().getDescription());
-
-
-
 
 
     }

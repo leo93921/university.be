@@ -104,7 +104,6 @@ public class LessonServiceTest {
     }
 
 
-
     @Test
     public void createLesson() throws UserTypeNotSupported {
 
@@ -169,14 +168,11 @@ public class LessonServiceTest {
         cr.setLongitude(1.0);
 
 
-
-
         Lesson lesson = new Lesson();
         lesson.setId(1);
         lesson.setClassroom(cr);
         lesson.setTimeslot(ts);
         lesson.setSubject(s);
-
 
 
         //FINE NORMALE
@@ -192,7 +188,6 @@ public class LessonServiceTest {
         csM.setID(1);
         csM.setName("Engineering");
         csM.setAcademicYear(ayM);
-
 
 
         UserModel uM = new UserModel();
@@ -229,7 +224,7 @@ public class LessonServiceTest {
 
 
         ClassroomModel crM = new ClassroomModel();
-        crM.setId(1);
+        crM.setID(1);
         crM.setName("Y1");
         crM.setLatitude(1.0);
         crM.setLongitude(1.0);
@@ -250,7 +245,6 @@ public class LessonServiceTest {
         assertEquals(lesson.getId(), model1.getID());
         assertEquals(lesson.getClassroom().getName(), model1.getClassroom().getName());
         assertEquals(lesson.getSubject().getName(), model1.getSubject().getName());
-
 
 
     }

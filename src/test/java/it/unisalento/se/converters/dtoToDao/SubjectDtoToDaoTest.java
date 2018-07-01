@@ -48,7 +48,7 @@ public class SubjectDtoToDaoTest {
         assertEquals(sub.getName(), dao.getName());
         assertEquals(sub.getCFU(), (Integer) dao.getCfu());
         assertEquals(sub.getTeachingYear(), (Integer) dao.getYear());
-        assertEquals(cs.getName(),  dao.getCourseOfStudy().getName());
+        assertEquals(cs.getName(), dao.getCourseOfStudy().getName());
 
     }
 }

@@ -10,7 +10,7 @@ public class ClassroomDtoToDao {
         dao.setName(model.getName());
         dao.setLatitude(model.getLatitude());
         dao.setLongitude(model.getLongitude());
-        dao.setId(model.getId());
+        dao.setId(model.getID());
 
 
         return dao;

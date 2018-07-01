@@ -4,7 +4,7 @@ import it.unisalento.se.dao.Lesson;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import org.junit.Test;
-import org.junit.Test;
+
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -53,7 +53,7 @@ public class LessonDtoToDaoTest {
 
 
         ClassroomModel cr = new ClassroomModel();
-        cr.setId(1);
+        cr.setID(1);
         cr.setName("Y1");
         cr.setLatitude(1.0);
         cr.setLongitude(1.0);
