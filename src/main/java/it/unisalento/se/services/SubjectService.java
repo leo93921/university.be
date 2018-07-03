@@ -8,6 +8,7 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.ISubjectService;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.models.SubjectModel;
+import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,19 @@ public class SubjectService implements ISubjectService {
     @Override
     public List<SubjectModel> getAllSubjectsByCourseOfStudy(CourseOfStudyModel model) throws UserTypeNotSupported {
         List<Subject> daos = repository.findByCourseOfStudy(model.getID());
+        List<SubjectModel> models = new ArrayList<>();
+
+        for (Subject dao : daos) {
+            models.add(SubjectDaoToDto.convert(dao));
+        }
+
+        return models;
+    }
+
+    @Override
+    public List<SubjectModel> getAllSubjectsByProfessor(UserModel prof) throws UserTypeNotSupported {
+        List<Subject> daos = repository.findByProfessor(prof.getId());
+
         List<SubjectModel> models = new ArrayList<>();
 
         for (Subject dao : daos) {

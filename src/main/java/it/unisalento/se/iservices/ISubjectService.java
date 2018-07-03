@@ -4,6 +4,7 @@ import it.unisalento.se.exceptions.SubjectNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.models.SubjectModel;
+import it.unisalento.se.models.UserModel;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ISubjectService {
     SubjectModel saveSubject(SubjectModel model) throws UserTypeNotSupported;
 
     List<SubjectModel> getAllSubjectsByCourseOfStudy(CourseOfStudyModel model) throws UserTypeNotSupported;
+
+    List<SubjectModel> getAllSubjectsByProfessor(UserModel prof) throws UserTypeNotSupported;
 }
