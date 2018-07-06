@@ -7,6 +7,7 @@ import it.unisalento.se.dao.Lesson;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.ILessonService;
+import it.unisalento.se.models.LessonFilterModel;
 import it.unisalento.se.models.LessonModel;
 import it.unisalento.se.repositories.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LessonService implements ILessonService {
@@ -42,4 +45,17 @@ public class LessonService implements ILessonService {
         return LessonDaoToDto.convert(saved);
     }
 
+    @Override
+    public List<LessonModel> filterByTimeAndSubject(LessonFilterModel filter) throws UserTypeNotSupported {
+        List<Lesson> daos = repository.findByTimeAndSubject(
+                filter.getStartTime().getStartTime(),
+                filter.getEndTime().getEndTime(),
+                filter.getSubject().getID());
+
+        List<LessonModel> models = new ArrayList<>();
+        for (Lesson dao : daos) {
+            models.add(LessonDaoToDto.convert(dao));
+        }
+        return models;
+    }
 }

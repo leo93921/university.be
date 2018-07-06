@@ -5,6 +5,7 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.ISubjectService;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.models.SubjectModel;
+import it.unisalento.se.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class SubjectRestController {
     @PostMapping(value = "/find-by-course", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<SubjectModel> getAllSubjectsByCourseOfStudy(@RequestBody CourseOfStudyModel model) throws UserTypeNotSupported {
         return subjectService.getAllSubjectsByCourseOfStudy(model);
+    }
+
+    @PostMapping(value = "/find-by-prof", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<SubjectModel> getAllSubjectsByProfessor(@RequestBody UserModel prof) throws UserTypeNotSupported {
+        return subjectService.getAllSubjectsByProfessor(prof);
     }
 
 }

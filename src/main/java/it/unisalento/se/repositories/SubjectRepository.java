@@ -13,4 +13,7 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
 
     @Query("SELECT s FROM Subject s WHERE s.courseOfStudy.id = :courseOfStudyID")
     List<Subject> findByCourseOfStudy(@Param("courseOfStudyID") Integer courseOfStudyID);
+
+    @Query("SELECT s FROM Subject s WHERE s.user.id = :professorID")
+    List<Subject> findByProfessor(@Param("professorID") Integer professorId);
 }

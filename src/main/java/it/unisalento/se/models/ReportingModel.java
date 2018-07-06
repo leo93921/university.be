@@ -1,16 +1,15 @@
 package it.unisalento.se.models;
 
-import it.unisalento.se.dao.User;
-
 import java.util.Date;
 
 public class ReportingModel implements CourseOfStudyNode {
+
 
     private Integer ID;
     private SupportDeviceModel supportDevice;
     private String description;
     private Date lastModified;
-    private User doneBy;
+    private UserModel doneBy;
     private ReportingStatusModel reportingStatus;
     private ClassroomModel classroom;
 
@@ -48,11 +47,11 @@ public class ReportingModel implements CourseOfStudyNode {
         this.lastModified = lastModified;
     }
 
-    public User getDoneBy() {
+    public UserModel getDoneBy() {
         return doneBy;
     }
 
-    public void setDoneBy(User doneBy) {
+    public void setDoneBy(UserModel doneBy) {
         this.doneBy = doneBy;
     }
 
@@ -71,4 +70,6 @@ public class ReportingModel implements CourseOfStudyNode {
     public void setClassroom(ClassroomModel classroom) {
         this.classroom = classroom;
     }
+
+
 }
