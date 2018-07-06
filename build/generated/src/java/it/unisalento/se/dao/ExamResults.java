@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 29-giu-2018 14.59.05 by Hibernate Tools 5.2.0.Final
+// Generated 2-lug-2018 15.46.49 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.Date;

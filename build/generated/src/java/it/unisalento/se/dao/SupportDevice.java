@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 19-giu-2018 15.18.59 by Hibernate Tools 5.2.0.Final
+// Generated 2-lug-2018 15.46.49 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.HashSet;
@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -27,6 +28,7 @@ public class SupportDevice  implements java.io.Serializable {
 
      private Integer id;
      private String name;
+     private Set<Reporting> reportings = new HashSet<Reporting>(0);
      private Set<Classroom> classrooms = new HashSet<Classroom>(0);
 
     public SupportDevice() {
@@ -36,8 +38,9 @@ public class SupportDevice  implements java.io.Serializable {
     public SupportDevice(String name) {
         this.name = name;
     }
-    public SupportDevice(String name, Set<Classroom> classrooms) {
+    public SupportDevice(String name, Set<Reporting> reportings, Set<Classroom> classrooms) {
        this.name = name;
+       this.reportings = reportings;
        this.classrooms = classrooms;
     }
    
@@ -61,6 +64,15 @@ public class SupportDevice  implements java.io.Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+
+@OneToMany(fetch=FetchType.LAZY, mappedBy="supportDevice")
+    public Set<Reporting> getReportings() {
+        return this.reportings;
+    }
+    
+    public void setReportings(Set<Reporting> reportings) {
+        this.reportings = reportings;
     }
 
 @ManyToMany(fetch=FetchType.LAZY)

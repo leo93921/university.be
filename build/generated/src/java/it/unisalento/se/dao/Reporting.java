@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 19-giu-2018 15.18.59 by Hibernate Tools 5.2.0.Final
+// Generated 2-lug-2018 15.46.49 by Hibernate Tools 5.2.0.Final
 
 
 import java.util.Date;
@@ -28,8 +28,8 @@ public class Reporting  implements java.io.Serializable {
      private Integer id;
      private Classroom classroom;
      private ReportingStatus reportingStatus;
+     private SupportDevice supportDevice;
      private User user;
-     private int item;
      private String note;
      private Date lastModified;
 
@@ -37,18 +37,18 @@ public class Reporting  implements java.io.Serializable {
     }
 
 	
-    public Reporting(Classroom classroom, ReportingStatus reportingStatus, User user, int item, Date lastModified) {
+    public Reporting(Classroom classroom, ReportingStatus reportingStatus, SupportDevice supportDevice, User user, Date lastModified) {
         this.classroom = classroom;
         this.reportingStatus = reportingStatus;
+        this.supportDevice = supportDevice;
         this.user = user;
-        this.item = item;
         this.lastModified = lastModified;
     }
-    public Reporting(Classroom classroom, ReportingStatus reportingStatus, User user, int item, String note, Date lastModified) {
+    public Reporting(Classroom classroom, ReportingStatus reportingStatus, SupportDevice supportDevice, User user, String note, Date lastModified) {
        this.classroom = classroom;
        this.reportingStatus = reportingStatus;
+       this.supportDevice = supportDevice;
        this.user = user;
-       this.item = item;
        this.note = note;
        this.lastModified = lastModified;
     }
@@ -86,6 +86,16 @@ public class Reporting  implements java.io.Serializable {
     }
 
 @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="item", nullable=false)
+    public SupportDevice getSupportDevice() {
+        return this.supportDevice;
+    }
+    
+    public void setSupportDevice(SupportDevice supportDevice) {
+        this.supportDevice = supportDevice;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="done_by", nullable=false)
     public User getUser() {
         return this.user;
@@ -93,16 +103,6 @@ public class Reporting  implements java.io.Serializable {
     
     public void setUser(User user) {
         this.user = user;
-    }
-
-    
-    @Column(name="item", nullable=false)
-    public int getItem() {
-        return this.item;
-    }
-    
-    public void setItem(int item) {
-        this.item = item;
     }
 
     
