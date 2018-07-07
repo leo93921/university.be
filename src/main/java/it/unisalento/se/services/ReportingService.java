@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ReportingService implements IReportingService {
@@ -39,13 +41,23 @@ public class ReportingService implements IReportingService {
     @Override
     @Transactional
     public ReportingModel saveReporting(ReportingModel model) throws UserTypeNotSupported, ReportingStatusNotSupported {
-        // TODO check if user is a professor, otherwise throw a new exception
+        // TODO check if user is a professor [or secretariat?], otherwise throw a new exception
         Reporting reporting = ReportingDtoToDao.convert(model);
         Reporting saved = repository.save(reporting);
         return ReportingDaoToDto.convert(saved);
     }
 
+    @Override
+    public List<ReportingModel> getAllReporting() throws UserTypeNotSupported, ReportingStatusNotSupported {
+        List<Reporting> daos = repository.findAll();
+        List<ReportingModel> models = new ArrayList<>();
 
+        for (Reporting dao : daos) {
+            models.add(ReportingDaoToDto.convert(dao));
+        }
+
+        return models;
+    }
 }
 
 
