@@ -4,6 +4,7 @@ import it.unisalento.se.exceptions.ReportingNotFoundException;
 import it.unisalento.se.exceptions.ReportingStatusNotSupported;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IReportingService;
+import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.models.ReportingModel;
 import it.unisalento.se.models.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class ReportingRestController {
     @PostMapping(value = "/find-by-professor", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<ReportingModel> getAllReportedProblemsByProfessor(@RequestBody UserModel prof) throws UserTypeNotSupported, ReportingStatusNotSupported {
         return reportingService.getAllReportingByProfessor(prof);
+    }
+
+    @PostMapping(value = "/find-by-classroom", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<ReportingModel> getAllReportedProblemsByClassroom(@RequestBody ClassroomModel classroom) throws UserTypeNotSupported, ReportingStatusNotSupported {
+        return reportingService.getAllReportedProblemsByClassroom(classroom);
     }
 }
 

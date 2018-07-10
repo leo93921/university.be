@@ -1,14 +1,17 @@
 package it.unisalento.se.services;
 
 import it.unisalento.se.converters.daoToDto.ReportingDaoToDto;
+import it.unisalento.se.converters.dtoToDao.ClassroomDtoToDao;
 import it.unisalento.se.converters.dtoToDao.ReportingDtoToDao;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
+import it.unisalento.se.dao.Classroom;
 import it.unisalento.se.dao.Reporting;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.exceptions.ReportingNotFoundException;
 import it.unisalento.se.exceptions.ReportingStatusNotSupported;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IReportingService;
+import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.models.ReportingModel;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.ReportingRepository;
@@ -29,8 +32,6 @@ public class ReportingService implements IReportingService {
 
     @Override
     @Transactional(readOnly = true)
-
-
     public ReportingModel getReportingByID(Integer ID) throws UserTypeNotSupported, ReportingNotFoundException, ReportingStatusNotSupported {
         try {
             Reporting dao = repository.getOne(ID);
@@ -51,22 +52,31 @@ public class ReportingService implements IReportingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ReportingModel> getAllReporting() throws UserTypeNotSupported, ReportingStatusNotSupported {
         List<Reporting> daos = repository.findAll();
-        List<ReportingModel> models = new ArrayList<>();
-
-        for (Reporting dao : daos) {
-            models.add(ReportingDaoToDto.convert(dao));
-        }
-
-        return models;
+        return getListOfModels(daos);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ReportingModel> getAllReportingByProfessor(UserModel professor) throws UserTypeNotSupported, ReportingStatusNotSupported {
         User profDao = UserDtoToDao.convert(professor);
 
         List<Reporting> daos = repository.findAllByUser(profDao);
+        return getListOfModels(daos);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReportingModel> getAllReportedProblemsByClassroom(ClassroomModel classroom) throws UserTypeNotSupported, ReportingStatusNotSupported {
+        Classroom classDao = ClassroomDtoToDao.convert(classroom);
+
+        List<Reporting> daos = repository.findAllByClassroom(classDao);
+        return getListOfModels(daos);
+    }
+
+    private List<ReportingModel> getListOfModels(List<Reporting> daos) throws UserTypeNotSupported, ReportingStatusNotSupported {
         List<ReportingModel> models = new ArrayList<>();
 
         for (Reporting dao : daos) {

@@ -3,6 +3,7 @@ package it.unisalento.se.iservices;
 import it.unisalento.se.exceptions.ReportingNotFoundException;
 import it.unisalento.se.exceptions.ReportingStatusNotSupported;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.models.ReportingModel;
 import it.unisalento.se.models.UserModel;
 
@@ -16,6 +17,8 @@ public interface IReportingService {
     List<ReportingModel> getAllReporting() throws UserTypeNotSupported, ReportingStatusNotSupported;
 
     List<ReportingModel> getAllReportingByProfessor(UserModel prof) throws UserTypeNotSupported, ReportingStatusNotSupported;
+
+    List<ReportingModel> getAllReportedProblemsByClassroom(ClassroomModel classroom) throws UserTypeNotSupported, ReportingStatusNotSupported;
 }
 
 
