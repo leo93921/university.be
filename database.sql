@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`academic_year` (
   `end_year` INT(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`course_of_study` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user_type` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -149,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`classroom` (
   `longitude` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -178,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`subject` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -192,6 +195,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`timeslot` (
   `end_time` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 50
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -225,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`lesson` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 50
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -248,15 +253,16 @@ CREATE TABLE IF NOT EXISTS `university_se`.`document` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `university_se`.`evaluation`
+-- Table `university_se`.`document_evaluation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_se`.`evaluation` ;
+DROP TABLE IF EXISTS `university_se`.`document_evaluation` ;
 
-CREATE TABLE IF NOT EXISTS `university_se`.`evaluation` (
+CREATE TABLE IF NOT EXISTS `university_se`.`document_evaluation` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `score` INT(11) NOT NULL,
   `note` VARCHAR(150) NULL DEFAULT NULL,
@@ -264,6 +270,12 @@ CREATE TABLE IF NOT EXISTS `university_se`.`evaluation` (
   `recipient` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_evaluation_sender_idx` (`sender` ASC),
+  INDEX `FK_evaluation_recipient_idx` (`recipient` ASC),
+  CONSTRAINT `FK_evaluation_recipient`
+    FOREIGN KEY (`recipient`)
+    REFERENCES `university_se`.`document` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
   CONSTRAINT `FK_evaluation_sender`
     FOREIGN KEY (`sender`)
     REFERENCES `university_se`.`user` (`id`)
@@ -336,6 +348,34 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
+-- Table `university_se`.`lesson_evaluation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `university_se`.`lesson_evaluation` ;
+
+CREATE TABLE IF NOT EXISTS `university_se`.`lesson_evaluation` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `score` INT(11) NOT NULL,
+  `note` VARCHAR(150) NULL DEFAULT NULL,
+  `sender` INT(11) NOT NULL,
+  `recipient` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `FK_lesson_evaluation_user_idx` (`sender` ASC),
+  INDEX `FK_lesson_evaluation_lesson_idx` (`recipient` ASC),
+  CONSTRAINT `FK_lesson_evaluation_lesson`
+    FOREIGN KEY (`recipient`)
+    REFERENCES `university_se`.`lesson` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_lesson_evaluation_user`
+    FOREIGN KEY (`sender`)
+    REFERENCES `university_se`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
 -- Table `university_se`.`message`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `university_se`.`message` ;
@@ -387,6 +427,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`support_device` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 3
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -430,6 +471,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`reporting` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = latin1;
 
 
