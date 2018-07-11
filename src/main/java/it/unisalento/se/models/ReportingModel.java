@@ -7,11 +7,21 @@ public class ReportingModel implements CourseOfStudyNode {
 
     private Integer ID;
     private SupportDeviceModel supportDevice;
-    private String description;
+    private String note;
     private Date lastModified;
     private UserModel doneBy;
     private ReportingStatusModel reportingStatus;
     private ClassroomModel classroom;
+
+    public String getProblemDescription() {
+        return problemDescription;
+    }
+
+    public void setProblemDescription(String problemDescription) {
+        this.problemDescription = problemDescription;
+    }
+
+    private String problemDescription;
 
     @Override
     public Integer getID() {
@@ -31,12 +41,12 @@ public class ReportingModel implements CourseOfStudyNode {
         this.supportDevice = supportDevice;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNote() {
+        return note;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNote(String description) {
+        this.note = description;
     }
 
     public Date getLastModified() {

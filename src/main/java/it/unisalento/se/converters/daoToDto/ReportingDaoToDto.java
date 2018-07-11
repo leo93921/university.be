@@ -12,11 +12,12 @@ public class ReportingDaoToDto {
         ReportingModel model = new ReportingModel();
         model.setID(dao.getId());
         model.setSupportDevice(SupportDeviceDaoToDto.convert(dao.getSupportDevice()));
-        model.setDescription(dao.getNote());
+        model.setNote(dao.getNote());
         model.setLastModified(dao.getLastModified());
         model.setDoneBy(UserDaoToDto.convert(dao.getUser()));
         model.setReportingStatus(ReportingStatusDaoToDto.convert(dao.getReportingStatus()));
         model.setClassroom(ClassroomDaoToDto.convert(dao.getClassroom()));
+        model.setProblemDescription(dao.getProblemDescription());
 
         return model;
     }
