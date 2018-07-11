@@ -11,12 +11,11 @@ public class Constants {
     public static final Integer SECRETARIAT_VALUE = 3;
 
     // States of reported problems
-    public static final String REPORTED = "REPORTED";
-    public static final String WORKING_ON_IT = "WORKING_ON_IT";
-    public static final String FIXED = "FIXED";
-    public static final String NOT_FIXED = "NOT_FIXED";
-    public static final String NOT_A_PROBLEM = "NOT_A_PROBLEM";
-    public static final String DELAYED = "DELAYED";
+    public static final String RECEIVED = "RECEIVED";
+    public static final String IN_PROGRESS = "IN_PROGRESS";
+    public static final String SOLVED = "SOLVED";
+    public static final String REFUSED = "REFUSED";
+
 
     // Options for Multipart configurations
     public static final String TMP_SAVE_LOCATION = System.getProperty("java.io.tmpdir"); // Temporary location where files will be stored

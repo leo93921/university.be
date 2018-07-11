@@ -9,26 +9,20 @@ public class ReportingStatusDtoToDao {
     public static ReportingStatus convert(ReportingStatusModel model) throws ReportingStatusNotSupported {
         ReportingStatus status = new ReportingStatus();
 
-        if (model.equals(ReportingStatusModel.REPORTED)) {
+        if (model.equals(ReportingStatusModel.RECEIVED)) {
             status.setId(1);
-            status.setName(Constants.REPORTED);
-        } else if (model.equals(ReportingStatusModel.WORKING_ON_IT)) {
+            status.setName(Constants.RECEIVED);
+        } else if (model.equals(ReportingStatusModel.IN_PROGRESS)) {
             status.setId(2);
-            status.setName(Constants.WORKING_ON_IT);
-        } else if (model.equals(ReportingStatusModel.FIXED)) {
+            status.setName(Constants.IN_PROGRESS);
+        } else if (model.equals(ReportingStatusModel.SOLVED)) {
             status.setId(3);
-            status.setName(Constants.FIXED);
-        } else if (model.equals(ReportingStatusModel.NOT_FIXED)) {
+            status.setName(Constants.SOLVED);
+        } else if (model.equals(ReportingStatusModel.REFUSED)) {
             status.setId(4);
-            status.setName(Constants.NOT_FIXED);
+            status.setName(Constants.REFUSED);
 
-        } else if (model.equals(ReportingStatusModel.NOT_A_PROBLEM)) {
-            status.setId(5);
-            status.setName(Constants.NOT_A_PROBLEM);
 
-        } else if (model.equals(ReportingStatusModel.DELAYED)) {
-            status.setId(6);
-            status.setName(Constants.DELAYED);
 
         } else
             throw new ReportingStatusNotSupported("Reporting Status cannot be " + status.getName());

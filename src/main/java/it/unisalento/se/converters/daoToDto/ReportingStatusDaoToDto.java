@@ -9,18 +9,15 @@ public class ReportingStatusDaoToDto {
 
     public static ReportingStatusModel convert(ReportingStatus status) throws ReportingStatusNotSupported {
 
-        if (status.getName().equalsIgnoreCase(Constants.REPORTED))
-            return ReportingStatusModel.REPORTED;
-        if (status.getName().equalsIgnoreCase(Constants.WORKING_ON_IT))
-            return ReportingStatusModel.WORKING_ON_IT;
-        if (status.getName().equalsIgnoreCase(Constants.FIXED))
-            return ReportingStatusModel.FIXED;
-        if (status.getName().equalsIgnoreCase(Constants.NOT_FIXED))
-            return ReportingStatusModel.NOT_FIXED;
-        if (status.getName().equalsIgnoreCase(Constants.NOT_A_PROBLEM))
-            return ReportingStatusModel.NOT_A_PROBLEM;
-        if (status.getName().equalsIgnoreCase(Constants.DELAYED))
-            return ReportingStatusModel.DELAYED;
+        if (status.getName().equalsIgnoreCase(Constants.RECEIVED))
+            return ReportingStatusModel.RECEIVED;
+        if (status.getName().equalsIgnoreCase(Constants.IN_PROGRESS))
+            return ReportingStatusModel.IN_PROGRESS;
+        if (status.getName().equalsIgnoreCase(Constants.SOLVED))
+            return ReportingStatusModel.SOLVED;
+        if (status.getName().equalsIgnoreCase(Constants.REFUSED))
+            return ReportingStatusModel.REFUSED;
+
         else
             throw new ReportingStatusNotSupported("Reporting Status cannot be " + status.getName());
     }
