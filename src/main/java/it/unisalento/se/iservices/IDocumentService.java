@@ -14,6 +14,7 @@ import java.util.List;
 public interface IDocumentService {
 
     DocumentModel getDocumentByID(Integer ID) throws DocumentNotFoundException, UserTypeNotSupported;
+
     DocumentModel saveDocument(DocumentModel document) throws UserTypeNotSupported;
 
     DocumentModel saveDocument(MultipartFile file,

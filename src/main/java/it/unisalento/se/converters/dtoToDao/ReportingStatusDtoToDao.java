@@ -23,7 +23,6 @@ public class ReportingStatusDtoToDao {
             status.setName(Constants.REFUSED);
 
 
-
         } else
             throw new ReportingStatusNotSupported("Reporting Status cannot be " + status.getName());
 

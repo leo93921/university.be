@@ -12,6 +12,7 @@ public class ReportingModel implements CourseOfStudyNode {
     private UserModel doneBy;
     private ReportingStatusModel reportingStatus;
     private ClassroomModel classroom;
+    private String problemDescription;
 
     public String getProblemDescription() {
         return problemDescription;
@@ -20,8 +21,6 @@ public class ReportingModel implements CourseOfStudyNode {
     public void setProblemDescription(String problemDescription) {
         this.problemDescription = problemDescription;
     }
-
-    private String problemDescription;
 
     @Override
     public Integer getID() {
