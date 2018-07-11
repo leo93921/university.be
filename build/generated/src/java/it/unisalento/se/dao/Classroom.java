@@ -1,10 +1,10 @@
 package it.unisalento.se.dao;
-// Generated 2-lug-2018 15.46.49 by Hibernate Tools 5.2.0.Final
+// Generated 11-lug-2018 9.15.59 by Hibernate Tools 5.2.0.Final
 
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.*;
 
 import static javax.persistence.GenerationType.IDENTITY;
 

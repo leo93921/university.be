@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user_type` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -372,6 +373,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`reporting_status` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -395,12 +397,13 @@ DROP TABLE IF EXISTS `university_se`.`reporting` ;
 
 CREATE TABLE IF NOT EXISTS `university_se`.`reporting` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `item` INT(11) NOT NULL,
+  `item` INT(11) NULL DEFAULT NULL,
   `note` VARCHAR(150) NULL DEFAULT NULL,
   `last_modified` DATETIME NOT NULL,
   `done_by` INT(11) NOT NULL,
   `status` INT(11) NOT NULL,
   `classroom` INT(11) NOT NULL,
+  `problem_description` TINYTEXT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_reporting_user_idx` (`done_by` ASC),
   INDEX `FK_reporing_status_idx` (`status` ASC),
