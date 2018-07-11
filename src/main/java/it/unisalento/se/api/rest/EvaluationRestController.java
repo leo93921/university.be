@@ -18,15 +18,34 @@ public class EvaluationRestController {
     @Autowired
     private IEvaluationService evaluationService;
 
-    @GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EvaluationModel getDocumentEvaluationbyID(@PathVariable("id") Integer ID) throws UserTypeNotSupported, ExamNotFoundException, EvaluationNotFoundException {
-        return evaluationService.getDocumentEvaluationbyID(ID);
+    @GetMapping(value = "/{type}/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public EvaluationModel getDocumentEvaluationbyID(@PathVariable("type") String type, @PathVariable("id") Integer ID) throws UserTypeNotSupported, EvaluationNotFoundException, EvaluationRecipientNotSupported {
+        if (type == "document") {
+            return evaluationService.getDocumentEvaluationbyID(ID);
+        }
+        if (type == "lesson") {
+            return evaluationService.getLessonEvaluationbyID(ID);
+        } else {
+            throw new EvaluationRecipientNotSupported("Cannot evaluate this type : " + type);
+        }
     }
 
-    @GetMapping(value = "/lesson/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    /*@GetMapping(value = "/lesson/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public EvaluationModel getLessonEvaluationbyID(@PathVariable("id") Integer ID) throws UserTypeNotSupported, ExamNotFoundException, EvaluationNotFoundException {
         return evaluationService.getLessonEvaluationbyID(ID);
-    }
+    }*/
+
+
+
+    /*
+    @RequestMapping(value = "/{app}/conf/{fnm}", method=RequestMethod.GET)
+public ResponseEntity<?> getConf(@PathVariable("app") String app, @PathVariable("fnm") String fnm) {
+   log.debug("AppName:" + app);
+   log.debug("fName:" + fnm);
+           ...
+           return ...
+  }
+     */
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported {
