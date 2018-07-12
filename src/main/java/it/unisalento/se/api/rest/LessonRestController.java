@@ -6,6 +6,7 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.ILessonService;
 import it.unisalento.se.models.LessonFilterModel;
 import it.unisalento.se.models.LessonModel;
+import it.unisalento.se.models.SubjectModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,12 @@ public class LessonRestController {
     @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<LessonModel> getLessonByDate(@RequestBody LessonFilterModel filter) throws UserTypeNotSupported {
         return lessonService.filterByTimeAndSubject(filter);
+    }
+
+
+    @PostMapping(value = "/find-by-subject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<LessonModel> getLessonsBySubject(@RequestBody SubjectModel subject) throws UserTypeNotSupported {
+        return lessonService.getLessonsBySubjects(subject);
     }
 
 

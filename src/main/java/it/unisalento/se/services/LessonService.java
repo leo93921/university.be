@@ -3,12 +3,14 @@ package it.unisalento.se.services;
 
 import it.unisalento.se.converters.daoToDto.LessonDaoToDto;
 import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
+import it.unisalento.se.converters.dtoToDao.SubjectDtoToDao;
 import it.unisalento.se.dao.Lesson;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.ILessonService;
 import it.unisalento.se.models.LessonFilterModel;
 import it.unisalento.se.models.LessonModel;
+import it.unisalento.se.models.SubjectModel;
 import it.unisalento.se.repositories.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,4 +60,15 @@ public class LessonService implements ILessonService {
         }
         return models;
     }
+
+    @Override
+    public List<LessonModel> getLessonsBySubjects(SubjectModel subject) throws UserTypeNotSupported {
+        List<Lesson> daos = repository.findBySubject(SubjectDtoToDao.convert(subject));
+        List<LessonModel> models = new ArrayList<>();
+        for (Lesson dao : daos) {
+            models.add(LessonDaoToDto.convert(dao));
+        }
+        return models;
+    }
+
 }
