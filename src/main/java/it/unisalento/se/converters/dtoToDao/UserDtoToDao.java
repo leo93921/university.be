@@ -13,7 +13,9 @@ public class UserDtoToDao {
         dao.setName(model.getName());
         dao.setSurname(model.getSurname());
         dao.setUserType(UserTypeDtoToDao.convert(model.getUserType()));
-
+        if (model.getCourseOfStudy() != null) {
+            dao.setCourseOfStudy(CourseOfStudyDtoToDao.convert(model.getCourseOfStudy()));
+        }
         return dao;
     }
 

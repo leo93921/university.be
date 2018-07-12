@@ -13,6 +13,9 @@ public class UserDaoToDto {
         user.setName(u.getName());
         user.setSurname(u.getSurname());
         user.setUserType(UserTypeDaoToDto.convert(u.getUserType()));
+        if (u.getCourseOfStudy() != null) {
+            user.setCourseOfStudy(CourseOfStudyDaoToDto.convert(u.getCourseOfStudy()));
+        }
         return user;
     }
 

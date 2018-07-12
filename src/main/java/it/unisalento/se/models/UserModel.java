@@ -8,6 +8,7 @@ public class UserModel {
     private String surname;
     private String email;
     private String password;
+    private CourseOfStudyModel courseOfStudy;
 
     public String getPassword() {
         return password;
@@ -57,4 +58,11 @@ public class UserModel {
         this.email = email;
     }
 
+    public CourseOfStudyModel getCourseOfStudy() {
+        return courseOfStudy;
+    }
+
+    public void setCourseOfStudy(CourseOfStudyModel courseOfStudy) {
+        this.courseOfStudy = courseOfStudy;
+    }
 }
