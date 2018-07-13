@@ -4,6 +4,7 @@ import it.unisalento.se.exceptions.InvalidCredentialsException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
+import it.unisalento.se.models.FCMTokenRegistration;
 import it.unisalento.se.models.RegistrationRequest;
 import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
@@ -48,5 +49,10 @@ public class UserRestController {
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public UserModel register(@RequestBody RegistrationRequest request) throws UserTypeNotSupported {
         return userService.register(request);
+    }
+
+    @PostMapping(value = "/fcm-token", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FCMTokenRegistration registerToken(@RequestBody FCMTokenRegistration request) {
+        return userService.registerFCMToken(request);
     }
 }

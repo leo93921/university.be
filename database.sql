@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user` (
   `user_type` INT(11) NOT NULL,
   `course_of_study` INT(11) NULL DEFAULT NULL,
   `password` VARCHAR(45) NOT NULL,
+  `fcm_token` VARCHAR(150) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `FK_user_type_idx` (`user_type` ASC),
