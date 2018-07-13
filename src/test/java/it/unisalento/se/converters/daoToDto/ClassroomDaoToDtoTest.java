@@ -16,7 +16,6 @@ public class ClassroomDaoToDtoTest {
     @Test
     public void convert() {
 
-
         Classroom c = new Classroom();
         c.setId(1);
         c.setName("O1");
@@ -24,8 +23,8 @@ public class ClassroomDaoToDtoTest {
         c.setLongitude(95.8);
 
         Set<SupportDevice> supportDevices = new HashSet<>();
-        supportDevices.add(new SupportDevice("Projector"));
         supportDevices.add(new SupportDevice("Smart board"));
+        supportDevices.add(new SupportDevice("Projector"));
         c.setSupportDevices(supportDevices);
 
         ClassroomModel m = ClassroomDaoToDto.convert(c);
