@@ -47,4 +47,16 @@ public class FcmService implements IFcmService {
         FirebaseMessaging.getInstance().send(message);
     }
 
+    @Override
+    public void sendMessageToUser(String title, String body, String token) throws FirebaseMessagingException, IOException {
+        FcmService.initApp();
+
+        Message message = Message.builder()
+                .putData("title", title)
+                .putData("body", body)
+                .setToken(token)
+                .build();
+
+        FirebaseMessaging.getInstance().send(message);
+    }
 }
