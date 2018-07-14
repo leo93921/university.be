@@ -9,6 +9,7 @@ import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.iservices.IUserTypeService;
+import it.unisalento.se.models.FCMTokenRegistration;
 import it.unisalento.se.models.RegistrationRequest;
 import it.unisalento.se.models.UserCredentials;
 import it.unisalento.se.models.UserModel;
@@ -76,5 +77,13 @@ public class UserService implements IUserService {
         dao.setPassword(request.getPassword());
         User saved = userRepository.save(dao);
         return UserDaoToDto.convert(saved);
+    }
+
+    @Override
+    public FCMTokenRegistration registerFCMToken(FCMTokenRegistration request) {
+        User dao = userRepository.getOne(request.getModel().getId());
+        dao.setFcmToken(request.getToken());
+        userRepository.save(dao);
+        return request;
     }
 }

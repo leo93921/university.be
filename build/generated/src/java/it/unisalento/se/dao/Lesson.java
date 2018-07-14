@@ -72,7 +72,7 @@ public class Lesson  implements java.io.Serializable {
         this.subject = subject;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="timeslot", nullable=false)
     public Timeslot getTimeslot() {
         return this.timeslot;

@@ -4,11 +4,13 @@ import it.unisalento.se.converters.daoToDto.DocumentDaoToDto;
 import it.unisalento.se.converters.dtoToDao.DocumentDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.dao.Document;
+import it.unisalento.se.dao.Subject;
 import it.unisalento.se.exceptions.DocumentNotFoundException;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.StorageException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IDocumentService;
+import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.ILessonService;
 import it.unisalento.se.iservices.IStorageService;
 import it.unisalento.se.models.DocumentModel;
@@ -35,7 +37,8 @@ public class DocumentService implements IDocumentService {
     private IStorageService storageService;
     @Autowired
     private ILessonService lessonService;
-
+    @Autowired
+    private IFcmService fcmService;
 
     @Override
     @Transactional(readOnly = true)
@@ -87,6 +90,19 @@ public class DocumentService implements IDocumentService {
         model.setLink(name);
 
         Document saved = repository.save(DocumentDtoToDao.convert(model));
+
+        Subject subject = saved.getLesson().getSubject();
+        // Send notification to all user attending the subject
+        try {
+            fcmService.sendMessageToTopic(
+                    "New document available",
+                    "Document available for " + subject.getName(),
+                    subject.getName().replaceAll(" ", "")
+            );
+        } catch (Exception e) {
+            System.err.println("Cannot send notification");
+            e.printStackTrace();
+        }
         return DocumentDaoToDto.convert(saved);
     }
 
