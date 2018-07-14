@@ -16,7 +16,11 @@ public interface LessonRepository extends JpaRepository<Lesson, Integer> {
 
     @Query("SELECT l FROM Lesson l WHERE l.subject.id = :subjectID AND (l.timeslot.startTime >= :start AND l.timeslot.endTime <= :end)")
     List<Lesson> findByTimeAndSubject(@Param("start") Date startTime, @Param("end") Date endTime, @Param("subjectID") Integer subjectID);
+
     List<Lesson> findBySubject(Subject subject);
+
+    @Query("SELECT l FROM Lesson l WHERE l.subject.courseOfStudy.id = :courseOfStudyID AND (l.timeslot.startTime >= :start AND l.timeslot.endTime <= :end)")
+    List<Lesson> findByTimeAndCourseOfStudy(@Param("start") Date startTime, @Param("end") Date endTime, @Param("courseOfStudyID") Integer courseOfStudyID);
 
 
 }

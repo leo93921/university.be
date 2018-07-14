@@ -38,6 +38,12 @@ public class LessonRestController {
     }
 
 
+    @PostMapping(value = "/daily", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<LessonModel> getDailyLessons(@RequestBody LessonFilterModel filter) throws UserTypeNotSupported {
+        return lessonService.filterByTimeAndCourseOfStudy(filter);
+    }
+
+
     @PostMapping(value = "/find-by-subject", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<LessonModel> getLessonsBySubject(@RequestBody SubjectModel subject) throws UserTypeNotSupported {
         return lessonService.getLessonsBySubjects(subject);

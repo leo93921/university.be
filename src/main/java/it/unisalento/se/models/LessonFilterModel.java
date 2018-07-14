@@ -5,6 +5,15 @@ public class LessonFilterModel {
     private TimeSlotModel startTime;
     private TimeSlotModel endTime;
     private SubjectModel subject;
+    private CourseOfStudyModel courseOfStudy;
+
+    public CourseOfStudyModel getCourseOfStudy() {
+        return courseOfStudy;
+    }
+
+    public void setCourseOfStudy(CourseOfStudyModel courseOfStudy) {
+        this.courseOfStudy = courseOfStudy;
+    }
 
     public TimeSlotModel getStartTime() {
         return startTime;
