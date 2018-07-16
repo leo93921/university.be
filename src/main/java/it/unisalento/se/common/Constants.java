@@ -17,6 +17,10 @@ public class Constants {
     public static final String REFUSED = "REFUSED";
 
 
+    public static final String DOCUMENT = "DOCUMENT";
+    public static final String LESSON = "LESSON";
+
+
     // Options for Multipart configurations
     public static final String TMP_SAVE_LOCATION = System.getProperty("java.io.tmpdir"); // Temporary location where files will be stored
     public static final long MAX_FILE_SIZE = 5242880; // 5MB : Max file size.
