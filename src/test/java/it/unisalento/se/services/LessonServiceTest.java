@@ -4,7 +4,7 @@ package it.unisalento.se.services;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.*;
+import it.unisalento.se.models.LessonModel;
 import it.unisalento.se.repositories.LessonRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,6 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -104,7 +103,7 @@ public class LessonServiceTest {
     }
 
 
-    @Test
+    /*@Test
     public void createLesson() throws UserTypeNotSupported {
 
         //NORMALE
@@ -241,13 +240,12 @@ public class LessonServiceTest {
 
         LessonModel model1 = lessonService.saveLesson(lessonM);
 
-
         assertEquals(lesson.getId(), model1.getID());
         assertEquals(lesson.getClassroom().getName(), model1.getClassroom().getName());
         assertEquals(lesson.getSubject().getName(), model1.getSubject().getName());
 
 
-    }
+    }*/
 
 
 }
