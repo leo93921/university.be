@@ -57,20 +57,19 @@ public class EvaluationService implements IEvaluationService {
     @Transactional
 
     public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported {
-       System.out.println(model.getRecipientType());
-        if (model.getRecipientType().equals(Constants.LESSON) ) {
+        System.out.println(model.getRecipientType());
+        if (model.getRecipientType().equals(Constants.LESSON)) {
 
             LessonEvaluation lessEval = LessonEvaluationDtoToDao.convert(model);
             LessonEvaluation saved = repositoryL.save(lessEval);
             return LessonEvaluationDaoToDto.convert(saved);
         }
-        if (model.getRecipientType().equals(Constants.DOCUMENT) ) {
+        if (model.getRecipientType().equals(Constants.DOCUMENT)) {
 
             DocumentEvaluation docEval = DocumentEvaluationDtoToDao.convert(model);
             DocumentEvaluation saved = repositoryD.save(docEval);
             return DocumentEvaluationDaoToDto.convert(saved);
-        }
-        else throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
+        } else throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
 
 
     }

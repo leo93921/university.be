@@ -102,7 +102,6 @@ public class LessonService implements ILessonService {
     }
 
 
-
     @Override
     public List<LessonModel> filterByTimeAndCourseOfStudy(LessonFilterModel filter) throws UserTypeNotSupported {
         List<Lesson> daos = repository.findByTimeAndCourseOfStudy(
