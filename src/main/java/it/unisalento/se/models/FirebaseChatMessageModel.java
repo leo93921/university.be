@@ -2,16 +2,16 @@ package it.unisalento.se.models;
 
 import java.util.Date;
 
-public class FirebasePublicChatMessageModel {
+public class FirebaseChatMessageModel {
 
     private String UUID;
     private String content;
-    private Integer subjectID;
+    private Integer recipientID;
     private Integer senderID;
     private String senderFullName;
     private Date sendDate;
 
-    public FirebasePublicChatMessageModel() {
+    public FirebaseChatMessageModel() {
     }
 
     public String getUUID() {
@@ -30,12 +30,12 @@ public class FirebasePublicChatMessageModel {
         this.content = content;
     }
 
-    public Integer getSubjectID() {
-        return subjectID;
+    public Integer getRecipientID() {
+        return recipientID;
     }
 
-    public void setSubjectID(Integer subjectID) {
-        this.subjectID = subjectID;
+    public void setRecipientID(Integer recipientID) {
+        this.recipientID = recipientID;
     }
 
     public Integer getSenderID() {

@@ -2,7 +2,7 @@ package it.unisalento.se.api.rest;
 
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IChatService;
-import it.unisalento.se.models.ChatMessageRequest;
+import it.unisalento.se.models.PrivateChatMessageModel;
 import it.unisalento.se.models.PublicChatMessageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -20,13 +20,13 @@ public class ChatRestController {
     @Autowired
     private IChatService service;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PublicChatMessageModel saveMessage(@RequestBody PublicChatMessageModel message) throws IOException, UserTypeNotSupported {
+    @PostMapping(value = "/send-public-message", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Boolean sendPublicMessage(@RequestBody PublicChatMessageModel message) throws IOException, UserTypeNotSupported {
         return service.sendPublicMessage(message);
     }
 
-    @PostMapping(value = "/find", produces = MediaType.TEXT_PLAIN_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String getPublicMessage(@RequestBody ChatMessageRequest request) {
-        return service.getPublicMessage(request);
+    @PostMapping(value = "/send-private-message", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Boolean sendPrivateMessage(@RequestBody PrivateChatMessageModel message) throws IOException {
+        return service.sendPrivateMessage(message);
     }
 }
