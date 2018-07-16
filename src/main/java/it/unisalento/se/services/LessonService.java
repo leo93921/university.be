@@ -50,7 +50,8 @@ public class LessonService implements ILessonService {
         if (model.getID() != null) {
             Lesson oldLesson = repository.getOne(model.getID());
             // Send a notification only if something changed
-            sendNotification = !(oldLesson.getClassroom().getId().equals(model.getClassroom().getID()) &&
+            sendNotification = !(oldLesson.getClassroom() != null &&
+                    oldLesson.getClassroom().getId().equals(model.getClassroom().getID()) &&
                     oldLesson.getTimeslot().getStartTime().equals(model.getTimeSlot().getStartTime()) &&
                     oldLesson.getTimeslot().getEndTime().equals(model.getTimeSlot().getEndTime()));
         }
