@@ -23,7 +23,6 @@ public class ClassroomDaoToDtoTest {
         c.setLongitude(95.8);
 
         Set<SupportDevice> supportDevices = new HashSet<>();
-        supportDevices.add(new SupportDevice("Smart board"));
         supportDevices.add(new SupportDevice("Projector"));
         c.setSupportDevices(supportDevices);
 
@@ -33,8 +32,7 @@ public class ClassroomDaoToDtoTest {
         assertEquals("O1", m.getName());
         assertEquals(88.6, m.getLatitude(), 0);
         assertEquals(95.8, m.getLongitude(), 0);
-        assertEquals("Projector", m.getSupportDevices().get(1).getName());
-        assertEquals("Smart board", m.getSupportDevices().get(0).getName());
+        assertEquals("Projector", m.getSupportDevices().get(0).getName());
 
 
     }
