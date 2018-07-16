@@ -17,4 +17,6 @@ public interface ILessonService {
     List<LessonModel> filterByTimeAndSubject(LessonFilterModel filter) throws UserTypeNotSupported;
 
     List<LessonModel> getLessonsBySubjects(SubjectModel subject) throws UserTypeNotSupported;
+
+    List<LessonModel> filterByTimeAndCourseOfStudy(LessonFilterModel filter) throws UserTypeNotSupported;
 }

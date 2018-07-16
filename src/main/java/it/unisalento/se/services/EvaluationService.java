@@ -1,5 +1,7 @@
 package it.unisalento.se.services;
 
+
+import it.unisalento.se.common.Constants;
 import it.unisalento.se.converters.daoToDto.DocumentEvaluationDaoToDto;
 import it.unisalento.se.converters.daoToDto.LessonEvaluationDaoToDto;
 import it.unisalento.se.converters.dtoToDao.DocumentEvaluationDtoToDao;
@@ -24,6 +26,7 @@ public class EvaluationService implements IEvaluationService {
 
     @Autowired
     private LessonEvaluationRepository repositoryL;
+    @Autowired
     private DocumentEvaluationRepository repositoryD;
 
     @Override
@@ -54,16 +57,20 @@ public class EvaluationService implements IEvaluationService {
     @Transactional
 
     public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported {
-        if (model.getRecipientType() == "LESSON") {
+       System.out.println(model.getRecipientType());
+        if (model.getRecipientType().equals(Constants.LESSON) ) {
+
             LessonEvaluation lessEval = LessonEvaluationDtoToDao.convert(model);
             LessonEvaluation saved = repositoryL.save(lessEval);
             return LessonEvaluationDaoToDto.convert(saved);
         }
-        if (model.getRecipientType() == "DOCUMENT") {
+        if (model.getRecipientType().equals(Constants.DOCUMENT) ) {
+
             DocumentEvaluation docEval = DocumentEvaluationDtoToDao.convert(model);
             DocumentEvaluation saved = repositoryD.save(docEval);
             return DocumentEvaluationDaoToDto.convert(saved);
-        } else throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
+        }
+        else throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
 
 
     }
