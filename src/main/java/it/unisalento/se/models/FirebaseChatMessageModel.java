@@ -7,6 +7,7 @@ public class FirebaseChatMessageModel {
     private String UUID;
     private String content;
     private Integer recipientID;
+    private String recipientFullName;
     private Integer senderID;
     private String senderFullName;
     private Date sendDate;
@@ -36,6 +37,14 @@ public class FirebaseChatMessageModel {
 
     public void setRecipientID(Integer recipientID) {
         this.recipientID = recipientID;
+    }
+
+    public String getRecipientFullName() {
+        return recipientFullName;
+    }
+
+    public void setRecipientFullName(String recipientFullName) {
+        this.recipientFullName = recipientFullName;
     }
 
     public Integer getSenderID() {
