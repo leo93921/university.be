@@ -1,6 +1,5 @@
 package it.unisalento.se.services;
 
-
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.converters.daoToDto.DocumentEvaluationDaoToDto;
 import it.unisalento.se.converters.daoToDto.LessonEvaluationDaoToDto;
@@ -12,7 +11,10 @@ import it.unisalento.se.exceptions.EvaluationNotFoundException;
 import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
+import it.unisalento.se.iservices.IFcmService;
+import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.models.EvaluationModel;
+import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.DocumentEvaluationRepository;
 import it.unisalento.se.repositories.LessonEvaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,10 @@ public class EvaluationService implements IEvaluationService {
     private LessonEvaluationRepository repositoryL;
     @Autowired
     private DocumentEvaluationRepository repositoryD;
+    @Autowired
+    private IFcmService fcmService;
+    @Autowired
+    private IUserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -57,21 +63,59 @@ public class EvaluationService implements IEvaluationService {
     @Transactional
 
     public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported {
-        System.out.println(model.getRecipientType());
-        if (model.getRecipientType().equals(Constants.LESSON)) {
+        UserModel professor;
 
+        // Evaluating lesson
+        if (model.getRecipientType().equals(Constants.LESSON)) {
             LessonEvaluation lessEval = LessonEvaluationDtoToDao.convert(model);
             LessonEvaluation saved = repositoryL.save(lessEval);
+
+            professor = model.getRecipientL().getSubject().getProfessor();
+            sendNotification(model, professor);
+
             return LessonEvaluationDaoToDto.convert(saved);
         }
-        if (model.getRecipientType().equals(Constants.DOCUMENT)) {
 
+        // Evaluating documents
+        if (model.getRecipientType().equals(Constants.DOCUMENT)) {
             DocumentEvaluation docEval = DocumentEvaluationDtoToDao.convert(model);
             DocumentEvaluation saved = repositoryD.save(docEval);
+
+            professor = model.getRecipientD().getLesson().getSubject().getProfessor();
+            sendNotification(model, professor);
+
             return DocumentEvaluationDaoToDto.convert(saved);
-        } else throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
+        } else {
+            throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
+        }
+    }
 
+    private void sendNotification(EvaluationModel model, UserModel professor) {
+        if (professor != null) {
+            String token = userService.getFCMToken(professor);
+            if (token.trim().length() != 0) {
+                String body;
+                if (model.getRecipientType().equals(Constants.DOCUMENT)) {
+                    body = "A new evaluation has been left for the document \"" + model.getRecipientD().getName() + "\" of " + model.getRecipientD().getLesson().getSubject().getName();
+                } else {
+                    body = "A new evaluation has been left for a lesson of " + model.getRecipientL().getSubject().getName();
 
+                }
+
+                try {
+                    this.fcmService.sendMessageToUser(
+                            "New evaluation left",
+                            body,
+                            token
+                    );
+                } catch (Exception e) {
+                    System.err.println("Cannot send notification");
+                    e.printStackTrace();
+                }
+
+            }
+
+        }
     }
 
 }

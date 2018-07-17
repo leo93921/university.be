@@ -96,4 +96,14 @@ public class UserService implements IUserService {
         }
         return models;
     }
+
+    @Override
+    public String getFCMToken(UserModel model) {
+        User user = userRepository.getOne(model.getId());
+        if (user.getFcmToken() != null) {
+            return user.getFcmToken();
+        } else {
+            return "";
+        }
+    }
 }

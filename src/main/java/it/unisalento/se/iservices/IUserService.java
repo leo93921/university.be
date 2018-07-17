@@ -22,4 +22,6 @@ public interface IUserService {
     FCMTokenRegistration registerFCMToken(FCMTokenRegistration request);
 
     List<UserModel> getStudentsByCourseOfStudy(CourseOfStudyModel courseOfStudy) throws UserTypeNotSupported;
+
+    String getFCMToken(UserModel user);
 }
