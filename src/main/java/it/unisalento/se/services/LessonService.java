@@ -119,6 +119,23 @@ public class LessonService implements ILessonService {
 
 
     @Override
+    public List<LessonModel> filterByTimeAndProfessor(LessonFilterModel filter) throws UserTypeNotSupported {
+        List<Lesson> daos = repository.findByTimeAndProfessor(
+                filter.getStartTime().getStartTime(),
+                filter.getEndTime().getEndTime(),
+                filter.getProfessor().getId());
+
+        List<LessonModel> models = new ArrayList<>();
+        for (Lesson dao : daos) {
+            models.add(LessonDaoToDto.convert(dao));
+        }
+        return models;
+    }
+
+
+
+
+    @Override
     public List<LessonModel> getLessonsBySubjects(SubjectModel subject) throws UserTypeNotSupported {
         List<Lesson> daos = repository.findBySubject(SubjectDtoToDao.convert(subject));
         List<LessonModel> models = new ArrayList<>();

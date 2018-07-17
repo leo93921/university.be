@@ -1,6 +1,7 @@
 package it.unisalento.se.models;
 
-public class LessonFilterModel {
+public class ExamFilterModel {
+
 
     private TimeSlotModel startTime;
     private TimeSlotModel endTime;
@@ -47,4 +48,5 @@ public class LessonFilterModel {
     public void setSubject(SubjectModel subject) {
         this.subject = subject;
     }
+
 }
