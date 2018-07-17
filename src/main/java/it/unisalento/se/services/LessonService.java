@@ -64,21 +64,12 @@ public class LessonService implements ILessonService {
                 String subjectName = model.getSubject().getName();
                 String title = "Lesson of " + subjectName + " changed";
                 String body = "The lesson is at " + df.format(model.getTimeSlot().getStartTime()) + " in " + model.getClassroom().getName();
-                // Send message to students
+                // Send message to students and professor
                 fcmService.sendMessageToTopic(
                         title,
                         body,
                         subjectName.replaceAll(" ", "")
                 );
-                // Send message to professor
-                String token = saved.getSubject().getUser().getFcmToken();
-                if (token != null && !token.equals("")) {
-                    fcmService.sendMessageToUser(
-                            title,
-                            body,
-                            token
-                    );
-                }
             } catch (Exception e) {
                 System.err.println("Cannot send notification");
                 e.printStackTrace();
