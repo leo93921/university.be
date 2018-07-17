@@ -1,5 +1,6 @@
 package it.unisalento.se.repositories;
 
+import it.unisalento.se.dao.CourseOfStudy;
 import it.unisalento.se.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Query("SELECT u FROM User u WHERE u.userType.id = :typeId")
     List<User> findByUserType(@Param("typeId") Integer type);
+
+    List<User> findByCourseOfStudy(CourseOfStudy courseOfStudy);
 }

@@ -2,6 +2,7 @@ package it.unisalento.se.services;
 
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.converters.daoToDto.UserDaoToDto;
+import it.unisalento.se.converters.dtoToDao.CourseOfStudyDtoToDao;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.exceptions.InvalidCredentialsException;
@@ -9,10 +10,7 @@ import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.iservices.IUserTypeService;
-import it.unisalento.se.models.FCMTokenRegistration;
-import it.unisalento.se.models.RegistrationRequest;
-import it.unisalento.se.models.UserCredentials;
-import it.unisalento.se.models.UserModel;
+import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,5 +83,17 @@ public class UserService implements IUserService {
         dao.setFcmToken(request.getToken());
         userRepository.save(dao);
         return request;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UserModel> getStudentsByCourseOfStudy(CourseOfStudyModel courseOfStudy) throws UserTypeNotSupported {
+        List<User> users = userRepository.findByCourseOfStudy(
+                CourseOfStudyDtoToDao.convert(courseOfStudy));
+        List<UserModel> models = new ArrayList<>();
+        for (User user : users) {
+            models.add(UserDaoToDto.convert(user));
+        }
+        return models;
     }
 }
