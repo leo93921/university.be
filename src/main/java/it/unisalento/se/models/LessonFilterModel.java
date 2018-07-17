@@ -6,6 +6,15 @@ public class LessonFilterModel {
     private TimeSlotModel endTime;
     private SubjectModel subject;
     private CourseOfStudyModel courseOfStudy;
+    private UserModel professor;
+
+    public UserModel getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(UserModel professor) {
+        this.professor = professor;
+    }
 
     public CourseOfStudyModel getCourseOfStudy() {
         return courseOfStudy;
