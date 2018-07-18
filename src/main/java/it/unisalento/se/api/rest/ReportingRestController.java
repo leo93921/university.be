@@ -3,6 +3,7 @@ package it.unisalento.se.api.rest;
 import it.unisalento.se.exceptions.ReportingNotFoundException;
 import it.unisalento.se.exceptions.ReportingStatusNotSupported;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.exceptions.ValidationException;
 import it.unisalento.se.iservices.IReportingService;
 import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.models.ReportingModel;
@@ -27,7 +28,7 @@ public class ReportingRestController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ReportingModel saveReporting(@RequestBody ReportingModel model) throws UserTypeNotSupported, ReportingStatusNotSupported {
+    public ReportingModel saveReporting(@RequestBody ReportingModel model) throws UserTypeNotSupported, ReportingStatusNotSupported, ValidationException {
         return reportingService.saveReporting(model);
     }
 

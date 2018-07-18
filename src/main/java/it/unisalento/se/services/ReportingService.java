@@ -1,5 +1,7 @@
 package it.unisalento.se.services;
 
+import it.unisalento.se.common.validation.IValidationStrategy;
+import it.unisalento.se.common.validation.ReportingValidationStrategy;
 import it.unisalento.se.converters.daoToDto.ReportingDaoToDto;
 import it.unisalento.se.converters.dtoToDao.ClassroomDtoToDao;
 import it.unisalento.se.converters.dtoToDao.ReportingDtoToDao;
@@ -10,6 +12,7 @@ import it.unisalento.se.dao.User;
 import it.unisalento.se.exceptions.ReportingNotFoundException;
 import it.unisalento.se.exceptions.ReportingStatusNotSupported;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.exceptions.ValidationException;
 import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.IReportingService;
 import it.unisalento.se.models.ClassroomModel;
@@ -47,10 +50,18 @@ public class ReportingService implements IReportingService {
 
     @Override
     @Transactional
-    public ReportingModel saveReporting(ReportingModel model) throws UserTypeNotSupported, ReportingStatusNotSupported {
+    public ReportingModel saveReporting(ReportingModel model) throws UserTypeNotSupported, ReportingStatusNotSupported, ValidationException {
+
+        // Validate the request
+        IValidationStrategy validator = new ReportingValidationStrategy();
+        if (!model.validate(validator)) {
+            List<String> brokenRules = model.getValidationErrors(validator);
+            throw new ValidationException(brokenRules.get(0));
+        }
+
         // if there is an ID, it's an update of a reported problem, so a notification has to be sent
         Boolean sendNotification = model.getID() != null;
-        // TODO check if user is a professor [or secretariat?], otherwise throw a new exception
+
         Reporting reporting = ReportingDtoToDao.convert(model);
         Reporting saved = repository.save(reporting);
         if (sendNotification) {

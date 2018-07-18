@@ -1,8 +1,12 @@
 package it.unisalento.se.models;
 
-import java.util.Date;
+import it.unisalento.se.common.validation.IValidatableModel;
+import it.unisalento.se.common.validation.IValidationStrategy;
 
-public class ReportingModel implements CourseOfStudyNode {
+import java.util.Date;
+import java.util.List;
+
+public class ReportingModel implements CourseOfStudyNode, IValidatableModel {
 
 
     private Integer ID;
@@ -80,5 +84,13 @@ public class ReportingModel implements CourseOfStudyNode {
         this.classroom = classroom;
     }
 
+    @Override
+    public Boolean validate(IValidationStrategy strategy) {
+        return strategy.isValid(this);
+    }
 
+    @Override
+    public List<String> getValidationErrors(IValidationStrategy strategy) {
+        return strategy.brokenRules(this);
+    }
 }
