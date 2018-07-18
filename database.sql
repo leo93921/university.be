@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`academic_year` (
   `end_year` INT(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 9
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`course_of_study` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user_type` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user` (
   `user_type` INT(11) NOT NULL,
   `course_of_study` INT(11) NULL DEFAULT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `fcm_token` VARCHAR(150) NOT NULL,
+  `fcm_token` VARCHAR(150) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `FK_user_type_idx` (`user_type` ASC),
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`classroom` (
   `longitude` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`subject` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`timeslot` (
   `end_time` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 50
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -230,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`lesson` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 50
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`document` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -317,6 +317,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`exam` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -414,7 +415,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`reporting_status` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -428,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`support_device` (
   `name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -472,8 +473,8 @@ CREATE TABLE IF NOT EXISTS `university_se`.`reporting` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-AUTO_INCREMENT = 10
 DEFAULT CHARACTER SET = latin1;
+AUTO_INCREMENT = 1
 
 
 -- -----------------------------------------------------
@@ -504,3 +505,19 @@ DEFAULT CHARACTER SET = latin1;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+INSERT INTO `university_se`.`user_type` (`id`, `name`) VALUES ('1', 'STUDENT');
+INSERT INTO `university_se`.`user_type` (`id`, `name`) VALUES ('2', 'PROFESSOR');
+INSERT INTO `university_se`.`user_type` (`id`, `name`) VALUES ('3', 'SECRETARIAT');
+
+
+
+INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('1', 'RECEIVED');
+INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('2', 'IN_PROGRESS');
+INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('3', 'SOLVED');
+INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('4', 'REFUSED');
+
+
+
