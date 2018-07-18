@@ -9,6 +9,7 @@ import it.unisalento.se.dao.DocumentEvaluation;
 import it.unisalento.se.dao.LessonEvaluation;
 import it.unisalento.se.exceptions.EvaluationNotFoundException;
 import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
+import it.unisalento.se.exceptions.ScoreNotValidException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.iservices.IFcmService;
@@ -37,7 +38,7 @@ public class EvaluationService implements IEvaluationService {
 
     @Override
     @Transactional(readOnly = true)
-    public EvaluationModel getLessonEvaluationbyID(Integer ID) throws EvaluationNotFoundException, UserTypeNotSupported {
+    public EvaluationModel getLessonEvaluationbyID(Integer ID) throws EvaluationNotFoundException, UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         try {
             LessonEvaluation dao = repositoryL.getOne(ID);
             return LessonEvaluationDaoToDto.convert(dao);
@@ -49,7 +50,7 @@ public class EvaluationService implements IEvaluationService {
 
     @Override
     @Transactional(readOnly = true)
-    public EvaluationModel getDocumentEvaluationbyID(Integer ID) throws EvaluationNotFoundException, UserTypeNotSupported {
+    public EvaluationModel getDocumentEvaluationbyID(Integer ID) throws EvaluationNotFoundException, UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         try {
             DocumentEvaluation dao = repositoryD.getOne(ID);
             return DocumentEvaluationDaoToDto.convert(dao);
@@ -61,8 +62,7 @@ public class EvaluationService implements IEvaluationService {
 
     @Override
     @Transactional
-
-    public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported {
+    public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException {
         UserModel professor;
 
         // Evaluating lesson

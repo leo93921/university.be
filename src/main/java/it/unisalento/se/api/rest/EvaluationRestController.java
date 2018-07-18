@@ -2,7 +2,7 @@ package it.unisalento.se.api.rest;
 
 import it.unisalento.se.exceptions.EvaluationNotFoundException;
 import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
-import it.unisalento.se.exceptions.ExamNotFoundException;
+import it.unisalento.se.exceptions.ScoreNotValidException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.models.EvaluationModel;
@@ -19,11 +19,12 @@ public class EvaluationRestController {
     private IEvaluationService evaluationService;
 
     @GetMapping(value = "/{type}/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EvaluationModel getDocumentEvaluationbyID(@PathVariable("type") String type, @PathVariable("id") Integer ID) throws UserTypeNotSupported, EvaluationNotFoundException, EvaluationRecipientNotSupported {
-        if (type == "document") {
+    public EvaluationModel getDocumentEvaluationbyID(@PathVariable("type") String type, @PathVariable("id") Integer ID)
+            throws UserTypeNotSupported, EvaluationNotFoundException, EvaluationRecipientNotSupported, ScoreNotValidException {
+        if (type.equals("document")) {
             return evaluationService.getDocumentEvaluationbyID(ID);
         }
-        if (type == "lesson") {
+        if (type.equals("lesson")) {
             return evaluationService.getLessonEvaluationbyID(ID);
         } else {
             throw new EvaluationRecipientNotSupported("Cannot evaluate this type : " + type);
@@ -48,7 +49,7 @@ public ResponseEntity<?> getConf(@PathVariable("app") String app, @PathVariable(
      */
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported {
+    public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         return evaluationService.createEvaluation(model);
     }
 
