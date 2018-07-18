@@ -3,7 +3,9 @@ package it.unisalento.se.services;
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.converters.daoToDto.DocumentEvaluationDaoToDto;
 import it.unisalento.se.converters.daoToDto.LessonEvaluationDaoToDto;
+import it.unisalento.se.converters.dtoToDao.DocumentDtoToDao;
 import it.unisalento.se.converters.dtoToDao.DocumentEvaluationDtoToDao;
+import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonEvaluationDtoToDao;
 import it.unisalento.se.dao.DocumentEvaluation;
 import it.unisalento.se.dao.LessonEvaluation;
@@ -14,7 +16,9 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.IUserService;
+import it.unisalento.se.models.DocumentModel;
 import it.unisalento.se.models.EvaluationModel;
+import it.unisalento.se.models.LessonModel;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.DocumentEvaluationRepository;
 import it.unisalento.se.repositories.LessonEvaluationRepository;
@@ -23,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EvaluationService implements IEvaluationService {
@@ -58,6 +64,26 @@ public class EvaluationService implements IEvaluationService {
         } catch (EntityNotFoundException e) {
             throw new EvaluationNotFoundException();
         }
+    }
+
+    @Override
+    public List<EvaluationModel> getEvaluationsByLesson(LessonModel lesson) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
+        List<LessonEvaluation> daos = repositoryL.findByLesson(LessonDtoToDao.convert(lesson));
+        List<EvaluationModel> models = new ArrayList<>();
+        for (LessonEvaluation dao : daos ){
+            models.add(LessonEvaluationDaoToDto.convert(dao));
+        }
+        return models;
+    }
+
+    @Override
+    public List<EvaluationModel> getEvaluationsByDocument(DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
+        List<DocumentEvaluation> daos = repositoryD.findByDocument(DocumentDtoToDao.convert(document));
+        List<EvaluationModel> models = new ArrayList<>();
+        for (DocumentEvaluation dao : daos ){
+            models.add(DocumentEvaluationDaoToDto.convert(dao));
+        }
+        return models;
     }
 
     @Override
@@ -117,6 +143,9 @@ public class EvaluationService implements IEvaluationService {
 
         }
     }
+
+
+
 
 }
 
