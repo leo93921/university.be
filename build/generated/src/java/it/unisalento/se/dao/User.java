@@ -136,7 +136,7 @@ public class User  implements java.io.Serializable {
     }
 
 
-    @Column(name = "fcm_token", length = 150)
+    @Column(name = "fcm_token", length = 150, nullable = true)
     public String getFcmToken() {
         return this.fcmToken;
     }
