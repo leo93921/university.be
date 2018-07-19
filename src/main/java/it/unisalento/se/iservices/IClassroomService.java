@@ -12,4 +12,6 @@ public interface IClassroomService {
     ClassroomModel getClassroomByID(Integer ID) throws ClassroomNotFoundException;
 
     List<ClassroomModel> getAllClassrooms();
+
+    Boolean deleteClassroom(Integer model) throws ClassroomNotFoundException;
 }

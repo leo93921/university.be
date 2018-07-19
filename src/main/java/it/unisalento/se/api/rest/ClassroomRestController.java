@@ -1,6 +1,5 @@
 package it.unisalento.se.api.rest;
 
-
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
 import it.unisalento.se.iservices.IClassroomService;
 import it.unisalento.se.models.ClassroomModel;
@@ -32,5 +31,10 @@ public class ClassroomRestController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<ClassroomModel> getAllClassrooms() {
         return classroomService.getAllClassrooms();
+    }
+
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public Boolean deleteClassroom(@PathVariable("id") Integer ID) throws ClassroomNotFoundException {
+        return classroomService.deleteClassroom(ID);
     }
 }
