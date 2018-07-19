@@ -29,7 +29,7 @@ public class ReportingValidationStrategy implements IValidationStrategy {
 
         if (reportingModel.getReportingStatus().equals(ReportingStatusModel.REFUSED)) {
             // If it's refused, the note is required
-            if (reportingModel.getNote() == null || reportingModel.getNote().trim().length() > 0) {
+            if (reportingModel.getNote() == null || reportingModel.getNote().trim().length() == 0) {
                 rules.add("Note is required when a problem is refused");
             }
         }
