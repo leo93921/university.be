@@ -3,6 +3,7 @@ package it.unisalento.se.repositories;
 import it.unisalento.se.dao.CourseOfStudy;
 import it.unisalento.se.dao.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByUserType(@Param("typeId") Integer type);
 
     List<User> findByCourseOfStudy(CourseOfStudy courseOfStudy);
+
+    @Modifying
+    @Query("UPDATE User u SET u.fcmToken = '' WHERE u.id = :id")
+    void deleteFcmToken(@Param("id") Integer id);
 }

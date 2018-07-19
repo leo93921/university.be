@@ -53,6 +53,11 @@ public class UserRestController {
         return userService.registerFCMToken(request);
     }
 
+    @PostMapping(value = "/unsubscribe-fcm-token", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public boolean unsubscribeFromFCM(@RequestBody UserModel user) throws UserTypeNotSupported {
+        return userService.deleteFcmToken(user);
+    }
+
     @PostMapping(value = "/get-students", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<UserModel> getStudentsByCourseOfStudy(@RequestBody CourseOfStudyModel courseOfStudy) throws UserTypeNotSupported {
         return userService.getStudentsByCourseOfStudy(courseOfStudy);

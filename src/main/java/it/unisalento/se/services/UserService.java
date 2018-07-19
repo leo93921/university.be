@@ -106,4 +106,12 @@ public class UserService implements IUserService {
             return "";
         }
     }
+
+    @Override
+    @Transactional
+    public boolean deleteFcmToken(UserModel user) throws UserTypeNotSupported {
+        User dao = UserDtoToDao.convert(user);
+        userRepository.deleteFcmToken(dao.getId());
+        return true;
+    }
 }

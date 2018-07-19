@@ -24,4 +24,6 @@ public interface IUserService {
     List<UserModel> getStudentsByCourseOfStudy(CourseOfStudyModel courseOfStudy) throws UserTypeNotSupported;
 
     String getFCMToken(UserModel user);
+
+    boolean deleteFcmToken(UserModel user) throws UserTypeNotSupported;
 }
