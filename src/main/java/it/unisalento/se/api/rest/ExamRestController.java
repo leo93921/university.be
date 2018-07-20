@@ -6,8 +6,6 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IExamService;
 import it.unisalento.se.models.ExamFilterModel;
 import it.unisalento.se.models.ExamModel;
-import it.unisalento.se.models.LessonFilterModel;
-import it.unisalento.se.models.LessonModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;

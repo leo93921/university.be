@@ -5,6 +5,7 @@ import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
 import it.unisalento.se.exceptions.ScoreNotValidException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.DocumentModel;
+import it.unisalento.se.models.EvaluationFilterModel;
 import it.unisalento.se.models.EvaluationModel;
 import it.unisalento.se.models.LessonModel;
 
@@ -22,5 +23,9 @@ public interface IEvaluationService {
     List<EvaluationModel> getEvaluationsByLesson(LessonModel lesson) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException;
 
     List<EvaluationModel> getEvaluationsByDocument(DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException;
+
+    boolean checkEvaluation(EvaluationFilterModel filter) throws EvaluationRecipientNotSupported;
+
+
 }
 

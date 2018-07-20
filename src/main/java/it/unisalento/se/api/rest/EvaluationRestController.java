@@ -6,9 +6,9 @@ import it.unisalento.se.exceptions.ScoreNotValidException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.models.DocumentModel;
+import it.unisalento.se.models.EvaluationFilterModel;
 import it.unisalento.se.models.EvaluationModel;
 import it.unisalento.se.models.LessonModel;
-import it.unisalento.se.models.SubjectModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -46,25 +46,12 @@ public class EvaluationRestController {
         return evaluationService.getEvaluationsByDocument(document);
     }
 
+    @PostMapping(value = "/check", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public boolean checkEvaluation(@RequestBody EvaluationFilterModel filter) throws EvaluationRecipientNotSupported {
+        return evaluationService.checkEvaluation(filter);
 
+    }
 
-
-    /*@GetMapping(value = "/lesson/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EvaluationModel getLessonEvaluationbyID(@PathVariable("id") Integer ID) throws UserTypeNotSupported, ExamNotFoundException, EvaluationNotFoundException {
-        return evaluationService.getLessonEvaluationbyID(ID);
-    }*/
-
-
-
-    /*
-    @RequestMapping(value = "/{app}/conf/{fnm}", method=RequestMethod.GET)
-public ResponseEntity<?> getConf(@PathVariable("app") String app, @PathVariable("fnm") String fnm) {
-   log.debug("AppName:" + app);
-   log.debug("fName:" + fnm);
-           ...
-           return ...
-  }
-     */
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {

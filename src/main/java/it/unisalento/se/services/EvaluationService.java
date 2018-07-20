@@ -16,10 +16,7 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.IUserService;
-import it.unisalento.se.models.DocumentModel;
-import it.unisalento.se.models.EvaluationModel;
-import it.unisalento.se.models.LessonModel;
-import it.unisalento.se.models.UserModel;
+import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.DocumentEvaluationRepository;
 import it.unisalento.se.repositories.LessonEvaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +67,7 @@ public class EvaluationService implements IEvaluationService {
     public List<EvaluationModel> getEvaluationsByLesson(LessonModel lesson) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         List<LessonEvaluation> daos = repositoryL.findByLesson(LessonDtoToDao.convert(lesson));
         List<EvaluationModel> models = new ArrayList<>();
-        for (LessonEvaluation dao : daos ){
+        for (LessonEvaluation dao : daos) {
             models.add(LessonEvaluationDaoToDto.convert(dao));
         }
         return models;
@@ -80,11 +77,37 @@ public class EvaluationService implements IEvaluationService {
     public List<EvaluationModel> getEvaluationsByDocument(DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         List<DocumentEvaluation> daos = repositoryD.findByDocument(DocumentDtoToDao.convert(document));
         List<EvaluationModel> models = new ArrayList<>();
-        for (DocumentEvaluation dao : daos ){
+        for (DocumentEvaluation dao : daos) {
             models.add(DocumentEvaluationDaoToDto.convert(dao));
         }
         return models;
     }
+
+    @Override
+    public boolean checkEvaluation(EvaluationFilterModel filter) throws EvaluationRecipientNotSupported {
+
+        if (filter.getObjectType().equals(Constants.DOCUMENT)) {
+            boolean exist = repositoryD.checkDocumentEvaluation(
+                    filter.getUser().getId(),
+                    filter.getDocument().getId()
+
+            );
+            return exist;
+        }
+        if (filter.getObjectType().equals(Constants.LESSON)) {
+            boolean exist = repositoryL.checkLessonEvaluation(
+                    filter.getUser().getId(),
+                    filter.getLesson().getId()
+
+            );
+            return exist;
+        } else {
+            throw new EvaluationRecipientNotSupported("cannot have information about this object evaluation");
+        }
+
+
+    }
+
 
     @Override
     @Transactional
@@ -143,8 +166,6 @@ public class EvaluationService implements IEvaluationService {
 
         }
     }
-
-
 
 
 }
