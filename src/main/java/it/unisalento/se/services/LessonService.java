@@ -108,7 +108,6 @@ public class LessonService implements ILessonService {
     }
 
 
-
     @Override
     public List<LessonModel> filterByTimeAndProfessor(LessonFilterModel filter) throws UserTypeNotSupported {
         List<Lesson> daos = repository.findByTimeAndProfessor(
@@ -122,8 +121,6 @@ public class LessonService implements ILessonService {
         }
         return models;
     }
-
-
 
 
     @Override
