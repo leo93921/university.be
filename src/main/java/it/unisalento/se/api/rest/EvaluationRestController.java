@@ -39,7 +39,7 @@ public class EvaluationRestController {
     }
 
     @PostMapping(value = "/get-by-document", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<EvaluationModel> getByDocument(@RequestBody DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
+    public List<EvaluationModel> getByDocument(@RequestBody DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
         return evaluationService.getEvaluationsByDocument(document);
     }
 
