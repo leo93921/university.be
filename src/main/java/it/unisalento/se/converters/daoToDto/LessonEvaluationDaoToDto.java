@@ -10,8 +10,7 @@ import it.unisalento.se.models.EvaluationModel;
 public class LessonEvaluationDaoToDto {
     public static EvaluationModel convert(LessonEvaluation le) throws UserTypeNotSupported, ScoreNotValidException, EvaluationRecipientNotSupported {
 
-        EvaluationBuilder builder = new EvaluationBuilder();
-        EvaluationModel model = builder
+        EvaluationModel model = EvaluationBuilder.getInstance()
                 .setID(le.getId())
                 .setNote(le.getNote())
                 .setScore(le.getScore())

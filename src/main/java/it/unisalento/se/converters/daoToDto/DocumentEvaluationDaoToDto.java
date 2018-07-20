@@ -13,8 +13,7 @@ public class DocumentEvaluationDaoToDto {
     public static EvaluationModel convert(DocumentEvaluation de)
             throws UserTypeNotSupported, ScoreNotValidException, EvaluationRecipientNotSupported {
 
-        EvaluationBuilder builder = new EvaluationBuilder();
-        EvaluationModel docEval = builder
+        EvaluationModel docEval = EvaluationBuilder.getInstance()
                 .setID(de.getId())
                 .setScore(de.getScore())
                 .setNote(de.getNote())

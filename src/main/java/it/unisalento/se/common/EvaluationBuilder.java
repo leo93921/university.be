@@ -6,13 +6,22 @@ import it.unisalento.se.models.*;
 
 public class EvaluationBuilder {
 
+    private static EvaluationBuilder instance;
+
     private Integer ID;
     private Integer score;
     private String note;
     private UserModel sender;
     private CourseOfStudyNode evaluatedNode;
 
-    public EvaluationBuilder() {
+    private EvaluationBuilder() {
+    }
+
+    public static EvaluationBuilder getInstance() {
+        if (instance == null) {
+            instance = new EvaluationBuilder();
+        }
+        return instance;
     }
 
     public EvaluationBuilder setID(Integer ID) {
