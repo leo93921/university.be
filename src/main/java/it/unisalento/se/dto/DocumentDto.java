@@ -1,22 +1,22 @@
-package it.unisalento.se.models;
+package it.unisalento.se.dto;
+
+import it.unisalento.se.models.LessonModel;
 
 import java.util.Date;
 
-public class DocumentModel implements CourseOfStudyNode {
+public class DocumentDto {
 
     private Integer ID;
     private String name;
     private String note;
     private Date publishDate;
-    private CourseOfStudyNode node;
+    private LessonModel lesson;
     private String link;
 
-    @Override
     public Integer getID() {
         return ID;
     }
 
-    @Override
     public void setID(Integer ID) {
         this.ID = ID;
     }
@@ -45,12 +45,12 @@ public class DocumentModel implements CourseOfStudyNode {
         this.publishDate = publishDate;
     }
 
-    public CourseOfStudyNode getLesson() {
-        return node;
+    public LessonModel getLesson() {
+        return lesson;
     }
 
-    public void setLesson(CourseOfStudyNode node) {
-        this.node = node;
+    public void setLesson(LessonModel lesson) {
+        this.lesson = lesson;
     }
 
     public String getLink() {

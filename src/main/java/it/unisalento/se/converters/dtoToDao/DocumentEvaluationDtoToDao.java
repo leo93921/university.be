@@ -1,13 +1,14 @@
 package it.unisalento.se.converters.dtoToDao;
 
 import it.unisalento.se.dao.DocumentEvaluation;
+import it.unisalento.se.exceptions.NodeNotSupportedException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.EvaluationModel;
 
 public class DocumentEvaluationDtoToDao {
 
 
-    public static DocumentEvaluation convert(EvaluationModel model) throws UserTypeNotSupported {
+    public static DocumentEvaluation convert(EvaluationModel model) throws UserTypeNotSupported, NodeNotSupportedException {
 
         DocumentEvaluation dao = new DocumentEvaluation();
         dao.setId(model.getId());

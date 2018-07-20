@@ -5,10 +5,7 @@ import it.unisalento.se.converters.dtoToDao.DocumentDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.dao.Document;
 import it.unisalento.se.dao.Subject;
-import it.unisalento.se.exceptions.DocumentNotFoundException;
-import it.unisalento.se.exceptions.LessonNotFoundException;
-import it.unisalento.se.exceptions.StorageException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.exceptions.*;
 import it.unisalento.se.iservices.IDocumentService;
 import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.ILessonService;
@@ -54,7 +51,7 @@ public class DocumentService implements IDocumentService {
 
     @Override
     @Transactional
-    public DocumentModel saveDocument(DocumentModel document) throws UserTypeNotSupported {
+    public DocumentModel saveDocument(DocumentModel document) throws UserTypeNotSupported, NodeNotSupportedException {
         Document dao = DocumentDtoToDao.convert(document);
         Document saved = repository.save(dao);
         return DocumentDaoToDto.convert(saved);
@@ -77,7 +74,7 @@ public class DocumentService implements IDocumentService {
                                       String documentName,
                                       String documentNote,
                                       String publishDate,
-                                      String lessonId) throws UserTypeNotSupported, StorageException, ParseException, LessonNotFoundException {
+                                      String lessonId) throws UserTypeNotSupported, StorageException, ParseException, LessonNotFoundException, NodeNotSupportedException {
         String name = storageService.store(file);
 
         DocumentModel model = new DocumentModel();

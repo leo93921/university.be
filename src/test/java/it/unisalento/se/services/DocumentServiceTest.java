@@ -3,6 +3,7 @@ package it.unisalento.se.services;
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.DocumentNotFoundException;
+import it.unisalento.se.exceptions.NodeNotSupportedException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.DocumentRepository;
@@ -78,7 +79,7 @@ public class DocumentServiceTest {
     }
 
     @Test
-    public void saveDocument() throws UserTypeNotSupported {
+    public void saveDocument() throws UserTypeNotSupported, NodeNotSupportedException {
         Document saved = new Document();
         saved.setId(1);
         saved.setNote("A note");

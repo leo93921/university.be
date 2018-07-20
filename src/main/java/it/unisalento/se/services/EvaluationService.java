@@ -9,10 +9,7 @@ import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonEvaluationDtoToDao;
 import it.unisalento.se.dao.DocumentEvaluation;
 import it.unisalento.se.dao.LessonEvaluation;
-import it.unisalento.se.exceptions.EvaluationNotFoundException;
-import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
-import it.unisalento.se.exceptions.ScoreNotValidException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.exceptions.*;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.IUserService;
@@ -77,7 +74,7 @@ public class EvaluationService implements IEvaluationService {
     }
 
     @Override
-    public List<EvaluationModel> getEvaluationsByDocument(DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
+    public List<EvaluationModel> getEvaluationsByDocument(DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
         List<DocumentEvaluation> daos = repositoryD.findByDocument(DocumentDtoToDao.convert(document));
         List<EvaluationModel> models = new ArrayList<>();
         for (DocumentEvaluation dao : daos ){
@@ -88,7 +85,7 @@ public class EvaluationService implements IEvaluationService {
 
     @Override
     @Transactional
-    public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException {
+    public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException, NodeNotSupportedException {
         UserModel professor;
 
         // Evaluating lesson
@@ -107,7 +104,8 @@ public class EvaluationService implements IEvaluationService {
             DocumentEvaluation docEval = DocumentEvaluationDtoToDao.convert(model);
             DocumentEvaluation saved = repositoryD.save(docEval);
 
-            professor = model.getRecipientD().getLesson().getSubject().getProfessor();
+            LessonModel lesson = (LessonModel) model.getRecipientD().getLesson();
+            professor = lesson.getSubject().getProfessor();
             sendNotification(model, professor);
 
             return DocumentEvaluationDaoToDto.convert(saved);
@@ -122,7 +120,8 @@ public class EvaluationService implements IEvaluationService {
             if (token.trim().length() != 0) {
                 String body;
                 if (model.getRecipientType().equals(Constants.DOCUMENT)) {
-                    body = "A new evaluation has been left for the document \"" + model.getRecipientD().getName() + "\" of " + model.getRecipientD().getLesson().getSubject().getName();
+                    LessonModel lesson = (LessonModel) model.getRecipientD().getLesson();
+                    body = "A new evaluation has been left for the document \"" + model.getRecipientD().getName() + "\" of " + lesson.getSubject().getName();
                 } else {
                     body = "A new evaluation has been left for a lesson of " + model.getRecipientL().getSubject().getName();
 

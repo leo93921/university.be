@@ -3,6 +3,7 @@ package it.unisalento.se.converters.dtoToDao;
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.Document;
 import it.unisalento.se.dao.UserType;
+import it.unisalento.se.exceptions.NodeNotSupportedException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class DocumentDtoToDaoTest {
 
     @Test
-    public void convert() throws UserTypeNotSupported {
+    public void convert() throws UserTypeNotSupported, NodeNotSupportedException {
         UserModel professor = new UserModel();
         professor.setId(1);
         professor.setEmail("mario.rossi@test.it");

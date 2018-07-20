@@ -1,14 +1,10 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.exceptions.EvaluationNotFoundException;
-import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
-import it.unisalento.se.exceptions.ScoreNotValidException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.exceptions.*;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.models.DocumentModel;
 import it.unisalento.se.models.EvaluationModel;
 import it.unisalento.se.models.LessonModel;
-import it.unisalento.se.models.SubjectModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +38,7 @@ public class EvaluationRestController {
     }
 
     @PostMapping(value = "/get-by-document", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<EvaluationModel> getByDocument(@RequestBody DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
+    public List<EvaluationModel> getByDocument(@RequestBody DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
         return evaluationService.getEvaluationsByDocument(document);
     }
 
@@ -67,7 +63,7 @@ public ResponseEntity<?> getConf(@PathVariable("app") String app, @PathVariable(
      */
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
+    public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
         return evaluationService.createEvaluation(model);
     }
 

@@ -1,9 +1,7 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.exceptions.DocumentNotFoundException;
-import it.unisalento.se.exceptions.LessonNotFoundException;
-import it.unisalento.se.exceptions.StorageException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.dto.DocumentDto;
+import it.unisalento.se.exceptions.*;
 import it.unisalento.se.iservices.IDocumentService;
 import it.unisalento.se.iservices.IStorageService;
 import it.unisalento.se.models.DocumentModel;
@@ -43,7 +41,7 @@ public class DocumentRestController {
             @RequestParam("note") String documentNote,
             @RequestParam("publishDate") String publishDate,
             @RequestParam("lesson-id") String lessonId
-    ) throws UserTypeNotSupported, StorageException, LessonNotFoundException, ParseException {
+    ) throws UserTypeNotSupported, StorageException, LessonNotFoundException, ParseException, NodeNotSupportedException {
 
         return service.saveDocument(file, documentName, documentNote, publishDate, lessonId);
     }
@@ -59,10 +57,9 @@ public class DocumentRestController {
     }
 
     @PostMapping(value = "/download")
-    public ResponseEntity<Resource> downloadFile(@RequestBody DocumentModel documentModel, HttpServletRequest request) throws FileNotFoundException, StorageException {
+    public ResponseEntity<Resource> downloadFile(@RequestBody DocumentDto documentDto, HttpServletRequest request) throws FileNotFoundException, StorageException {
         // Load file as resource
-        System.out.println(documentModel.getLink());
-        Resource resource = storageService.loadAsResource(documentModel.getLink());
+        Resource resource = storageService.loadAsResource(documentDto.getLink());
 
         String contentType = null;
         try {
