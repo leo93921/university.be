@@ -1,6 +1,7 @@
 package it.unisalento.se.iservices;
 
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
+import it.unisalento.se.exceptions.EntityNotDeletableException;
 import it.unisalento.se.models.ClassroomModel;
 
 import java.util.List;
@@ -13,5 +14,5 @@ public interface IClassroomService {
 
     List<ClassroomModel> getAllClassrooms();
 
-    Boolean deleteClassroom(Integer model) throws ClassroomNotFoundException;
+    Boolean deleteClassroom(Integer model) throws ClassroomNotFoundException, EntityNotDeletableException;
 }

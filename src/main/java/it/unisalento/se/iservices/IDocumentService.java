@@ -22,6 +22,6 @@ public interface IDocumentService {
 
     List<DocumentModel> getDocumentsByLesson(LessonModel lesson) throws UserTypeNotSupported;
 
-    Boolean deleteDocument(Integer documentID);
+    Boolean deleteDocument(Integer documentID) throws EntityNotDeletableException;
 
 }

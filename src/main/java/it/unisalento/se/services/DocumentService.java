@@ -113,11 +113,15 @@ public class DocumentService implements IDocumentService {
     }
 
     @Override
-    public Boolean deleteDocument(Integer documentID) {
+    public Boolean deleteDocument(Integer documentID) throws EntityNotDeletableException {
         Document dao = repository.getOne(documentID);
         Boolean deleted = storageService.removeFile(dao.getLink());
         if (deleted) {
-            repository.delete(dao);
+            try {
+                repository.delete(dao);
+            } catch (Exception e) {
+                throw new EntityNotDeletableException();
+            }
         }
         return true;
     }

@@ -6,6 +6,7 @@ import it.unisalento.se.converters.dtoToDao.ClassroomDtoToDao;
 import it.unisalento.se.dao.Classroom;
 import it.unisalento.se.dao.SupportDevice;
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
+import it.unisalento.se.exceptions.EntityNotDeletableException;
 import it.unisalento.se.iservices.IClassroomService;
 import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.repositories.ClassroomRepository;
@@ -65,10 +66,15 @@ public class ClassroomService implements IClassroomService {
     }
 
     @Override
-    public Boolean deleteClassroom(Integer ID) throws ClassroomNotFoundException {
+    public Boolean deleteClassroom(Integer ID) throws ClassroomNotFoundException, EntityNotDeletableException {
         try {
             Classroom classroom = classroomRepository.getOne(ID);
-            classroomRepository.delete(classroom);
+            try {
+                classroomRepository.delete(classroom);
+            } catch (Exception e) {
+                throw new EntityNotDeletableException();
+            }
+
             return true;
         } catch (EntityNotFoundException e) {
             throw new ClassroomNotFoundException();

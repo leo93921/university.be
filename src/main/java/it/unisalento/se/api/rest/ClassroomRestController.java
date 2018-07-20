@@ -1,6 +1,7 @@
 package it.unisalento.se.api.rest;
 
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
+import it.unisalento.se.exceptions.EntityNotDeletableException;
 import it.unisalento.se.iservices.IClassroomService;
 import it.unisalento.se.models.ClassroomModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class ClassroomRestController {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Boolean deleteClassroom(@PathVariable("id") Integer ID) throws ClassroomNotFoundException {
+    public Boolean deleteClassroom(@PathVariable("id") Integer ID) throws ClassroomNotFoundException, EntityNotDeletableException {
         return classroomService.deleteClassroom(ID);
     }
 }

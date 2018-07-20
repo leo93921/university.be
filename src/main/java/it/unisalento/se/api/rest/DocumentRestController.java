@@ -52,7 +52,7 @@ public class DocumentRestController {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public Boolean deleteDocument(@PathVariable("id") Integer ID) {
+    public Boolean deleteDocument(@PathVariable("id") Integer ID) throws EntityNotDeletableException {
         return service.deleteDocument(ID);
     }
 
