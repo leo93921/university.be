@@ -1,5 +1,8 @@
 package it.unisalento.se.models;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.Date;
 
 public class DocumentModel implements CourseOfStudyNode {
@@ -8,6 +11,10 @@ public class DocumentModel implements CourseOfStudyNode {
     private String name;
     private String note;
     private Date publishDate;
+    @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS, property = "@class")
+    @JsonSubTypes(
+            value = @JsonSubTypes.Type(value = LessonModel.class, name = "lesson")
+    )
     private CourseOfStudyNode node;
     private String link;
 

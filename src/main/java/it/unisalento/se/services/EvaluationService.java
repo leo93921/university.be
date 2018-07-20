@@ -1,5 +1,6 @@
 package it.unisalento.se.services;
 
+import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.converters.daoToDto.DocumentEvaluationDaoToDto;
 import it.unisalento.se.converters.daoToDto.LessonEvaluationDaoToDto;
@@ -9,11 +10,19 @@ import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonEvaluationDtoToDao;
 import it.unisalento.se.dao.DocumentEvaluation;
 import it.unisalento.se.dao.LessonEvaluation;
-import it.unisalento.se.exceptions.*;
+import it.unisalento.se.dto.DocumentDto;
+import it.unisalento.se.dto.EvaluationDto;
+import it.unisalento.se.exceptions.EvaluationNotFoundException;
+import it.unisalento.se.exceptions.EvaluationRecipientNotSupported;
+import it.unisalento.se.exceptions.ScoreNotValidException;
+import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IEvaluationService;
 import it.unisalento.se.iservices.IFcmService;
 import it.unisalento.se.iservices.IUserService;
-import it.unisalento.se.models.*;
+import it.unisalento.se.models.EvaluationFilterModel;
+import it.unisalento.se.models.EvaluationModel;
+import it.unisalento.se.models.LessonModel;
+import it.unisalento.se.models.UserModel;
 import it.unisalento.se.repositories.DocumentEvaluationRepository;
 import it.unisalento.se.repositories.LessonEvaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EvaluationService implements IEvaluationService {
@@ -71,7 +82,7 @@ public class EvaluationService implements IEvaluationService {
     }
 
     @Override
-    public List<EvaluationModel> getEvaluationsByDocument(DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
+    public List<EvaluationModel> getEvaluationsByDocument(DocumentDto document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         List<DocumentEvaluation> daos = repositoryD.findByDocument(DocumentDtoToDao.convert(document));
         List<EvaluationModel> models = new ArrayList<>();
         for (DocumentEvaluation dao : daos) {
@@ -108,7 +119,7 @@ public class EvaluationService implements IEvaluationService {
 
     @Override
     @Transactional
-    public EvaluationModel createEvaluation(EvaluationModel model) throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException, NodeNotSupportedException {
+    public EvaluationModel createEvaluation(EvaluationDto model) throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException {
         UserModel professor;
 
         // Evaluating lesson
@@ -127,7 +138,7 @@ public class EvaluationService implements IEvaluationService {
             DocumentEvaluation docEval = DocumentEvaluationDtoToDao.convert(model);
             DocumentEvaluation saved = repositoryD.save(docEval);
 
-            LessonModel lesson = (LessonModel) model.getRecipientD().getLesson();
+            LessonModel lesson = model.getRecipientD().getLesson();
             professor = lesson.getSubject().getProfessor();
             sendNotification(model, professor);
 
@@ -137,24 +148,36 @@ public class EvaluationService implements IEvaluationService {
         }
     }
 
-    private void sendNotification(EvaluationModel model, UserModel professor) {
+    private void sendNotification(EvaluationDto model, UserModel professor) {
         if (professor != null) {
             String token = userService.getFCMToken(professor);
             if (token.trim().length() != 0) {
                 String body;
                 if (model.getRecipientType().equals(Constants.DOCUMENT)) {
-                    LessonModel lesson = (LessonModel) model.getRecipientD().getLesson();
+                    LessonModel lesson = model.getRecipientD().getLesson();
                     body = "A new evaluation has been left for the document \"" + model.getRecipientD().getName() + "\" of " + lesson.getSubject().getName();
                 } else {
                     body = "A new evaluation has been left for a lesson of " + model.getRecipientL().getSubject().getName();
 
                 }
 
+                Map<String, String> additionalData = new HashMap<>();
+                additionalData.put("type", "evaluation");
+                if (model.getRecipientType().equals(Constants.DOCUMENT)) {
+                    additionalData.put("recipientType", "document");
+                    additionalData.put("recipient", CommonUtils.toJson(model.getRecipientD()));
+                } else {
+                    additionalData.put("recipientType", "lesson");
+                    additionalData.put("recipient", CommonUtils.toJson(model.getRecipientL()));
+                }
+
+
                 try {
                     this.fcmService.sendMessageToUser(
                             "New evaluation left",
                             body,
-                            token
+                            token,
+                            CommonUtils.toJson(additionalData)
                     );
                 } catch (Exception e) {
                     System.err.println("Cannot send notification");

@@ -1,5 +1,6 @@
 package it.unisalento.se.services;
 
+import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.converters.daoToDto.DocumentDaoToDto;
 import it.unisalento.se.converters.dtoToDao.DocumentDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
@@ -23,7 +24,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DocumentService implements IDocumentService {
@@ -83,18 +86,24 @@ public class DocumentService implements IDocumentService {
 
         DateFormat m_ISO8601Local = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         model.setPublishDate(m_ISO8601Local.parse(publishDate));
-        model.setLesson(lessonService.getLessonByID(Integer.valueOf(lessonId)));
+        LessonModel lesson = lessonService.getLessonByID(Integer.valueOf(lessonId));
+        model.setLesson(lesson);
         model.setLink(name);
 
         Document saved = repository.save(DocumentDtoToDao.convert(model));
 
         Subject subject = saved.getLesson().getSubject();
+        Map<String, String> notificationAdditionalData = new HashMap<>();
+        notificationAdditionalData.put("type", "document");
+        notificationAdditionalData.put("lesson", CommonUtils.toJson(lesson));
+
         // Send notification to all user attending the subject
         try {
             fcmService.sendMessageToTopic(
                     "New document available",
                     "Document available for " + subject.getName(),
-                    subject.getName().replaceAll(" ", "")
+                    subject.getName().replaceAll(" ", ""),
+                    CommonUtils.toJson(notificationAdditionalData)
             );
         } catch (Exception e) {
             System.err.println("Cannot send notification");

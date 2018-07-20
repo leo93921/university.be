@@ -1,6 +1,7 @@
 package it.unisalento.se.services;
 
 
+import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.converters.daoToDto.LessonDaoToDto;
 import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
 import it.unisalento.se.converters.dtoToDao.SubjectDtoToDao;
@@ -21,7 +22,9 @@ import javax.persistence.EntityNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LessonService implements ILessonService {
@@ -55,7 +58,7 @@ public class LessonService implements ILessonService {
                     oldLesson.getTimeslot().getStartTime().equals(model.getTimeSlot().getStartTime()) &&
                     oldLesson.getTimeslot().getEndTime().equals(model.getTimeSlot().getEndTime()));
         }
-        // TODO check if user is a professor, otherwise throw a new exception
+
         Lesson lesson = LessonDtoToDao.convert(model);
         Lesson saved = repository.save(lesson);
         if (sendNotification) {
@@ -64,11 +67,17 @@ public class LessonService implements ILessonService {
                 String subjectName = model.getSubject().getName();
                 String title = "Lesson of " + subjectName + " changed";
                 String body = "The lesson is at " + df.format(model.getTimeSlot().getStartTime()) + " in " + model.getClassroom().getName();
+
+                Map<String, String> notificationAdditionalData = new HashMap<>();
+                notificationAdditionalData.put("type", "lesson");
+                notificationAdditionalData.put("lesson", CommonUtils.toJson(model));
+
                 // Send message to students and professor
                 fcmService.sendMessageToTopic(
                         title,
                         body,
-                        subjectName.replaceAll(" ", "")
+                        subjectName.replaceAll(" ", ""),
+                        CommonUtils.toJson(notificationAdditionalData)
                 );
             } catch (Exception e) {
                 System.err.println("Cannot send notification");

@@ -1,8 +1,9 @@
 package it.unisalento.se.api.rest;
 
+import it.unisalento.se.dto.DocumentDto;
+import it.unisalento.se.dto.EvaluationDto;
 import it.unisalento.se.exceptions.*;
 import it.unisalento.se.iservices.IEvaluationService;
-import it.unisalento.se.models.DocumentModel;
 import it.unisalento.se.models.EvaluationFilterModel;
 import it.unisalento.se.models.EvaluationModel;
 import it.unisalento.se.models.LessonModel;
@@ -39,7 +40,7 @@ public class EvaluationRestController {
     }
 
     @PostMapping(value = "/get-by-document", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<EvaluationModel> getByDocument(@RequestBody DocumentModel document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
+    public List<EvaluationModel> getByDocument(@RequestBody DocumentDto document) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
         return evaluationService.getEvaluationsByDocument(document);
     }
 
@@ -51,7 +52,7 @@ public class EvaluationRestController {
 
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EvaluationModel saveEvaluation(@RequestBody EvaluationModel model) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
+    public EvaluationModel saveEvaluation(@RequestBody EvaluationDto model) throws UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException, NodeNotSupportedException {
         return evaluationService.createEvaluation(model);
     }
 

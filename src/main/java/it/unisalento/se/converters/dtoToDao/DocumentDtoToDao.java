@@ -1,6 +1,7 @@
 package it.unisalento.se.converters.dtoToDao;
 
 import it.unisalento.se.dao.Document;
+import it.unisalento.se.dto.DocumentDto;
 import it.unisalento.se.exceptions.NodeNotSupportedException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.CourseOfStudyNode;
@@ -24,4 +25,15 @@ public class DocumentDtoToDao {
         return dao;
     }
 
+    public static Document convert(DocumentDto model) throws UserTypeNotSupported {
+        Document dao = new Document();
+        dao.setId(model.getID());
+        dao.setName(model.getName());
+        dao.setNote(model.getNote());
+        dao.setPublishDate(model.getPublishDate());
+        CourseOfStudyNode node = model.getLesson();
+        dao.setLesson(LessonDtoToDao.convert(model.getLesson()));
+        dao.setLink(model.getLink());
+        return dao;
+    }
 }

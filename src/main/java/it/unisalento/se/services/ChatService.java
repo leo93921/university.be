@@ -1,6 +1,7 @@
 package it.unisalento.se.services;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
+import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.iservices.IChatService;
 import it.unisalento.se.iservices.IFcmService;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -50,12 +53,17 @@ public class ChatService implements IChatService {
             e.printStackTrace();
         }
 
+        Map<String, String> notificationAdditionalData = new HashMap<>();
+        notificationAdditionalData.put("type", "public-chat");
+        notificationAdditionalData.put("recipient", CommonUtils.toJson(message.getRecipient()));
+
         String subjectName = message.getRecipient().getName();
         try {
             fcmService.sendMessageToTopic(
                     "New message in " + subjectName,
                     "A new message has been left in " + subjectName,
-                    subjectName.replaceAll(" ", "")
+                    subjectName.replaceAll(" ", ""),
+                    CommonUtils.toJson(notificationAdditionalData)
             );
         } catch (Exception e) {
             System.err.println("Cannot send notification");
@@ -80,6 +88,10 @@ public class ChatService implements IChatService {
 
         realtimeDbService.savePrivateMessage(msg);
 
+        Map<String, String> notificationAdditionalData = new HashMap<>();
+        notificationAdditionalData.put("type", "private-chat");
+        notificationAdditionalData.put("recipient", CommonUtils.toJson(message.getSender()));
+
         // Send notification
         User user = userRepository.getOne(message.getRecipient().getId());
         String fcmToken = user.getFcmToken();
@@ -88,7 +100,9 @@ public class ChatService implements IChatService {
                 fcmService.sendMessageToUser(
                         senderName + " sent you a message.",
                         senderName + " " + sender.getSurname(),
-                        fcmToken
+                        fcmToken,
+                        CommonUtils.toJson(notificationAdditionalData)
+
                 );
             } catch (FirebaseMessagingException e) {
                 System.err.println("Cannot send notification");

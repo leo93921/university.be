@@ -72,8 +72,9 @@ public class ReportingService implements IReportingService {
                 try {
                     this.fcmService.sendMessageToUser(
                             "Problem reported has been updated",
-                            "Problem to classroom " + model.getClassroom().getName() + " has been updated",
-                            token
+                            "Problem to classroom " + model.getClassroom().getName() + " has been updated. Go to the site to see all the informations you need.",
+                            token,
+                            ""
                     );
                 } catch (Exception e) {
                     System.err.println("Unable to send notification");
