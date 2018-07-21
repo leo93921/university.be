@@ -1,22 +1,24 @@
 package it.unisalento.se.models;
 
-public class EvaluationModel {
+public class EvaluationModel implements CourseOfStudyNode {
 
     private Integer id;
     private Integer score;
     private String note;
     private UserModel sender;
     private String recipientType;
-    private LessonModel recipientL;
-    private DocumentModel recipientD;
+    private CourseOfStudyNode recipient;
 
-    public Integer getId() {
+    @Override
+    public Integer getID() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public void setID(Integer ID) {
+        this.id = ID;
     }
+
 
     public Integer getScore() {
         return score;
@@ -50,19 +52,11 @@ public class EvaluationModel {
         this.recipientType = recipientType;
     }
 
-    public LessonModel getRecipientL() {
-        return recipientL;
+    public CourseOfStudyNode getRecipient() {
+        return recipient;
     }
 
-    public void setRecipientL(LessonModel recipientL) {
-        this.recipientL = recipientL;
-    }
-
-    public DocumentModel getRecipientD() {
-        return recipientD;
-    }
-
-    public void setRecipientD(DocumentModel recipientD) {
-        this.recipientD = recipientD;
+    public void setRecipient(CourseOfStudyNode recipient) {
+        this.recipient = recipient;
     }
 }

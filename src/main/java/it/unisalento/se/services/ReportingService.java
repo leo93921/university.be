@@ -30,7 +30,6 @@ import java.util.List;
 @Service
 public class ReportingService implements IReportingService {
 
-
     @Autowired
     private ReportingRepository repository;
     @Autowired

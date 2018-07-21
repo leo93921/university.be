@@ -59,17 +59,18 @@ public class EvaluationBuilder {
 
     public EvaluationModel build() {
         EvaluationModel model = new EvaluationModel();
-        model.setId(this.ID);
+        model.setID(this.ID);
         model.setNote(this.note);
         model.setScore(this.score);
         model.setSender(this.sender);
-        if (evaluatedNode instanceof DocumentModel) {
+        model.setRecipient(evaluatedNode);
+        /*if (evaluatedNode instanceof DocumentModel) {
             model.setRecipientType(Constants.DOCUMENT);
             model.setRecipientD((DocumentModel) evaluatedNode);
         } else {
             model.setRecipientType(Constants.LESSON);
             model.setRecipientL((LessonModel) evaluatedNode);
-        }
+        }*/
         return model;
     }
 
