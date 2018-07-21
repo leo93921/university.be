@@ -38,6 +38,9 @@ public class StorageService implements IStorageService {
         // String filename = StringUtils.cleanPath(file.getOriginalFilename());
         String[] splittedFilename = StringUtils.cleanPath(file.getOriginalFilename()).split("/");
         String originalFilename = splittedFilename[splittedFilename.length - 1];
+        // Remove spaces in file name (fix of a bug in the ionic framework)
+        originalFilename = originalFilename.replaceAll(" ", "_");
+        System.out.println(originalFilename);
         String filename = (new Date()).getTime() + "_" + originalFilename;
         try {
             if (file.isEmpty()) {
