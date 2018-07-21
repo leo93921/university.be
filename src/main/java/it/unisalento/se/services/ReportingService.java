@@ -1,6 +1,5 @@
 package it.unisalento.se.services;
 
-import it.unisalento.se.common.validation.IValidationStrategy;
 import it.unisalento.se.common.validation.ReportingValidationStrategy;
 import it.unisalento.se.converters.daoToDto.ReportingDaoToDto;
 import it.unisalento.se.converters.dtoToDao.ClassroomDtoToDao;
@@ -52,9 +51,9 @@ public class ReportingService implements IReportingService {
     public ReportingModel saveReporting(ReportingModel model) throws UserTypeNotSupported, ReportingStatusNotSupported, ValidationException {
 
         // Validate the request
-        IValidationStrategy validator = new ReportingValidationStrategy();
-        if (!model.validate(validator)) {
-            List<String> brokenRules = model.getValidationErrors(validator);
+        model.setValidationStrategy(new ReportingValidationStrategy());
+        if (!model.validate()) {
+            List<String> brokenRules = model.getValidationErrors();
             throw new ValidationException(brokenRules.get(0));
         }
 
