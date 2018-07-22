@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -77,6 +79,33 @@ public class SupportDeviceServiceTest {
 
         assertEquals(sd.getId(), model1.getID());
         assertEquals(sd.getName(), model1.getName());
+
+
+    }
+
+    @Test
+    public void getAll() {
+
+
+
+        SupportDevice sd = new SupportDevice();
+        sd.setId(1);
+        sd.setName("Riscaldamento");
+
+        SupportDevice sd2 = new SupportDevice();
+        sd2.setId(2);
+        sd2.setName("VideoProiettore");
+
+        List<SupportDevice> list = new ArrayList<>();
+        list.add(sd);
+        list.add(sd2);
+
+        when(supportDeviceRepository.findAll()).thenReturn(list);
+
+        List<SupportDeviceModel> model = supportDeviceService.getAll();
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(sd.getName(), model.get(0).getName());
+        assertEquals(sd2.getName(), model.get(1).getName());
 
 
     }

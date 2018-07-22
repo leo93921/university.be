@@ -19,7 +19,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +31,6 @@ public class CourseOfStudyServiceTest {
     private CourseOfStudyRepository courseOfStudyRepository;
     @InjectMocks
     private CourseOfStudyService courseOfStudyService;
-
 
 
     @Test(expected = CourseOfStudyNotFoundException.class)
@@ -86,7 +85,6 @@ public class CourseOfStudyServiceTest {
         cos.setName("Computer");
 
 
-
         AcademicYearModel ayM = new AcademicYearModel();
         ayM.setID(1);
         ayM.setStartYear(2017);
@@ -98,14 +96,13 @@ public class CourseOfStudyServiceTest {
         cosM.setName("Computer");
 
 
-
         when(courseOfStudyRepository.save(any(CourseOfStudy.class))).thenReturn(cos);
 
         CourseOfStudyModel model1 = courseOfStudyService.saveCourseOfStudy(cosM);
 
 
         assertEquals(cos.getId(), model1.getID());
-      assertEquals(cos.getName(), model1.getName());
+        assertEquals(cos.getName(), model1.getName());
 
 
     }

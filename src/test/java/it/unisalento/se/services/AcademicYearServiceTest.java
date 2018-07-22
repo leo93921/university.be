@@ -1,15 +1,11 @@
 package it.unisalento.se.services;
 
 import it.unisalento.se.dao.AcademicYear;
-import it.unisalento.se.dao.Exam;
 import it.unisalento.se.exceptions.AcademicYearNotFoundException;
 import it.unisalento.se.exceptions.ExamNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.AcademicYearModel;
-import it.unisalento.se.models.ExamModel;
-import it.unisalento.se.models.SupportDeviceModel;
 import it.unisalento.se.repositories.AcademicYearRepository;
-import it.unisalento.se.repositories.ExamRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -17,11 +13,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -43,12 +38,10 @@ public class AcademicYearServiceTest {
         ay.setEndYear(2018);
 
 
-
         AcademicYearModel ayM = new AcademicYearModel();
         ayM.setID(1);
         ayM.setStartYear(2017);
         ayM.setEndYear(2018);
-
 
 
         when(academicYearRepository.save(any(AcademicYear.class))).thenReturn(ay);
@@ -57,8 +50,8 @@ public class AcademicYearServiceTest {
 
 
         assertEquals(ay.getId(), model1.getID());
-        assertEquals(new Integer ( ay.getEndYear()), model1.getEndYear());
-        assertEquals(new Integer (ay.getStartYear()), model1.getStartYear());
+        assertEquals(new Integer(ay.getEndYear()), model1.getEndYear());
+        assertEquals(new Integer(ay.getStartYear()), model1.getStartYear());
 
     }
 
@@ -73,8 +66,8 @@ public class AcademicYearServiceTest {
 
         AcademicYearModel model = academicYearService.getAcademicYearByID(1);
         assertEquals(new Integer(1), model.getID());
-        assertEquals(new  Integer (ay.getStartYear()), model.getStartYear());
-        assertEquals(new  Integer (ay.getEndYear()), model.getEndYear());
+        assertEquals(new Integer(ay.getStartYear()), model.getStartYear());
+        assertEquals(new Integer(ay.getEndYear()), model.getEndYear());
 
     }
 
@@ -106,11 +99,8 @@ public class AcademicYearServiceTest {
 
         List<AcademicYearModel> model = academicYearService.getAll();
         assertEquals(new Integer(1), model.get(0).getID());
-        assertEquals(new  Integer (ay.getStartYear()), model.get(0).getStartYear());
-        assertEquals(new  Integer (ay.getEndYear()), model.get(0).getEndYear());
-
-
-
+        assertEquals(new Integer(ay.getStartYear()), model.get(0).getStartYear());
+        assertEquals(new Integer(ay.getEndYear()), model.get(0).getEndYear());
 
 
     }

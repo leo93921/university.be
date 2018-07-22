@@ -1,7 +1,6 @@
 package it.unisalento.se.converters.dtoToDao;
 
 import it.unisalento.se.common.Constants;
-import it.unisalento.se.dao.DocumentEvaluation;
 import it.unisalento.se.dao.LessonEvaluation;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.exceptions.NodeNotSupportedException;
@@ -9,9 +8,7 @@ import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
 import org.junit.Test;
 
-import java.util.Date;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class LessonEvaluationDtoToDaoTest {
 
@@ -52,8 +49,6 @@ public class LessonEvaluationDtoToDaoTest {
         lesson.setClassroom(new ClassroomModel());
 
 
-
-
         UserModel sender = new UserModel();
         sender.setId(2);
         sender.setEmail("mario.rossi@test.it");
@@ -77,9 +72,6 @@ public class LessonEvaluationDtoToDaoTest {
 
         assertEquals(model.getId(), dao.getId());
         assertEquals(model.getNote(), dao.getNote());
-
-
-
 
 
     }

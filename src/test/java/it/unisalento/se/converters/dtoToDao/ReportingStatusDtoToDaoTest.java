@@ -2,21 +2,14 @@ package it.unisalento.se.converters.dtoToDao;
 
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.ReportingStatus;
-import it.unisalento.se.dao.User;
-import it.unisalento.se.dao.UserType;
 import it.unisalento.se.exceptions.ReportingStatusNotSupported;
 import it.unisalento.se.models.ReportingStatusModel;
-import it.unisalento.se.models.UserModel;
-import it.unisalento.se.models.UserTypeModel;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ReportingStatusDtoToDaoTest {
     @Test
     public void convert1() throws ReportingStatusNotSupported {
-
 
 
         ReportingStatus dao = ReportingStatusDtoToDao.convert(ReportingStatusModel.RECEIVED);
@@ -25,9 +18,9 @@ public class ReportingStatusDtoToDaoTest {
         Assert.assertEquals(Constants.RECEIVED, dao.getName());
 
     }
+
     @Test
     public void convert2() throws ReportingStatusNotSupported {
-
 
 
         ReportingStatus dao = ReportingStatusDtoToDao.convert(ReportingStatusModel.IN_PROGRESS);
@@ -42,16 +35,15 @@ public class ReportingStatusDtoToDaoTest {
     public void convert3() throws ReportingStatusNotSupported {
 
 
-
         ReportingStatus dao = ReportingStatusDtoToDao.convert(ReportingStatusModel.SOLVED);
 
 
         Assert.assertEquals(Constants.SOLVED, dao.getName());
 
     }
+
     @Test
     public void convert4() throws ReportingStatusNotSupported {
-
 
 
         ReportingStatus dao = ReportingStatusDtoToDao.convert(ReportingStatusModel.REFUSED);
@@ -60,15 +52,6 @@ public class ReportingStatusDtoToDaoTest {
         Assert.assertEquals(Constants.REFUSED, dao.getName());
 
     }
-
-
-
-
-
-
-
-
-
 
 
 }

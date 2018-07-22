@@ -1,35 +1,11 @@
 package it.unisalento.se.services;
 
-import it.unisalento.se.dao.*;
-import it.unisalento.se.dao.AcademicYear;
-import it.unisalento.se.dao.Exam;
-import it.unisalento.se.exceptions.*;
-import it.unisalento.se.models.AcademicYearModel;
-import it.unisalento.se.models.ExamModel;
-import it.unisalento.se.models.SupportDeviceModel;
-import it.unisalento.se.repositories.AcademicYearRepository;
-import it.unisalento.se.repositories.ExamRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.persistence.EntityNotFoundException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.when;
-import it.unisalento.se.exceptions.AcademicYearNotFoundException;
+import it.unisalento.se.dao.Classroom;
+import it.unisalento.se.exceptions.ClassroomNotFoundException;
+import it.unisalento.se.exceptions.EntityNotDeletableException;
 import it.unisalento.se.exceptions.ExamNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.models.ClassroomModel;
-import it.unisalento.se.models.LessonModel;
-import it.unisalento.se.repositories.AcademicYearRepository;
 import it.unisalento.se.repositories.ClassroomRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,12 +14,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -75,15 +50,13 @@ public class ClassroomServiceTest {
         ClassroomModel model1 = classroomService.createClassroom(crm);
         assertEquals(new Integer(1), model1.getID());
         assertEquals(cr.getName(), model1.getName());
-        assertEquals(1.0, model1.getLatitude(),0);
-        assertEquals(1.0, model1.getLongitude(),0);
+        assertEquals(1.0, model1.getLatitude(), 0);
+        assertEquals(1.0, model1.getLongitude(), 0);
 
     }
 
     @Test
     public void getClassroomByID() throws ClassroomNotFoundException {
-
-
 
 
         Classroom cr = new Classroom();
@@ -93,15 +66,14 @@ public class ClassroomServiceTest {
         cr.setLongitude(1.0);
 
 
-
         when(classroomRepository.getOne(1)).thenReturn(cr);
 
         ClassroomModel model = classroomService.getClassroomByID(1);
 
         assertEquals(new Integer(1), model.getID());
         assertEquals(cr.getName(), model.getName());
-        assertEquals(1.0, model.getLatitude(),0);
-        assertEquals(1.0, model.getLongitude(),0);
+        assertEquals(1.0, model.getLatitude(), 0);
+        assertEquals(1.0, model.getLongitude(), 0);
 
     }
 
@@ -129,9 +101,8 @@ public class ClassroomServiceTest {
 
         List<ClassroomModel> model = classroomService.getAllClassrooms();
         assertEquals(new Integer(2), model.get(1).getID());
-        assertEquals(2.0, model.get(1).getLatitude(),0);
-        assertEquals(2.0, model.get(1).getLongitude(),0);
-
+        assertEquals(2.0, model.get(1).getLatitude(), 0);
+        assertEquals(2.0, model.get(1).getLongitude(), 0);
 
 
     }
@@ -163,7 +134,6 @@ public class ClassroomServiceTest {
         classroomService.deleteClassroom(1);
         when(classroomRepository.getOne(1)).thenThrow(new EntityNotFoundException());
         ClassroomModel model = classroomService.getClassroomByID(1);
-
 
 
     }

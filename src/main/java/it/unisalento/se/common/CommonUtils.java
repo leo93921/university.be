@@ -19,19 +19,19 @@ public class CommonUtils {
         return istance;
     }
 
-    public ViewResolver getCommonResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/templates/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
-    }
-
     public static String toJson(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ViewResolver getCommonResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/templates/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
     }
 }

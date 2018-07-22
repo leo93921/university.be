@@ -1,7 +1,6 @@
 package it.unisalento.se.converters.dtoToDao;
 
 import it.unisalento.se.common.Constants;
-import it.unisalento.se.dao.Document;
 import it.unisalento.se.dao.DocumentEvaluation;
 import it.unisalento.se.dao.UserType;
 import it.unisalento.se.exceptions.NodeNotSupportedException;
@@ -82,9 +81,6 @@ public class DocumentEvaluationDtoToDaoTest {
 
         assertEquals(model.getId(), dao.getId());
         assertEquals(model.getNote(), dao.getNote());
-       
-
-
 
 
     }
