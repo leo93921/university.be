@@ -4,7 +4,7 @@ package it.unisalento.se.services;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.LessonModel;
+import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.LessonRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,7 @@ import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LessonServiceTest {
@@ -103,7 +104,7 @@ public class LessonServiceTest {
     }
 
 
-    /*@Test
+    @Test
     public void createLesson() throws UserTypeNotSupported {
 
         //NORMALE
@@ -119,28 +120,16 @@ public class LessonServiceTest {
         cs.setAcademicYear(ay);
 
         UserType ut = new UserType();
-        ut.setId(1);
+        ut.setId(2);
         ut.setName("PROFESSOR");
 
         User u = new User();
         u.setId(1);
-        u.setName("Luigi");
-        u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setName("Francesco");
+        u.setSurname("Quercia");
+        u.setEmail("francesco.quercia@email.com");
         u.setUserType(ut);
-        u.setPassword("peach");
-
-        UserType ut2 = new UserType();
-        ut2.setId(2);
-        ut2.setName("STUDENT");
-
-        User u2 = new User();
-        u2.setId(2);
-        u2.setName("Tom");
-        u2.setSurname("Nook");
-        u2.setEmail("tom.nook@n.jp");
-        u2.setUserType(ut2);
-        u2.setPassword("money");
+        u.setPassword("ghianda");
 
 
         Subject s = new Subject();
@@ -154,6 +143,7 @@ public class LessonServiceTest {
         Date startDate = new Date();
         startDate.setTime(startDate.getTime() - 100);
         Date endDate = new Date();
+
         Timeslot ts = new Timeslot();
         ts.setId(1);
         ts.setStartTime(startDate);
@@ -191,20 +181,12 @@ public class LessonServiceTest {
 
         UserModel uM = new UserModel();
         uM.setId(1);
-        uM.setName("Luigi");
-        uM.setSurname("Mario");
-        uM.setEmail("mario.luigi@n.jp");
+        uM.setName("Francesco");
+        uM.setSurname("Quercia");
+        uM.setEmail("francesco.quercia@email.com");
         uM.setUserType(UserTypeModel.PROFESSOR);
-        uM.setPassword("peach");
+        uM.setPassword("ghianda");
 
-
-        UserModel u2M = new UserModel();
-        u2M.setId(2);
-        u2M.setName("Tom");
-        u2M.setSurname("Nook");
-        u2M.setEmail("tom.nook@n.jp");
-        u2M.setUserType(UserTypeModel.STUDENT);
-        u2M.setPassword("money");
 
 
         SubjectModel sM = new SubjectModel();
@@ -230,7 +212,7 @@ public class LessonServiceTest {
 
 
         LessonModel lessonM = new LessonModel();
-        lessonM.setID(1);
+
         lessonM.setClassroom(crM);
         lessonM.setTimeSlot(tsM);
         lessonM.setSubject(sM);
@@ -245,7 +227,7 @@ public class LessonServiceTest {
         assertEquals(lesson.getSubject().getName(), model1.getSubject().getName());
 
 
-    }*/
+    }
 
 
 }
