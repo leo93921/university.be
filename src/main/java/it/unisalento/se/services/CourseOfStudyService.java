@@ -3,7 +3,7 @@ package it.unisalento.se.services;
 import it.unisalento.se.converters.daoToDto.CourseOfStudyDaoToDto;
 import it.unisalento.se.converters.dtoToDao.CourseOfStudyDtoToDao;
 import it.unisalento.se.dao.CourseOfStudy;
-import it.unisalento.se.exceptions.CourseOfStudyNotFound;
+import it.unisalento.se.exceptions.CourseOfStudyNotFoundException;
 import it.unisalento.se.iservices.ICourseOfStudyService;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.repositories.CourseOfStudyRepository;
@@ -23,12 +23,12 @@ public class CourseOfStudyService implements ICourseOfStudyService {
 
     @Override
     @Transactional(readOnly = true)
-    public CourseOfStudyModel getCourseOfStudyByID(Integer ID) throws CourseOfStudyNotFound {
+    public CourseOfStudyModel getCourseOfStudyByID(Integer ID) throws CourseOfStudyNotFoundException {
         try {
             CourseOfStudy dao = repository.getOne(ID);
             return CourseOfStudyDaoToDto.convert(dao);
         } catch (EntityNotFoundException e) {
-            throw new CourseOfStudyNotFound();
+            throw new CourseOfStudyNotFoundException();
         }
     }
 

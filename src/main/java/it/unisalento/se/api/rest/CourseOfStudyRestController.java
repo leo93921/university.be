@@ -1,6 +1,6 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.exceptions.CourseOfStudyNotFound;
+import it.unisalento.se.exceptions.CourseOfStudyNotFoundException;
 import it.unisalento.se.iservices.ICourseOfStudyService;
 import it.unisalento.se.models.CourseOfStudyModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class CourseOfStudyRestController {
     private ICourseOfStudyService service;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public CourseOfStudyModel getCourseOfStudyByID(@PathVariable("id") Integer ID) throws CourseOfStudyNotFound {
+    public CourseOfStudyModel getCourseOfStudyByID(@PathVariable("id") Integer ID) throws CourseOfStudyNotFoundException {
         return service.getCourseOfStudyByID(ID);
     }
 

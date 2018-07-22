@@ -1,6 +1,6 @@
 package it.unisalento.se.api.rest;
 
-import it.unisalento.se.exceptions.CourseOfStudyNotFound;
+import it.unisalento.se.exceptions.CourseOfStudyNotFoundException;
 import it.unisalento.se.iservices.ICourseOfStudyService;
 import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.models.CourseOfStudyModel;
@@ -42,7 +42,7 @@ public class CourseOfStudyRestControllerTest {
     @Test
     public void getCourseOfStudyByID_ShouldFail() throws Exception {
 
-        when(service.getCourseOfStudyByID(any(Integer.class))).thenThrow(new CourseOfStudyNotFound());
+        when(service.getCourseOfStudyByID(any(Integer.class))).thenThrow(new CourseOfStudyNotFoundException());
 
         mockMvc.perform(get("/course-of-study/{id}", 123))
                 .andExpect(status().isNotFound());
