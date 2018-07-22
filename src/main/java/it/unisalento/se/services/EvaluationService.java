@@ -2,8 +2,7 @@ package it.unisalento.se.services;
 
 import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.common.Constants;
-import it.unisalento.se.converters.daoToDto.DocumentEvaluationDaoToDto;
-import it.unisalento.se.converters.daoToDto.LessonEvaluationDaoToDto;
+import it.unisalento.se.converters.daoToDto.EvaluationDaoToDto;
 import it.unisalento.se.converters.dtoToDao.DocumentDtoToDao;
 import it.unisalento.se.converters.dtoToDao.DocumentEvaluationDtoToDao;
 import it.unisalento.se.converters.dtoToDao.LessonDtoToDao;
@@ -52,7 +51,7 @@ public class EvaluationService implements IEvaluationService {
     public EvaluationModel getLessonEvaluationbyID(Integer ID) throws EvaluationNotFoundException, UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         try {
             LessonEvaluation dao = repositoryL.getOne(ID);
-            return LessonEvaluationDaoToDto.convert(dao);
+            return EvaluationDaoToDto.convert(dao);
 
         } catch (EntityNotFoundException e) {
             throw new EvaluationNotFoundException();
@@ -64,7 +63,7 @@ public class EvaluationService implements IEvaluationService {
     public EvaluationModel getDocumentEvaluationbyID(Integer ID) throws EvaluationNotFoundException, UserTypeNotSupported, EvaluationRecipientNotSupported, ScoreNotValidException {
         try {
             DocumentEvaluation dao = repositoryD.getOne(ID);
-            return DocumentEvaluationDaoToDto.convert(dao);
+            return EvaluationDaoToDto.convert(dao);
 
         } catch (EntityNotFoundException e) {
             throw new EvaluationNotFoundException();
@@ -76,7 +75,7 @@ public class EvaluationService implements IEvaluationService {
         List<LessonEvaluation> daos = repositoryL.findByLesson(LessonDtoToDao.convert(lesson));
         List<EvaluationModel> models = new ArrayList<>();
         for (LessonEvaluation dao : daos) {
-            models.add(LessonEvaluationDaoToDto.convert(dao));
+            models.add(EvaluationDaoToDto.convert(dao));
         }
         return models;
     }
@@ -86,7 +85,7 @@ public class EvaluationService implements IEvaluationService {
         List<DocumentEvaluation> daos = repositoryD.findByDocument(DocumentDtoToDao.convert(document));
         List<EvaluationModel> models = new ArrayList<>();
         for (DocumentEvaluation dao : daos) {
-            models.add(DocumentEvaluationDaoToDto.convert(dao));
+            models.add(EvaluationDaoToDto.convert(dao));
         }
         return models;
     }
@@ -130,7 +129,7 @@ public class EvaluationService implements IEvaluationService {
             professor = model.getRecipientL().getSubject().getProfessor();
             sendNotification(model, professor);
 
-            return LessonEvaluationDaoToDto.convert(saved);
+            return EvaluationDaoToDto.convert(saved);
         }
 
         // Evaluating documents
@@ -142,7 +141,7 @@ public class EvaluationService implements IEvaluationService {
             professor = lesson.getSubject().getProfessor();
             sendNotification(model, professor);
 
-            return DocumentEvaluationDaoToDto.convert(saved);
+            return EvaluationDaoToDto.convert(saved);
         } else {
             throw new EvaluationRecipientNotSupported("You cannot evaluate this object");
         }

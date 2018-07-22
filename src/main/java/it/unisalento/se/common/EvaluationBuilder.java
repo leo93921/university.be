@@ -64,13 +64,8 @@ public class EvaluationBuilder {
         model.setScore(this.score);
         model.setSender(this.sender);
         model.setRecipient(evaluatedNode);
-        /*if (evaluatedNode instanceof DocumentModel) {
-            model.setRecipientType(Constants.DOCUMENT);
-            model.setRecipientD((DocumentModel) evaluatedNode);
-        } else {
-            model.setRecipientType(Constants.LESSON);
-            model.setRecipientL((LessonModel) evaluatedNode);
-        }*/
+        model.setRecipientType(this.evaluatedNode instanceof DocumentModel ? Constants.DOCUMENT : Constants.LESSON);
+
         return model;
     }
 

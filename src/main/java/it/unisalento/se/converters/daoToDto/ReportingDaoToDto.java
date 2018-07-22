@@ -11,7 +11,7 @@ public class ReportingDaoToDto {
     public static ReportingModel convert(Reporting dao) throws UserTypeNotSupported, ReportingStatusNotSupported {
         ReportingModel model = new ReportingModel();
         model.setID(dao.getId());
-        if (model.getSupportDevice() != null) {
+        if (dao.getSupportDevice() != null) {
             model.setSupportDevice(SupportDeviceDaoToDto.convert(dao.getSupportDevice()));
         }
         model.setNote(dao.getNote());
