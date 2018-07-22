@@ -10,7 +10,7 @@ import it.unisalento.se.models.UserModel;
 
 public class LessonEvaluationDtoToDao {
     public static LessonEvaluation convert(EvaluationModel model) throws UserTypeNotSupported {
-        return convert(model.getId(), model.getScore(), model.getNote(), model.getSender(), model.getRecipientL());
+        return convert(model.getID(), model.getScore(), model.getNote(), model.getSender(), (LessonModel) model.getRecipient());
     }
 
 

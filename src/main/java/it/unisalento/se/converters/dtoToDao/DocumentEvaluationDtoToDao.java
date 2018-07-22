@@ -6,6 +6,7 @@ import it.unisalento.se.dao.User;
 import it.unisalento.se.dto.EvaluationDto;
 import it.unisalento.se.exceptions.NodeNotSupportedException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
+import it.unisalento.se.models.DocumentModel;
 import it.unisalento.se.models.EvaluationModel;
 
 public class DocumentEvaluationDtoToDao {
@@ -13,11 +14,11 @@ public class DocumentEvaluationDtoToDao {
 
     public static DocumentEvaluation convert(EvaluationModel model) throws UserTypeNotSupported, NodeNotSupportedException {
         return convert(
-                model.getId(),
+                model.getID(),
                 model.getScore(),
                 model.getNote(),
                 UserDtoToDao.convert(model.getSender()),
-                DocumentDtoToDao.convert(model.getRecipientD()));
+                DocumentDtoToDao.convert((DocumentModel) model.getRecipient()));
     }
 
     public static DocumentEvaluation convert(EvaluationDto model) throws UserTypeNotSupported {

@@ -1,0 +1,263 @@
+@startuml
+
+page 1x1
+skinparam PageMargin 500
+
+interface CourseOfStudyNode
+
+class AcademicYearModel {
+    - id: Integer
+    - startYear: Integer
+    - endYear: Integer
+}
+
+class ClassroomModel {
+    - id: Integer
+    - name: String
+    - latitude: double
+    - longitude: double
+    - supportDevices: List<SupportDeviceModel>
+}
+
+class CourseOfStudyModel {
+    - ID: Integer
+    - academicYear: AcademicYearModel
+    - name: String
+}
+
+class DocumentModel {
+    - ID: Integer
+    - name: String
+    - note: String
+    - publishDate: Date
+    - node: CourseOfStudyNode
+    - link: String
+}
+
+class ExamModel {
+    - ID: Integer
+    - description: String
+    - subject: SubjectModel
+    - classroom: ClassroomModel
+    - timeslot: TimeSlotModel
+}
+
+class LessonModel {
+    - ID: Integer
+    - classroom: ClassroomModel
+    - timeSlot: TimeSlotModel
+    - subject: SubjectModel
+}
+
+class ReportingModel {
+    - ID: Integer
+    - supportDevice: SupportDeviceModel
+    - note: String
+    - lastModified: Date
+    - doneBy: UserModel
+    - reportingStatus: ReportingStatusModel
+    - classroom: ClassroomModel
+    - problemDescription: String
+    - validationStrategy: IValidationStrategy
+}
+
+enum ReportingStatusModel {
+    RECEIVED
+    IN_PROGRESS
+    SOLVED
+    REFUSED
+}
+
+class SubjectModel{
+    - ID: Integer
+    - name: String
+    - professor: UserModel
+    - CFU: Integer
+    - teachingYear: Integer
+    - courseOfStudy: CourseOfStudyModel
+}
+
+class SupportDeviceModel {
+    - ID: Integer
+    - name: String
+}
+
+class TimeSlotModel {
+    - ID: Integer
+    - startTime: Date
+    - endTime: Date
+}
+
+class UserModel {
+    - id: Integer
+    - userType: UserTypeModel
+    - name: String
+    - surname: String
+    - email: String
+    - password: String
+    - courseOfStudy: CourseOfStudyModel
+}
+
+enum UserTypeModel {
+    STUDENT
+    PROFESSOR
+    SECRETARIAT
+}
+
+class ChatMessageModel {
+    - ID: Integer
+    - content: String
+    - sender: UserModel
+    - sendDate: Date
+}
+
+class EvaluationModel {
+    - id: Integer
+    - score: Integer
+    - note: String
+    - sender: UserModel
+    - recipientType: String
+    - recipient: CourseOfStudyNode
+}
+
+class PrivateChatMessageModel {
+    - recipient: UserModel
+}
+
+class PublicChatMessageModel {
+    - recipient: SubjectModel
+}
+
+class EvaluationBuilder {
+    - {static} instance: EvaluationBuilder
+    - ID: Integer
+    - score: Integer
+    - note: String
+    - sender: UserModel
+    - evaluatedNode: CourseOfStudyNode
+    --
+    - {method} constructor: EvaluationBuilder
+    + {static} getInstance(): EvaluationBuilder
+    + setID(Integer ID): EvaluationBuilder
+    + setScore(Integer score): EvaluationBuilder
+    + setNote(String note): EvaluationBuilder
+    + setSender(UserModel user): EvaluationBuilder
+    + setTarget(CourseOfStudyNode evaluatedTarget) : EvaluationBuilder
+    + build(): EvaluationModel
+}
+
+
+
+interface IValidatableModel {
+    + validate(): Boolean
+    + getValidationErrors(): List<String>
+}
+
+
+interface IValidationStrategy {
+    + isValid(CourseOfStudyNode node): boolean
+    + brokenRules(CourseOfStudyNode node): List<String>
+}
+
+
+note top of EvaluationBuilder : This implements the Builder and the Singleton patterns. \n\
+In this way, the class is instantiated just once. \nThe build method implements the builder \
+returning an \nevaluation object.
+
+note top of CourseOfStudyNode : This is the base class for the Composite pattern. \n\
+Other classes implements this interface. For example \nthe EvaluationModel class implements this in order\n\
+to reduce dependencies to other classes. In future, \nevaluations for different types of CourseOfStudyNode\n\
+could be added in a very fast way.
+
+note "These classes implements the Strategy Pattern in order to solve \
+a data \nvalidation problem. In this way it is possible to implement every \
+type of \nvalidation on data of each CourseOfStudyNode effortlessly." as StrategyNote
+
+StrategyNote .. IValidationStrategy
+StrategyNote .. ReportingModel
+
+
+CourseOfStudyNode <|.. AcademicYearModel
+
+CourseOfStudyNode <|.. ClassroomModel
+ClassroomModel o-- SupportDeviceModel
+
+CourseOfStudyNode <|.. CourseOfStudyModel
+CourseOfStudyModel o-- AcademicYearModel
+
+CourseOfStudyNode <|.. DocumentModel
+DocumentModel *-- CourseOfStudyNode
+
+CourseOfStudyNode <|.. ExamModel
+ExamModel *-- SubjectModel
+ExamModel o-- ClassroomModel
+ExamModel o-- TimeSlotModel
+
+
+CourseOfStudyNode <|.. LessonModel
+LessonModel *-- ClassroomModel
+LessonModel *-- TimeSlotModel
+LessonModel *-- SubjectModel
+
+CourseOfStudyNode <|.. ReportingModel
+IValidatableModel <|.. ReportingModel
+ReportingModel *-- ClassroomModel
+ReportingModel o-- SupportDeviceModel
+ReportingModel o-- UserModel
+ReportingModel o-- ReportingStatusModel
+ReportingModel o-- IValidationStrategy
+
+CourseOfStudyNode <|.. SubjectModel
+SubjectModel o-- UserModel
+SubjectModel o-- CourseOfStudyModel
+
+CourseOfStudyNode <|.. SupportDeviceModel
+
+CourseOfStudyNode <|.. TimeSlotModel
+
+UserModel o-- CourseOfStudyModel
+UserModel o-- UserTypeModel
+
+ChatMessageModel o-- UserModel
+
+CourseOfStudyNode <|.. EvaluationModel
+EvaluationModel o-- UserModel
+EvaluationModel *-- CourseOfStudyNode
+
+PrivateChatMessageModel --|> ChatMessageModel
+PublicChatMessageModel --|> ChatMessageModel
+PrivateChatMessageModel *-- UserModel
+PublicChatMessageModel *-- SubjectModel
+
+EvaluationBuilder ..> EvaluationModel
+
+
+
+
+interface IReportingService {
+    + getReportingByID(Integer ID): ReportingModel
+    + saveReporting(ReportingModel model): ReportingModel
+    + getAllReporting(): List<ReportingModel>
+    + getAllReportingByProfessor(UserModel prof): List<ReportingModel>
+    + getAllReportedProblemsByClassroom(ClassroomModel classroom): List<ReportingModel>
+}
+
+interface ReportingRepository {
+    + findAllByUser(User profDao): List<Reporting>
+    + findAllByClassroom(Classroom classDao): List<Reporting>
+}
+
+interface IValidationStrategy {
+    + isValid(CourseOfStudyNode node): boolean
+    + brokenRules(CourseOfStudyNode node): List<String>
+}
+
+ReportingRepository ..|> JpaRepository
+
+ReportingValidationStrategy ..|> IValidationStrategy
+
+ReportingService ..> ReportingValidationStrategy
+ReportingService ..> ReportingRepository
+ReportingService ..|> IReportingService
+
+@enduml

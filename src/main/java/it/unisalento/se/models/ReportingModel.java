@@ -1,5 +1,6 @@
 package it.unisalento.se.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.unisalento.se.common.validation.IValidatableModel;
 import it.unisalento.se.common.validation.IValidationStrategy;
 
@@ -17,6 +18,8 @@ public class ReportingModel implements CourseOfStudyNode, IValidatableModel {
     private ReportingStatusModel reportingStatus;
     private ClassroomModel classroom;
     private String problemDescription;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private IValidationStrategy validationStrategy;
 
     public String getProblemDescription() {
         return problemDescription;
@@ -84,13 +87,20 @@ public class ReportingModel implements CourseOfStudyNode, IValidatableModel {
         this.classroom = classroom;
     }
 
-    @Override
-    public Boolean validate(IValidationStrategy strategy) {
-        return strategy.isValid(this);
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public void setValidationStrategy(IValidationStrategy validationStrategy) {
+        this.validationStrategy = validationStrategy;
     }
 
     @Override
-    public List<String> getValidationErrors(IValidationStrategy strategy) {
-        return strategy.brokenRules(this);
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public Boolean validate() {
+        return this.validationStrategy.isValid(this);
+    }
+
+    @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public List<String> getValidationErrors() {
+        return this.validationStrategy.brokenRules(this);
     }
 }

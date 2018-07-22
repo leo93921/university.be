@@ -70,16 +70,16 @@ public class DocumentEvaluationDtoToDaoTest {
 
 
         EvaluationModel model = new EvaluationModel();
-        model.setId(1);
+        model.setID(1);
         model.setNote("Nota");
         model.setRecipientType("DOCUMENT");
-        model.setRecipientD(document);
+        model.setRecipient(document);
         model.setSender(sender);
         model.setScore(1);
 
         DocumentEvaluation dao = DocumentEvaluationDtoToDao.convert(model);
 
-        assertEquals(model.getId(), dao.getId());
+        assertEquals(model.getID(), dao.getId());
         assertEquals(model.getNote(), dao.getNote());
 
 
