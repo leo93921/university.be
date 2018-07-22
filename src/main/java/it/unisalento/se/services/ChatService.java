@@ -1,6 +1,5 @@
 package it.unisalento.se.services;
 
-import com.google.firebase.messaging.FirebaseMessagingException;
 import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.iservices.IChatService;
@@ -104,7 +103,7 @@ public class ChatService implements IChatService {
                         CommonUtils.toJson(notificationAdditionalData)
 
                 );
-            } catch (FirebaseMessagingException e) {
+            } catch (Exception e) {
                 System.err.println("Cannot send notification");
                 e.printStackTrace();
             }
