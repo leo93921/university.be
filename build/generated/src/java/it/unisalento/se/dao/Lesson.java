@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 11-lug-2018 9.15.59 by Hibernate Tools 5.2.0.Final
+// Generated 23-lug-2018 9.32.08 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -22,6 +22,7 @@ public class Lesson  implements java.io.Serializable {
      private Classroom classroom;
      private Subject subject;
      private Timeslot timeslot;
+    private Set<LessonEvaluation> lessonEvaluations = new HashSet<LessonEvaluation>(0);
      private Set<Document> documents = new HashSet<Document>(0);
 
     public Lesson() {
@@ -33,10 +34,12 @@ public class Lesson  implements java.io.Serializable {
         this.subject = subject;
         this.timeslot = timeslot;
     }
-    public Lesson(Classroom classroom, Subject subject, Timeslot timeslot, Set<Document> documents) {
+
+    public Lesson(Classroom classroom, Subject subject, Timeslot timeslot, Set<LessonEvaluation> lessonEvaluations, Set<Document> documents) {
        this.classroom = classroom;
        this.subject = subject;
        this.timeslot = timeslot;
+        this.lessonEvaluations = lessonEvaluations;
        this.documents = documents;
     }
    
@@ -80,6 +83,15 @@ public class Lesson  implements java.io.Serializable {
     
     public void setTimeslot(Timeslot timeslot) {
         this.timeslot = timeslot;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "lesson")
+    public Set<LessonEvaluation> getLessonEvaluations() {
+        return this.lessonEvaluations;
+    }
+
+    public void setLessonEvaluations(Set<LessonEvaluation> lessonEvaluations) {
+        this.lessonEvaluations = lessonEvaluations;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="lesson")

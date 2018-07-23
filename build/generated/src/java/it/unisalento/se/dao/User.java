@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 13-lug-2018 11.44.49 by Hibernate Tools 5.2.0.Final
+// Generated 23-lug-2018 9.32.08 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -28,9 +28,7 @@ public class User  implements java.io.Serializable {
     private String fcmToken;
      private Set<Reporting> reportings = new HashSet<Reporting>(0);
     private Set<LessonEvaluation> lessonEvaluations = new HashSet<LessonEvaluation>(0);
-     private Set<ChatGroup> chatGroups = new HashSet<ChatGroup>(0);
     private Set<DocumentEvaluation> documentEvaluations = new HashSet<DocumentEvaluation>(0);
-     private Set<Message> messages = new HashSet<Message>(0);
      private Set<Subject> subjects = new HashSet<Subject>(0);
      private Set<ExamResults> examResultses = new HashSet<ExamResults>(0);
 
@@ -46,7 +44,7 @@ public class User  implements java.io.Serializable {
         this.password = password;
     }
 
-    public User(CourseOfStudy courseOfStudy, UserType userType, String name, String surname, String email, String password, String fcmToken, Set<Reporting> reportings, Set<LessonEvaluation> lessonEvaluations, Set<ChatGroup> chatGroups, Set<DocumentEvaluation> documentEvaluations, Set<Message> messages, Set<Subject> subjects, Set<ExamResults> examResultses) {
+    public User(CourseOfStudy courseOfStudy, UserType userType, String name, String surname, String email, String password, String fcmToken, Set<Reporting> reportings, Set<LessonEvaluation> lessonEvaluations, Set<DocumentEvaluation> documentEvaluations, Set<Subject> subjects, Set<ExamResults> examResultses) {
        this.courseOfStudy = courseOfStudy;
        this.userType = userType;
        this.name = name;
@@ -56,9 +54,7 @@ public class User  implements java.io.Serializable {
         this.fcmToken = fcmToken;
        this.reportings = reportings;
         this.lessonEvaluations = lessonEvaluations;
-       this.chatGroups = chatGroups;
         this.documentEvaluations = documentEvaluations;
-       this.messages = messages;
        this.subjects = subjects;
        this.examResultses = examResultses;
     }
@@ -136,7 +132,7 @@ public class User  implements java.io.Serializable {
     }
 
 
-    @Column(name = "fcm_token", length = 150, nullable = true)
+    @Column(name = "fcm_token")
     public String getFcmToken() {
         return this.fcmToken;
     }
@@ -163,18 +159,6 @@ public class User  implements java.io.Serializable {
         this.lessonEvaluations = lessonEvaluations;
     }
 
-@ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="chat_group_has_user", catalog="university_se", joinColumns = { 
-        @JoinColumn(name="user", nullable=false, updatable=false) }, inverseJoinColumns = { 
-        @JoinColumn(name="chat_group", nullable=false, updatable=false) })
-    public Set<ChatGroup> getChatGroups() {
-        return this.chatGroups;
-    }
-    
-    public void setChatGroups(Set<ChatGroup> chatGroups) {
-        this.chatGroups = chatGroups;
-    }
-
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 public Set<DocumentEvaluation> getDocumentEvaluations() {
     return this.documentEvaluations;
@@ -182,15 +166,6 @@ public Set<DocumentEvaluation> getDocumentEvaluations() {
 
     public void setDocumentEvaluations(Set<DocumentEvaluation> documentEvaluations) {
         this.documentEvaluations = documentEvaluations;
-    }
-
-@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
-    public Set<Message> getMessages() {
-        return this.messages;
-    }
-    
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
     }
 
 @OneToMany(fetch=FetchType.LAZY, mappedBy="user")

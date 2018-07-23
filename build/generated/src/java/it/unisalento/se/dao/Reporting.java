@@ -1,5 +1,5 @@
 package it.unisalento.se.dao;
-// Generated 11-lug-2018 9.15.59 by Hibernate Tools 5.2.0.Final
+// Generated 23-lug-2018 9.32.08 by Hibernate Tools 5.2.0.Final
 
 
 import javax.persistence.*;
@@ -37,7 +37,6 @@ public class Reporting  implements java.io.Serializable {
         this.lastModified = lastModified;
         this.problemDescription = problemDescription;
     }
-
     public Reporting(Classroom classroom, ReportingStatus reportingStatus, SupportDevice supportDevice, User user, String note, Date lastModified, String problemDescription) {
        this.classroom = classroom;
        this.reportingStatus = reportingStatus;
