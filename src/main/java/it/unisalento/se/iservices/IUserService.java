@@ -1,6 +1,7 @@
 package it.unisalento.se.iservices;
 
 import it.unisalento.se.exceptions.InvalidCredentialsException;
+import it.unisalento.se.exceptions.UserAlreadyRegisteredException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
@@ -17,7 +18,7 @@ public interface IUserService {
 
     List<UserModel> getAllProfessors() throws UserTypeNotSupported;
 
-    UserModel register(RegistrationRequest request) throws UserTypeNotSupported;
+    UserModel register(RegistrationRequest request) throws UserTypeNotSupported, UserAlreadyRegisteredException;
 
     FCMTokenRegistration registerFCMToken(FCMTokenRegistration request);
 

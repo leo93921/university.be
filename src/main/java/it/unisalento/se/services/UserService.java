@@ -6,6 +6,7 @@ import it.unisalento.se.converters.dtoToDao.CourseOfStudyDtoToDao;
 import it.unisalento.se.converters.dtoToDao.UserDtoToDao;
 import it.unisalento.se.dao.User;
 import it.unisalento.se.exceptions.InvalidCredentialsException;
+import it.unisalento.se.exceptions.UserAlreadyRegisteredException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IUserService;
@@ -69,8 +70,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserModel register(RegistrationRequest request) throws UserTypeNotSupported {
-        // TODO check if email is already present
+    public UserModel register(RegistrationRequest request) throws UserTypeNotSupported, UserAlreadyRegisteredException {
+        List<User> daos = userRepository.findByEmail(request.getEmail());
+        if (daos.size() != 0) {
+            throw new UserAlreadyRegisteredException();
+        }
         User dao = UserDtoToDao.convert(request);
         dao.setPassword(request.getPassword());
         User saved = userRepository.save(dao);

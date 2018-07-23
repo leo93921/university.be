@@ -9,6 +9,7 @@ import it.unisalento.se.iservices.ISubjectService;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.models.SubjectModel;
 import it.unisalento.se.models.UserModel;
+import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.repositories.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,9 @@ public class SubjectService implements ISubjectService {
     @Override
     @Transactional
     public SubjectModel saveSubject(SubjectModel model) throws UserTypeNotSupported {
-        // TODO check if user is a professor, otherwise throw a new exception
+        if (!model.getProfessor().getUserType().equals(UserTypeModel.PROFESSOR)) {
+            throw new UserTypeNotSupported("Only professors are allowed here");
+        }
         Subject subject = SubjectDtoToDao.convert(model);
         Subject saved = repository.save(subject);
         return SubjectDaoToDto.convert(saved);

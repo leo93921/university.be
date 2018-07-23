@@ -8,6 +8,7 @@ import it.unisalento.se.exceptions.ExamResultNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.iservices.IExamResultService;
 import it.unisalento.se.models.ExamResultModel;
+import it.unisalento.se.models.UserTypeModel;
 import it.unisalento.se.repositories.ExamResultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,9 @@ public class ExamResultService implements IExamResultService {
     @Override
     @Transactional
     public ExamResultModel saveExamResult(ExamResultModel model) throws UserTypeNotSupported {
-        // TODO check if user is a professor, otherwise throw a new exception
+        if (!model.getStudent().getUserType().equals(UserTypeModel.STUDENT)) {
+            throw new UserTypeNotSupported("Only students can do exams.");
+        }
         ExamResults examResult = ExamResultDtoToDao.convert(model);
         ExamResults saved = repository.save(examResult);
         return ExamResultDaoToDto.convert(saved);

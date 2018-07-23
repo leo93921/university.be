@@ -2,6 +2,7 @@ package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.Constants;
 import it.unisalento.se.exceptions.InvalidCredentialsException;
+import it.unisalento.se.exceptions.UserAlreadyRegisteredException;
 import it.unisalento.se.exceptions.UserNotFoundException;
 import it.unisalento.se.iservices.IUserService;
 import it.unisalento.se.models.RegistrationRequest;
@@ -194,7 +195,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void registerUser() throws Exception {
+    public void registerUser() throws Exception, UserAlreadyRegisteredException {
         UserModel u = new UserModel();
         u.setUserType(UserTypeModel.PROFESSOR);
         u.setSurname("Rossi");

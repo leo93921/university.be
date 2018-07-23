@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query("UPDATE User u SET u.fcmToken = '' WHERE u.id = :id")
     void deleteFcmToken(@Param("id") Integer id);
+
+    List<User> findByEmail(String email);
 }

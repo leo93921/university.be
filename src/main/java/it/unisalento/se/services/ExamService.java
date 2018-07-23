@@ -38,7 +38,6 @@ public class ExamService implements IExamService {
     @Override
     @Transactional
     public ExamModel saveExam(ExamModel model) throws UserTypeNotSupported {
-        // TODO check if user is a professor, otherwise throw a new exception
         Exam exam = ExamDtoToDao.convert(model);
         Exam saved = repository.save(exam);
         return ExamDaoToDto.convert(saved);
