@@ -229,4 +229,6 @@ public class UserRestControllerTest {
         verify(userServiceMock, times(1)).register(refEq(req));
         verifyNoMoreInteractions(userServiceMock);
     }
+
+
 }
