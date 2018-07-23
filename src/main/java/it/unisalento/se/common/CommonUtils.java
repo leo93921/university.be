@@ -7,18 +7,6 @@ import org.springframework.web.servlet.view.JstlView;
 
 public class CommonUtils {
 
-    private static CommonUtils istance = null;
-
-    private CommonUtils() {
-    }
-
-    public static synchronized CommonUtils getCommonUtils() {
-        if (istance == null) {
-            istance = new CommonUtils();
-        }
-        return istance;
-    }
-
     public static String toJson(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
@@ -27,7 +15,7 @@ public class CommonUtils {
         }
     }
 
-    public ViewResolver getCommonResolver() {
+    public static ViewResolver getCommonResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/templates/");

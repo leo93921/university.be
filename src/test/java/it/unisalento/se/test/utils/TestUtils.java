@@ -18,7 +18,7 @@ public class TestUtils {
     public static MockMvc getMockMvc(Object controller) {
         return MockMvcBuilders
                 .standaloneSetup(controller)
-                .setViewResolvers(CommonUtils.getCommonUtils().getCommonResolver())
+                .setViewResolvers(CommonUtils.getCommonResolver())
                 .build();
     }
 

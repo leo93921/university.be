@@ -16,7 +16,7 @@ public class WebAppConfig implements WebMvcConfigurer {
 
     @Bean
     public ViewResolver viewResolver() {
-        return CommonUtils.getCommonUtils().getCommonResolver();
+        return CommonUtils.getCommonResolver();
     }
 
     @Override
