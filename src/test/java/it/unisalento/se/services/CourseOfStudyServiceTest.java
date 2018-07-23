@@ -2,10 +2,7 @@ package it.unisalento.se.services;
 
 import it.unisalento.se.dao.AcademicYear;
 import it.unisalento.se.dao.CourseOfStudy;
-import it.unisalento.se.exceptions.AcademicYearNotFoundException;
 import it.unisalento.se.exceptions.CourseOfStudyNotFoundException;
-import it.unisalento.se.exceptions.ExamNotFoundException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.repositories.CourseOfStudyRepository;
@@ -34,7 +31,7 @@ public class CourseOfStudyServiceTest {
 
 
     @Test(expected = CourseOfStudyNotFoundException.class)
-    public void getcos_shouldFail() throws ExamNotFoundException, UserTypeNotSupported, AcademicYearNotFoundException, CourseOfStudyNotFoundException {
+    public void getcos_shouldFail() throws CourseOfStudyNotFoundException {
         when(courseOfStudyRepository.getOne(10)).thenThrow(new EntityNotFoundException());
 
         CourseOfStudyModel model = courseOfStudyService.getCourseOfStudyByID(10);
@@ -133,8 +130,13 @@ public class CourseOfStudyServiceTest {
         when(courseOfStudyRepository.findAll()).thenReturn(list);
 
         List<CourseOfStudyModel> model = courseOfStudyService.getAllCourses();
-        assertEquals(new Integer(1), model.get(0).getID());
+
+        assertEquals(Integer.valueOf(1), model.get(0).getID());
         assertEquals(cos.getName(), model.get(0).getName());
+        assertEquals(ay.getId(), model.get(0).getAcademicYear().getID());
+        assertEquals(Integer.valueOf(ay.getStartYear()), model.get(0).getAcademicYear().getStartYear());
+        assertEquals(Integer.valueOf(ay.getEndYear()), model.get(0).getAcademicYear().getEndYear());
+
         assertEquals(cos2.getName(), model.get(1).getName());
 
 

@@ -43,16 +43,6 @@ public class SupportDeviceServiceTest {
 
     }
 
-
-    /*
-        @Test(expected = ExamNotFoundException.class)
-    public void getExam_shouldFail() throws ExamNotFoundException, UserTypeNotSupported {
-        when(examRepository.getOne(10)).thenThrow(new EntityNotFoundException());
-
-        ExamModel model = examService.getExamByID(10);
-    }
-     */
-
     @Test(expected = SupportDeviceNotFoundException.class)
     public void getSupportExam_shouldFaild() throws SupportDeviceNotFoundException {
         when(supportDeviceRepository.getOne(18)).thenThrow(new EntityNotFoundException());
@@ -86,8 +76,6 @@ public class SupportDeviceServiceTest {
     @Test
     public void getAll() {
 
-
-
         SupportDevice sd = new SupportDevice();
         sd.setId(1);
         sd.setName("Riscaldamento");
@@ -105,8 +93,8 @@ public class SupportDeviceServiceTest {
         List<SupportDeviceModel> model = supportDeviceService.getAll();
         assertEquals(new Integer(1), model.get(0).getID());
         assertEquals(sd.getName(), model.get(0).getName());
+        assertEquals(Integer.valueOf(2), model.get(1).getID());
         assertEquals(sd2.getName(), model.get(1).getName());
-
 
     }
 

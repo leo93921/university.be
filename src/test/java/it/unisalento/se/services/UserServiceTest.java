@@ -188,11 +188,21 @@ public class UserServiceTest {
 
         when(userRepository.findByCourseOfStudy(any(CourseOfStudy.class))).thenReturn(list);
 
-        List<UserModel> model = userService.getStudentsByCourseOfStudy(cosM);
+        List<UserModel> models = userService.getStudentsByCourseOfStudy(cosM);
 
-      assertEquals(new Integer(1), model.get(0).getId());
-        assertEquals(u.getName(), model.get(0).getName());
-        assertEquals(u2.getSurname(), model.get(1).getSurname());
+        assertEquals(new Integer(1), models.get(0).getId());
+        assertEquals(u.getName(), models.get(0).getName());
+        assertEquals(u.getSurname(), models.get(0).getSurname());
+        assertEquals(u.getEmail(), models.get(0).getEmail());
+        assertEquals(u.getUserType().getName(), models.get(0).getUserType().name());
+        assertNull(models.get(0).getPassword());
+
+        assertEquals(new Integer(2), models.get(1).getId());
+        assertEquals(u2.getName(), models.get(1).getName());
+        assertEquals(u2.getSurname(), models.get(1).getSurname());
+        assertEquals(u2.getEmail(), models.get(1).getEmail());
+        assertEquals(u2.getUserType().getName(), models.get(1).getUserType().name());
+        assertNull(models.get(1).getPassword());
 
 
     }
@@ -210,4 +220,21 @@ public class UserServiceTest {
     }
 
 
+    @Test
+    public void getFCMToken() {
+        User u = new User();
+        u.setFcmToken("a_token");
+        when(userRepository.getOne(any(Integer.class))).thenReturn(u);
+
+        UserModel userModel = new UserModel();
+        userModel.setId(10);
+        String token = userService.getFCMToken(userModel);
+
+        assertEquals(u.getFcmToken(), token);
+
+        u.setFcmToken(null);
+        token = userService.getFCMToken(userModel);
+
+        assertEquals("", token);
+    }
 }

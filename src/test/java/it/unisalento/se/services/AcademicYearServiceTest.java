@@ -2,8 +2,6 @@ package it.unisalento.se.services;
 
 import it.unisalento.se.dao.AcademicYear;
 import it.unisalento.se.exceptions.AcademicYearNotFoundException;
-import it.unisalento.se.exceptions.ExamNotFoundException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.repositories.AcademicYearRepository;
 import org.junit.Test;
@@ -72,7 +70,7 @@ public class AcademicYearServiceTest {
     }
 
     @Test(expected = AcademicYearNotFoundException.class)
-    public void getay_shouldFail() throws ExamNotFoundException, UserTypeNotSupported, AcademicYearNotFoundException {
+    public void getay_shouldFail() throws AcademicYearNotFoundException {
         when(academicYearRepository.getOne(10)).thenThrow(new EntityNotFoundException());
 
         AcademicYearModel model = academicYearService.getAcademicYearByID(10);
@@ -98,10 +96,13 @@ public class AcademicYearServiceTest {
         when(academicYearRepository.findAll()).thenReturn(list);
 
         List<AcademicYearModel> model = academicYearService.getAll();
-        assertEquals(new Integer(1), model.get(0).getID());
-        assertEquals(new Integer(ay.getStartYear()), model.get(0).getStartYear());
-        assertEquals(new Integer(ay.getEndYear()), model.get(0).getEndYear());
+        assertEquals(Integer.valueOf(1), model.get(0).getID());
+        assertEquals(Integer.valueOf(ay.getStartYear()), model.get(0).getStartYear());
+        assertEquals(Integer.valueOf(ay.getEndYear()), model.get(0).getEndYear());
 
+        assertEquals(Integer.valueOf(2), model.get(1).getID());
+        assertEquals(Integer.valueOf(ay2.getStartYear()), model.get(1).getStartYear());
+        assertEquals(Integer.valueOf(ay2.getEndYear()), model.get(1).getEndYear());
 
     }
 }
