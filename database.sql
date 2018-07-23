@@ -5,9 +5,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
 -- Schema university_se
 -- -----------------------------------------------------
 DROP SCHEMA IF EXISTS `university_se` ;
@@ -34,15 +31,18 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `university_se`.`chat_group`
+-- Table `university_se`.`classroom`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_se`.`chat_group` ;
+DROP TABLE IF EXISTS `university_se`.`classroom` ;
 
-CREATE TABLE IF NOT EXISTS `university_se`.`chat_group` (
+CREATE TABLE IF NOT EXISTS `university_se`.`classroom` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `latitude` DOUBLE NULL DEFAULT NULL,
+  `longitude` DOUBLE NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user` (
   `user_type` INT(11) NOT NULL,
   `course_of_study` INT(11) NULL DEFAULT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `fcm_token` VARCHAR(150) NULL DEFAULT NULL,
+  `fcm_token` TINYTEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `FK_user_type_idx` (`user_type` ASC),
@@ -109,47 +109,6 @@ CREATE TABLE IF NOT EXISTS `university_se`.`user` (
     REFERENCES `university_se`.`user_type` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-AUTO_INCREMENT = 1
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `university_se`.`chat_group_has_user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_se`.`chat_group_has_user` ;
-
-CREATE TABLE IF NOT EXISTS `university_se`.`chat_group_has_user` (
-  `chat_group` INT(11) NOT NULL,
-  `user` INT(11) NOT NULL,
-  PRIMARY KEY (`chat_group`, `user`),
-  INDEX `fk_chat_group_has_user_user1_idx` (`user` ASC),
-  INDEX `fk_chat_group_has_user_chat_group1_idx` (`chat_group` ASC),
-  CONSTRAINT `fk_chat_group_has_user_chat_group1`
-    FOREIGN KEY (`chat_group`)
-    REFERENCES `university_se`.`chat_group` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_chat_group_has_user_user1`
-    FOREIGN KEY (`user`)
-    REFERENCES `university_se`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `university_se`.`classroom`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_se`.`classroom` ;
-
-CREATE TABLE IF NOT EXISTS `university_se`.`classroom` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `latitude` DOUBLE NULL DEFAULT NULL,
-  `longitude` DOUBLE NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
@@ -283,6 +242,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`document_evaluation` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -374,34 +334,7 @@ CREATE TABLE IF NOT EXISTS `university_se`.`lesson_evaluation` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
-
-
--- -----------------------------------------------------
--- Table `university_se`.`message`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_se`.`message` ;
-
-CREATE TABLE IF NOT EXISTS `university_se`.`message` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `body` VARCHAR(45) NOT NULL,
-  `send_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `sender` INT(11) NOT NULL,
-  `chat_group` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `FK_message_user_idx` (`sender` ASC),
-  INDEX `FK_message_chat_group_idx` (`chat_group` ASC),
-  CONSTRAINT `FK_message_chat_group`
-    FOREIGN KEY (`chat_group`)
-    REFERENCES `university_se`.`chat_group` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_message_user`
-    FOREIGN KEY (`sender`)
-    REFERENCES `university_se`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = latin1;
 
 
@@ -473,8 +406,8 @@ CREATE TABLE IF NOT EXISTS `university_se`.`reporting` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = latin1;
 AUTO_INCREMENT = 1
+DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
@@ -507,17 +440,12 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-
 INSERT INTO `university_se`.`user_type` (`id`, `name`) VALUES ('1', 'STUDENT');
 INSERT INTO `university_se`.`user_type` (`id`, `name`) VALUES ('2', 'PROFESSOR');
 INSERT INTO `university_se`.`user_type` (`id`, `name`) VALUES ('3', 'SECRETARIAT');
-
 
 
 INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('1', 'RECEIVED');
 INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('2', 'IN_PROGRESS');
 INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('3', 'SOLVED');
 INSERT INTO `university_se`.`reporting_status` (`id`, `name`) VALUES ('4', 'REFUSED');
-
-
-
