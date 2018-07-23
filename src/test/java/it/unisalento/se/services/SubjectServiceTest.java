@@ -3,10 +3,7 @@ package it.unisalento.se.services;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.SubjectNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
-import it.unisalento.se.models.CourseOfStudyModel;
-import it.unisalento.se.models.SubjectModel;
-import it.unisalento.se.models.UserModel;
-import it.unisalento.se.models.UserTypeModel;
+import it.unisalento.se.models.*;
 import it.unisalento.se.repositories.SubjectRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -82,6 +79,32 @@ public class SubjectServiceTest {
         service.saveSubject(model);
     }
 
+    @Test
+    public void saveSubject_OK() throws UserTypeNotSupported {
+
+        when(subjectRepository.save(any(Subject.class))).thenReturn(getSubject());
+
+        SubjectModel model = new SubjectModel();
+        model.setID(2);
+        model.setName("Subject");
+        model.setCFU(34);
+        model.setTeachingYear(3);
+        UserModel professor = new UserModel();
+        professor.setUserType(UserTypeModel.PROFESSOR);
+        CourseOfStudyModel courseOfStudy = new CourseOfStudyModel();
+        AcademicYearModel academicYear = new AcademicYearModel();
+        academicYear.setStartYear(2017);
+        academicYear.setEndYear(2018);
+        courseOfStudy.setAcademicYear(academicYear);
+        model.setCourseOfStudy(courseOfStudy);
+        model.setProfessor(professor);
+
+        SubjectModel savedModel = service.saveSubject(model);
+
+        assertEquals(model.getID(), savedModel.getID());
+        assertEquals(model.getName(), savedModel.getName());
+        assertEquals(model.getTeachingYear(), savedModel.getTeachingYear());
+    }
 
     @Test
     public void getAllSubjectsByCourseOfStudy() throws UserTypeNotSupported {
