@@ -3,8 +3,6 @@ package it.unisalento.se.services;
 import it.unisalento.se.dao.Classroom;
 import it.unisalento.se.exceptions.ClassroomNotFoundException;
 import it.unisalento.se.exceptions.EntityNotDeletableException;
-import it.unisalento.se.exceptions.ExamNotFoundException;
-import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.ClassroomModel;
 import it.unisalento.se.repositories.ClassroomRepository;
 import org.junit.Test;
@@ -99,16 +97,22 @@ public class ClassroomServiceTest {
 
         when(classroomRepository.findAll()).thenReturn(list);
 
-        List<ClassroomModel> model = classroomService.getAllClassrooms();
-        assertEquals(new Integer(2), model.get(1).getID());
-        assertEquals(2.0, model.get(1).getLatitude(), 0);
-        assertEquals(2.0, model.get(1).getLongitude(), 0);
+        List<ClassroomModel> models = classroomService.getAllClassrooms();
+
+        assertEquals(Integer.valueOf(1), models.get(0).getID());
+        assertEquals("Y1", models.get(0).getName());
+        assertEquals(1.0, models.get(0).getLatitude(), 0);
+        assertEquals(1.0, models.get(0).getLongitude(), 0);
+        assertEquals(Integer.valueOf(2), models.get(1).getID());
+        assertEquals("Y2", models.get(1).getName());
+        assertEquals(2.0, models.get(1).getLatitude(), 0);
+        assertEquals(2.0, models.get(1).getLongitude(), 0);
 
 
     }
 
     @Test(expected = ClassroomNotFoundException.class)
-    public void getClassroom_shouldFail() throws ExamNotFoundException, UserTypeNotSupported, ClassroomNotFoundException {
+    public void getClassroom_shouldFail() throws ClassroomNotFoundException {
         when(classroomRepository.getOne(10)).thenThrow(new EntityNotFoundException());
 
         ClassroomModel model = classroomService.getClassroomByID(10);

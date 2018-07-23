@@ -10,7 +10,6 @@ import it.unisalento.se.models.AcademicYearModel;
 import it.unisalento.se.models.CourseOfStudyModel;
 import it.unisalento.se.models.UserModel;
 import it.unisalento.se.models.UserTypeModel;
-import it.unisalento.se.repositories.AcademicYearRepository;
 import it.unisalento.se.repositories.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,8 +20,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.any;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -103,7 +103,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void getAllProfessors() throws UserTypeNotSupported, UserNotFoundException {
+    public void getAllProfessors() throws UserTypeNotSupported {
         UserType ut = new UserType();
         ut.setId(1);
         ut.setName("PROFESSOR");
@@ -115,8 +115,6 @@ public class UserServiceTest {
         u.setEmail("emanuele.filippo@email.it");
         u.setUserType(ut);
         u.setPassword("ciaociaociao");
-
-
 
         User u2 = new User();
         u2.setId(2);
@@ -133,19 +131,25 @@ public class UserServiceTest {
 
         when(userRepository.findByUserType(2)).thenReturn(list);
 
-        List<UserModel> model = userService.getAllProfessors();
-        assertEquals(new Integer(1), model.get(0).getId());
-        assertEquals(u.getName(), model.get(0).getName());
-        assertEquals(u2.getSurname(), model.get(1).getSurname());
+        List<UserModel> models = userService.getAllProfessors();
+        assertEquals(new Integer(1), models.get(0).getId());
+        assertEquals(u.getName(), models.get(0).getName());
+        assertEquals(u.getSurname(), models.get(0).getSurname());
+        assertEquals(u.getEmail(), models.get(0).getEmail());
+        assertEquals(u.getUserType().getName(), models.get(0).getUserType().name());
+        assertNull(models.get(0).getPassword());
 
-
-
-
+        assertEquals(new Integer(2), models.get(1).getId());
+        assertEquals(u2.getName(), models.get(1).getName());
+        assertEquals(u2.getSurname(), models.get(1).getSurname());
+        assertEquals(u2.getEmail(), models.get(1).getEmail());
+        assertEquals(u2.getUserType().getName(), models.get(1).getUserType().name());
+        assertNull(models.get(1).getPassword());
 
     }
 
     @Test
-    public void getStudentsByCourseOfStudy() throws UserTypeNotSupported, UserNotFoundException {
+    public void getStudentsByCourseOfStudy() throws UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
