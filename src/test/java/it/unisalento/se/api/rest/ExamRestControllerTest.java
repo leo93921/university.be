@@ -302,21 +302,7 @@ public class ExamRestControllerTest {
         lista.add(exam);
 
 
-        /*
-                when(service.filterByTimeAndCourseOfStudy(any(ExamFilterModel.class))).thenReturn(lista);
 
-        mockMvc.perform(post("/exam/daily").contentType(MediaType.APPLICATION_JSON_UTF8).content(CommonUtils.toJson(filter)))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$[0].id", Matchers.is(exam.getID())))
-                .andExpect(jsonPath("$[0].classroom.name", Matchers.is(cr.getName())))
-                .andExpect(jsonPath("$[0].subject.name", Matchers.is(sub.getName())))
-
-        ;
-
-        verify(service, times(1)).filterByTimeAndCourseOfStudy(examFilter.capture());
-        verifyNoMoreInteractions(service);
-         */
 
 
         when(service.filterByTimeAndProfessor(any(ExamFilterModel.class))).thenReturn(lista);

@@ -1,6 +1,7 @@
 package it.unisalento.se.services;
 
 
+import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
@@ -13,7 +14,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
@@ -27,6 +30,492 @@ public class LessonServiceTest {
     private LessonRepository lessonRepository;
     @InjectMocks
     private LessonService lessonService;
+
+
+/*
+    @Test
+    public void getLessonsBySubjects_OK() throws LessonNotFoundException, UserTypeNotSupported {
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+        AcademicYearModel aym = new AcademicYearModel();
+        aym.setID(1);
+        aym.setStartYear(2017);
+        aym.setEndYear(2018);
+
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+
+        CourseOfStudyModel csm = new CourseOfStudyModel();
+        csm.setID(1);
+        csm.setName("Engineering");
+        csm.setAcademicYear(aym);
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("PROFESSOR");
+
+        User u = new User();
+        u.setId(1);
+        u.setName("Luigi");
+        u.setSurname("Mario");
+        u.setEmail("mario.luigi@n.jp");
+        u.setUserType(ut);
+        u.setPassword("peach");
+
+        UserModel um = new UserModel();
+        um.setId(1);
+        um.setName("Luigi");
+        um.setSurname("Mario");
+        um.setEmail("mario.luigi@n.jp");
+        um.setUserType(UserTypeModel.PROFESSOR);
+        um.setPassword("peach");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(u);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+
+        SubjectModel sm = new SubjectModel();
+        sm.setID(1);
+        sm.setName("Software");
+        sm.setCFU(12);
+        sm.setProfessor(um);
+        sm.setCourseOfStudy(csm);
+        sm.setTeachingYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+        Lesson l = new Lesson();
+        l.setId(1);
+        l.setClassroom(cr);
+        l.setTimeslot(ts);
+        l.setSubject(s);
+
+        Date filter_before = new Date();
+        Date filter_after = new Date();
+        filter_before.setTime(startDate.getTime() -1000);
+        filter_after.setTime(endDate.getTime() + 1000);
+
+
+        TimeSlotModel ts_before = new TimeSlotModel();
+        ts_before.setID(2);
+        ts_before.setStartTime(filter_before);
+        ts_before.setEndTime(filter_after);
+
+        TimeSlotModel ts_after = new TimeSlotModel();
+        ts_after.setID(3);
+        ts_after.setStartTime(filter_before);
+        ts_after.setEndTime(filter_after);
+
+        LessonFilterModel filter = new LessonFilterModel();
+        filter.setStartTime(ts_before);
+        filter.setEndTime(ts_after);
+        filter.setProfessor(um);
+
+        List<Lesson> lista = new ArrayList<>();
+        lista.add(l);
+
+
+        when(lessonRepository.findBySubject(s)).thenReturn(lista);
+
+        List<LessonModel> model = lessonService.getLessonsBySubjects(sm);
+
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(cr.getName(), model.get(0).getClassroom().getName());
+        assertEquals(ts.getStartTime(), model.get(0).getTimeSlot().getStartTime());
+        assertEquals(s.getName(), model.get(0).getSubject().getName());
+
+
+    }
+*/
+
+    @Test
+    public void filterByTimeAndProfessor_OK() throws LessonNotFoundException, UserTypeNotSupported {
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+        AcademicYearModel aym = new AcademicYearModel();
+        aym.setID(1);
+        aym.setStartYear(2017);
+        aym.setEndYear(2018);
+
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+
+        CourseOfStudyModel csm = new CourseOfStudyModel();
+        csm.setID(1);
+        csm.setName("Engineering");
+        csm.setAcademicYear(aym);
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("PROFESSOR");
+
+        User u = new User();
+        u.setId(1);
+        u.setName("Luigi");
+        u.setSurname("Mario");
+        u.setEmail("mario.luigi@n.jp");
+        u.setUserType(ut);
+        u.setPassword("peach");
+
+        UserModel um = new UserModel();
+        um.setId(1);
+        um.setName("Luigi");
+        um.setSurname("Mario");
+        um.setEmail("mario.luigi@n.jp");
+        um.setUserType(UserTypeModel.PROFESSOR);
+        um.setPassword("peach");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(u);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+
+        SubjectModel sm = new SubjectModel();
+        sm.setID(1);
+        sm.setName("Software");
+        sm.setCFU(12);
+        sm.setProfessor(um);
+        sm.setCourseOfStudy(csm);
+        sm.setTeachingYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+        Lesson l = new Lesson();
+        l.setId(1);
+        l.setClassroom(cr);
+        l.setTimeslot(ts);
+        l.setSubject(s);
+
+        Date filter_before = new Date();
+        Date filter_after = new Date();
+        filter_before.setTime(startDate.getTime() -1000);
+        filter_after.setTime(endDate.getTime() + 1000);
+
+
+        TimeSlotModel ts_before = new TimeSlotModel();
+        ts_before.setID(2);
+        ts_before.setStartTime(filter_before);
+        ts_before.setEndTime(filter_after);
+
+        TimeSlotModel ts_after = new TimeSlotModel();
+        ts_after.setID(3);
+        ts_after.setStartTime(filter_before);
+        ts_after.setEndTime(filter_after);
+
+        LessonFilterModel filter = new LessonFilterModel();
+        filter.setStartTime(ts_before);
+        filter.setEndTime(ts_after);
+        filter.setProfessor(um);
+
+        List<Lesson> lista = new ArrayList<>();
+        lista.add(l);
+
+
+        when(lessonRepository.findByTimeAndProfessor(ts_before.getStartTime(), ts_after.getEndTime(), sm.getID())).thenReturn(lista);
+
+        List<LessonModel> model = lessonService.filterByTimeAndProfessor(filter);
+
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(cr.getName(), model.get(0).getClassroom().getName());
+        assertEquals(ts.getStartTime(), model.get(0).getTimeSlot().getStartTime());
+        assertEquals(s.getName(), model.get(0).getSubject().getName());
+
+
+    }
+
+
+
+    @Test
+    public void filterByTimeAndCourseOfStudy_OK() throws LessonNotFoundException, UserTypeNotSupported {
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+        AcademicYearModel aym = new AcademicYearModel();
+        aym.setID(1);
+        aym.setStartYear(2017);
+        aym.setEndYear(2018);
+
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+
+        CourseOfStudyModel csm = new CourseOfStudyModel();
+        csm.setID(1);
+        csm.setName("Engineering");
+        csm.setAcademicYear(aym);
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("PROFESSOR");
+
+        User u = new User();
+        u.setId(1);
+        u.setName("Luigi");
+        u.setSurname("Mario");
+        u.setEmail("mario.luigi@n.jp");
+        u.setUserType(ut);
+        u.setPassword("peach");
+
+        UserModel um = new UserModel();
+        um.setId(1);
+        um.setName("Luigi");
+        um.setSurname("Mario");
+        um.setEmail("mario.luigi@n.jp");
+        um.setUserType(UserTypeModel.PROFESSOR);
+        um.setPassword("peach");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(u);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+
+        SubjectModel sm = new SubjectModel();
+        sm.setID(1);
+        sm.setName("Software");
+        sm.setCFU(12);
+        sm.setProfessor(um);
+        sm.setCourseOfStudy(csm);
+        sm.setTeachingYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+        Lesson l = new Lesson();
+        l.setId(1);
+        l.setClassroom(cr);
+        l.setTimeslot(ts);
+        l.setSubject(s);
+
+        Date filter_before = new Date();
+        Date filter_after = new Date();
+        filter_before.setTime(startDate.getTime() -1000);
+        filter_after.setTime(endDate.getTime() + 1000);
+
+
+        TimeSlotModel ts_before = new TimeSlotModel();
+        ts_before.setID(2);
+        ts_before.setStartTime(filter_before);
+        ts_before.setEndTime(filter_after);
+
+        TimeSlotModel ts_after = new TimeSlotModel();
+        ts_after.setID(3);
+        ts_after.setStartTime(filter_before);
+        ts_after.setEndTime(filter_after);
+
+        LessonFilterModel filter = new LessonFilterModel();
+        filter.setStartTime(ts_before);
+        filter.setEndTime(ts_after);
+        filter.setCourseOfStudy(csm);
+
+        List<Lesson> lista = new ArrayList<>();
+        lista.add(l);
+
+
+        when(lessonRepository.findByTimeAndCourseOfStudy(ts_before.getStartTime(), ts_after.getEndTime(), sm.getID())).thenReturn(lista);
+
+        List<LessonModel> model = lessonService.filterByTimeAndCourseOfStudy(filter);
+
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(cr.getName(), model.get(0).getClassroom().getName());
+        assertEquals(ts.getStartTime(), model.get(0).getTimeSlot().getStartTime());
+        assertEquals(s.getName(), model.get(0).getSubject().getName());
+
+
+    }
+
+
+    @Test
+    public void filterByTimeAndSubject_OK() throws LessonNotFoundException, UserTypeNotSupported {
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+        AcademicYearModel aym = new AcademicYearModel();
+        aym.setID(1);
+        aym.setStartYear(2017);
+        aym.setEndYear(2018);
+
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+
+        CourseOfStudyModel csm = new CourseOfStudyModel();
+        csm.setID(1);
+        csm.setName("Engineering");
+        csm.setAcademicYear(aym);
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("PROFESSOR");
+
+        User u = new User();
+        u.setId(1);
+        u.setName("Luigi");
+        u.setSurname("Mario");
+        u.setEmail("mario.luigi@n.jp");
+        u.setUserType(ut);
+        u.setPassword("peach");
+
+        UserModel um = new UserModel();
+        um.setId(1);
+        um.setName("Luigi");
+        um.setSurname("Mario");
+        um.setEmail("mario.luigi@n.jp");
+        um.setUserType(UserTypeModel.PROFESSOR);
+        um.setPassword("peach");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(u);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+
+        SubjectModel sm = new SubjectModel();
+        sm.setID(1);
+        sm.setName("Software");
+        sm.setCFU(12);
+        sm.setProfessor(um);
+        sm.setCourseOfStudy(csm);
+        sm.setTeachingYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+        Lesson l = new Lesson();
+        l.setId(1);
+        l.setClassroom(cr);
+        l.setTimeslot(ts);
+        l.setSubject(s);
+
+        Date filter_before = new Date();
+        Date filter_after = new Date();
+        filter_before.setTime(startDate.getTime() -1000);
+        filter_after.setTime(endDate.getTime() + 1000);
+
+
+        TimeSlotModel ts_before = new TimeSlotModel();
+        ts_before.setID(2);
+        ts_before.setStartTime(filter_before);
+        ts_before.setEndTime(filter_after);
+
+        TimeSlotModel ts_after = new TimeSlotModel();
+        ts_after.setID(3);
+        ts_after.setStartTime(filter_before);
+        ts_after.setEndTime(filter_after);
+
+        LessonFilterModel filter = new LessonFilterModel();
+        filter.setStartTime(ts_before);
+        filter.setEndTime(ts_after);
+        filter.setSubject(sm);
+
+        List<Lesson> lista = new ArrayList<>();
+        lista.add(l);
+
+
+        when(lessonRepository.findByTimeAndSubject(ts_before.getStartTime(), ts_after.getEndTime(), sm.getID())).thenReturn(lista);
+
+        List<LessonModel> model = lessonService.filterByTimeAndSubject(filter);
+
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(cr.getName(), model.get(0).getClassroom().getName());
+        assertEquals(ts.getStartTime(), model.get(0).getTimeSlot().getStartTime());
+        assertEquals(s.getName(), model.get(0).getSubject().getName());
+
+
+    }
 
 
     @Test
