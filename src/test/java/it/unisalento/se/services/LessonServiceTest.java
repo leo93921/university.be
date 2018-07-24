@@ -65,17 +65,17 @@ public class LessonServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserModel um = new UserModel();
         um.setId(1);
         um.setName("Luigi");
         um.setSurname("Mario");
-        um.setEmail("mario.luigi@n.jp");
+        um.setEmail("mario.luigi@email.it");
         um.setUserType(UserTypeModel.PROFESSOR);
-        um.setPassword("peach");
+        um.setPassword("1234password4567");
 
 
         Subject s = new Subject();
@@ -118,7 +118,7 @@ public class LessonServiceTest {
 
         Date filter_before = new Date();
         Date filter_after = new Date();
-        filter_before.setTime(startDate.getTime() -1000);
+        filter_before.setTime(startDate.getTime() - 1000);
         filter_after.setTime(endDate.getTime() + 1000);
 
 
@@ -185,17 +185,17 @@ public class LessonServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserModel um = new UserModel();
         um.setId(1);
         um.setName("Luigi");
         um.setSurname("Mario");
-        um.setEmail("mario.luigi@n.jp");
+        um.setEmail("mario.luigi@email.it");
         um.setUserType(UserTypeModel.PROFESSOR);
-        um.setPassword("peach");
+        um.setPassword("1234password4567");
 
 
         Subject s = new Subject();
@@ -238,7 +238,7 @@ public class LessonServiceTest {
 
         Date filter_before = new Date();
         Date filter_after = new Date();
-        filter_before.setTime(startDate.getTime() -1000);
+        filter_before.setTime(startDate.getTime() - 1000);
         filter_after.setTime(endDate.getTime() + 1000);
 
 
@@ -274,7 +274,6 @@ public class LessonServiceTest {
     }
 
 
-
     @Test
     public void filterByTimeAndCourseOfStudy_OK() throws UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
@@ -307,17 +306,17 @@ public class LessonServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserModel um = new UserModel();
         um.setId(1);
         um.setName("Luigi");
         um.setSurname("Mario");
-        um.setEmail("mario.luigi@n.jp");
+        um.setEmail("mario.luigi@email.it");
         um.setUserType(UserTypeModel.PROFESSOR);
-        um.setPassword("peach");
+        um.setPassword("1234password4567");
 
 
         Subject s = new Subject();
@@ -360,7 +359,7 @@ public class LessonServiceTest {
 
         Date filter_before = new Date();
         Date filter_after = new Date();
-        filter_before.setTime(startDate.getTime() -1000);
+        filter_before.setTime(startDate.getTime() - 1000);
         filter_after.setTime(endDate.getTime() + 1000);
 
 
@@ -428,17 +427,17 @@ public class LessonServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserModel um = new UserModel();
         um.setId(1);
         um.setName("Luigi");
         um.setSurname("Mario");
-        um.setEmail("mario.luigi@n.jp");
+        um.setEmail("mario.luigi@email.it");
         um.setUserType(UserTypeModel.PROFESSOR);
-        um.setPassword("peach");
+        um.setPassword("1234password4567");
 
 
         Subject s = new Subject();
@@ -481,7 +480,7 @@ public class LessonServiceTest {
 
         Date filter_before = new Date();
         Date filter_after = new Date();
-        filter_before.setTime(startDate.getTime() -1000);
+        filter_before.setTime(startDate.getTime() - 1000);
         filter_after.setTime(endDate.getTime() + 1000);
 
 
@@ -538,9 +537,9 @@ public class LessonServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
 
         Subject s = new Subject();
@@ -595,7 +594,6 @@ public class LessonServiceTest {
     @Test
     public void createLesson() throws UserTypeNotSupported {
 
-        //NORMALE
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -652,9 +650,6 @@ public class LessonServiceTest {
         lesson.setSubject(s);
 
 
-        //FINE NORMALE
-
-        //MODEL
         AcademicYearModel ayM = new AcademicYearModel();
         ayM.setID(1);
         ayM.setStartYear(2017);
@@ -674,7 +669,6 @@ public class LessonServiceTest {
         uM.setEmail("francesco.quercia@email.com");
         uM.setUserType(UserTypeModel.PROFESSOR);
         uM.setPassword("ghianda");
-
 
 
         SubjectModel sM = new SubjectModel();

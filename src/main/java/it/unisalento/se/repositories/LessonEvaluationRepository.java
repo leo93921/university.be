@@ -19,7 +19,6 @@ public interface LessonEvaluationRepository extends JpaRepository<LessonEvaluati
     boolean checkLessonEvaluation(@Param("userID") Integer userID, @Param("lessonID") Integer lessonID);
 
 
-// https://stackoverflow.com/questions/30392129/spring-data-jpa-and-exists-query#comment73760775_30392287
 
 
 }

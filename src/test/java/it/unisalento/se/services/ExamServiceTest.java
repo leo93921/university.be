@@ -48,9 +48,9 @@ public class ExamServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         Subject s = new Subject();
         s.setId(1);
@@ -105,8 +105,6 @@ public class ExamServiceTest {
     @Test
     public void createExam() throws UserTypeNotSupported {
 
-
-        //NORMALE
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -126,9 +124,9 @@ public class ExamServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserType ut2 = new UserType();
         ut2.setId(2);
@@ -137,10 +135,10 @@ public class ExamServiceTest {
         User u2 = new User();
         u2.setId(2);
         u2.setName("Tom");
-        u2.setSurname("Nook");
-        u2.setEmail("tom.nook@n.jp");
+        u2.setSurname("Verdi");
+        u2.setEmail("tom.verdi@email.it");
         u2.setUserType(ut2);
-        u2.setPassword("money");
+        u2.setPassword("password123");
 
 
         Subject s = new Subject();
@@ -175,9 +173,6 @@ public class ExamServiceTest {
         exam.setTimeslot(ts);
 
 
-        //FINE NORMALE
-
-        //MODEL
         AcademicYearModel ayM = new AcademicYearModel();
         ayM.setID(1);
         ayM.setStartYear(2017);
@@ -194,18 +189,18 @@ public class ExamServiceTest {
         uM.setId(1);
         uM.setName("Luigi");
         uM.setSurname("Mario");
-        uM.setEmail("mario.luigi@n.jp");
+        uM.setEmail("mario.luigi@email.it");
         uM.setUserType(UserTypeModel.PROFESSOR);
-        uM.setPassword("peach");
+        uM.setPassword("1234password4567");
 
 
         UserModel u2M = new UserModel();
         u2M.setId(2);
         u2M.setName("Tom");
-        u2M.setSurname("Nook");
-        u2M.setEmail("tom.nook@n.jp");
+        u2M.setSurname("Verdi");
+        u2M.setEmail("tom.verdi@email.it");
         u2M.setUserType(UserTypeModel.STUDENT);
-        u2M.setPassword("money");
+        u2M.setPassword("password123");
 
 
         SubjectModel sM = new SubjectModel();

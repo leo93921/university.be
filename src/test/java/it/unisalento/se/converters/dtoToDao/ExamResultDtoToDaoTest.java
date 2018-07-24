@@ -29,18 +29,18 @@ public class ExamResultDtoToDaoTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(UserTypeModel.PROFESSOR);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
 
         UserModel u2 = new UserModel();
         u2.setId(2);
         u2.setName("Tom");
-        u2.setSurname("nook");
-        u2.setEmail("tom.nook@n.jp");
+        u2.setSurname("Verdi");
+        u2.setEmail("tom.verdi@email.it");
         u2.setUserType(UserTypeModel.STUDENT);
-        u2.setPassword("money");
+        u2.setPassword("password123");
 
         SubjectModel s = new SubjectModel();
         s.setID(1);

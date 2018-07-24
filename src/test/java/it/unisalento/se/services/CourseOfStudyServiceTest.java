@@ -51,15 +51,6 @@ public class CourseOfStudyServiceTest {
         cos.setAcademicYear(ay);
         cos.setName("Computer");
 
-        /*
-            when(academicYearRepository.getOne(1)).thenReturn(ay);
-
-        AcademicYearModel model = academicYearService.getAcademicYearByID(1);
-        assertEquals(new Integer(1), model.getID());
-        assertEquals(new  Integer (ay.getStartYear()), model.getStartYear());
-        assertEquals(new  Integer (ay.getEndYear()), model.getEndYear());
-         */
-
 
         when(courseOfStudyRepository.getOne(1)).thenReturn(cos);
         CourseOfStudyModel model = courseOfStudyService.getCourseOfStudyByID(1);

@@ -34,9 +34,9 @@ public class ExamDaoToDtoTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
 
         Subject s = new Subject();

@@ -84,30 +84,6 @@ public class ReportingServiceTest {
     @Test
     public void saveReporting() throws UserTypeNotSupported, ReportingStatusNotSupported, ValidationException {
 
-        /*
-           AcademicYear ay = new AcademicYear();
-        ay.setId(1);
-        ay.setStartYear(2017);
-        ay.setEndYear(2018);
-
-
-
-        AcademicYearModel ayM = new AcademicYearModel();
-        ayM.setID(1);
-        ayM.setStartYear(2017);
-        ayM.setEndYear(2018);
-
-
-
-        when(academicYearRepository.save(any(AcademicYear.class))).thenReturn(ay);
-
-        AcademicYearModel model1 = academicYearService.createAcademicYear(ayM);
-
-
-        assertEquals(ay.getId(), model1.getID());
-        assertEquals(new Integer ( ay.getEndYear()), model1.getEndYear());
-        assertEquals(new Integer (ay.getStartYear()), model1.getStartYear());
-         */
 
         SupportDevice sd = new SupportDevice();
         sd.setId(1);

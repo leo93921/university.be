@@ -18,7 +18,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
@@ -148,6 +151,295 @@ public class EvaluationServiceTest {
         ay.setEndYear(2018);
         return ay;
     }
+
+
+    @Test
+    public void getEvaluationbyLesson() throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException {
+
+
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+
+        AcademicYearModel aym = new AcademicYearModel();
+        aym.setID(1);
+        aym.setStartYear(2017);
+        aym.setEndYear(2018);
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+        CourseOfStudyModel csm = new CourseOfStudyModel();
+        csm.setID(1);
+        csm.setName("Engineering");
+        csm.setAcademicYear(aym);
+
+
+        UserType utp = new UserType();
+        utp.setId(2);
+        utp.setName("PROFESSOR");
+
+        User up = new User();
+        up.setId(1);
+        up.setName("Luigi");
+        up.setSurname("Luigino");
+        up.setEmail("luigi.luigino@email.it");
+        up.setUserType(utp);
+        up.setPassword("ciaociaociao");
+
+        UserModel um = new UserModel();
+        um.setId(1);
+        um.setName("Luigi");
+        um.setSurname("Luigino");
+        um.setEmail("luigi.luigino@email.it");
+        um.setUserType(UserTypeModel.PROFESSOR);
+        um.setPassword("ciaociaociao");
+
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("STUDENT");
+
+        User u = new User();
+        u.setId(2);
+        u.setName("Studente");
+        u.setSurname("Studente");
+        u.setEmail("emailstudente@email.it");
+        u.setUserType(ut);
+        u.setPassword("ciaociaociao");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(up);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+        SubjectModel sm = new SubjectModel();
+        sm.setID(1);
+        sm.setName("Software");
+        sm.setCFU(12);
+        sm.setProfessor(um);
+        sm.setCourseOfStudy(csm);
+        sm.setTeachingYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        TimeSlotModel tsm = new TimeSlotModel();
+        tsm.setID(1);
+        tsm.setStartTime(startDate);
+        tsm.setEndTime(endDate);
+
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+        Lesson l = new Lesson();
+        l.setId(1);
+        l.setClassroom(cr);
+        l.setTimeslot(ts);
+        l.setSubject(s);
+
+
+        ClassroomModel crm = new ClassroomModel();
+        crm.setID(1);
+        crm.setName("Y1");
+        crm.setLatitude(1.0);
+        crm.setLongitude(1.0);
+
+        LessonModel lm = new LessonModel();
+        lm.setID(1);
+        lm.setClassroom(crm);
+        lm.setTimeSlot(tsm);
+        lm.setSubject(sm);
+
+
+        LessonEvaluation lessonEvaluation = new LessonEvaluation();
+        lessonEvaluation.setId(1);
+        lessonEvaluation.setLesson(l);
+        lessonEvaluation.setUser(u);
+        lessonEvaluation.setScore(1);
+        lessonEvaluation.setNote("nota");
+
+
+        List<LessonEvaluation> lista = new ArrayList<>();
+        lista.add(lessonEvaluation);
+
+
+        when(lessonEvaluationRepository.findByLesson(any(Lesson.class))).thenReturn(lista);
+        List<EvaluationModel> model = evaluationService.getEvaluationsByLesson(lm);
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(lessonEvaluation.getNote(), model.get(0).getNote());
+
+
+    }
+
+
+    @Test
+    public void getEvaluationbyDocument() throws EvaluationRecipientNotSupported, UserTypeNotSupported, ScoreNotValidException {
+
+        AcademicYear ay = new AcademicYear();
+        ay.setId(1);
+        ay.setStartYear(2017);
+        ay.setEndYear(2018);
+
+
+        AcademicYearModel aym = new AcademicYearModel();
+        aym.setID(1);
+        aym.setStartYear(2017);
+        aym.setEndYear(2018);
+
+        CourseOfStudy cs = new CourseOfStudy();
+        cs.setId(1);
+        cs.setName("Engineering");
+        cs.setAcademicYear(ay);
+
+        CourseOfStudyModel csm = new CourseOfStudyModel();
+        csm.setID(1);
+        csm.setName("Engineering");
+        csm.setAcademicYear(aym);
+
+
+        UserType utp = new UserType();
+        utp.setId(2);
+        utp.setName("PROFESSOR");
+
+        User up = new User();
+        up.setId(1);
+        up.setName("Luigi");
+        up.setSurname("Luigino");
+        up.setEmail("luigi.luigino@email.it");
+        up.setUserType(utp);
+        up.setPassword("ciaociaociao");
+
+        UserModel um = new UserModel();
+        um.setId(1);
+        um.setName("Luigi");
+        um.setSurname("Luigino");
+        um.setEmail("luigi.luigino@email.it");
+        um.setUserType(UserTypeModel.PROFESSOR);
+        um.setPassword("ciaociaociao");
+
+
+        UserType ut = new UserType();
+        ut.setId(1);
+        ut.setName("STUDENT");
+
+        User u = new User();
+        u.setId(2);
+        u.setName("Studente");
+        u.setSurname("Studente");
+        u.setEmail("emailstudente@email.it");
+        u.setUserType(ut);
+        u.setPassword("ciaociaociao");
+
+
+        Subject s = new Subject();
+        s.setId(1);
+        s.setName("Software");
+        s.setCfu(12);
+        s.setUser(up);
+        s.setCourseOfStudy(cs);
+        s.setYear(2018);
+
+        SubjectModel sm = new SubjectModel();
+        sm.setID(1);
+        sm.setName("Software");
+        sm.setCFU(12);
+        sm.setProfessor(um);
+        sm.setCourseOfStudy(csm);
+        sm.setTeachingYear(2018);
+
+        Date startDate = new Date();
+        startDate.setTime(startDate.getTime() - 100);
+        Date endDate = new Date();
+        TimeSlotModel tsm = new TimeSlotModel();
+        tsm.setID(1);
+        tsm.setStartTime(startDate);
+        tsm.setEndTime(endDate);
+
+        Timeslot ts = new Timeslot();
+        ts.setId(1);
+        ts.setStartTime(startDate);
+        ts.setEndTime(endDate);
+
+
+        Classroom cr = new Classroom();
+        cr.setId(1);
+        cr.setName("Y1");
+        cr.setLatitude(1.0);
+        cr.setLongitude(1.0);
+
+        Lesson l = new Lesson();
+        l.setId(1);
+        l.setClassroom(cr);
+        l.setTimeslot(ts);
+        l.setSubject(s);
+
+
+        ClassroomModel crm = new ClassroomModel();
+        crm.setID(1);
+        crm.setName("Y1");
+        crm.setLatitude(1.0);
+        crm.setLongitude(1.0);
+
+        LessonModel lm = new LessonModel();
+        lm.setID(1);
+        lm.setClassroom(crm);
+        lm.setTimeSlot(tsm);
+        lm.setSubject(sm);
+
+
+        Document document = new Document();
+        document.setId(1);
+        document.setName("Name");
+        document.setNote("DocumentNote");
+        document.setPublishDate(startDate);
+        document.setLesson(l);
+        document.setLink("link");
+
+        DocumentDto d_dto = new DocumentDto();
+        d_dto.setID(1);
+        d_dto.setName("Name");
+        d_dto.setNote("DocumentNote");
+        d_dto.setPublishDate(startDate);
+        d_dto.setLesson(lm);
+        d_dto.setLink("link");
+
+        DocumentEvaluation de = new DocumentEvaluation();
+        de.setId(1);
+        de.setScore(1);
+        de.setNote("Note");
+        de.setUser(u);
+        de.setDocument(document);
+
+
+        List<DocumentEvaluation> lista = new ArrayList<>();
+        lista.add(de);
+
+
+        when(documentEvaluationRepository.findByDocument(any(Document.class))).thenReturn(lista);
+        List<EvaluationModel> model = evaluationService.getEvaluationsByDocument(d_dto);
+        assertEquals(new Integer(1), model.get(0).getID());
+        assertEquals(de.getNote(), model.get(0).getNote());
+
+    }
+
 
     @Test
     public void getDocumentEvaluationbyID() throws EvaluationRecipientNotSupported, UserTypeNotSupported, EvaluationNotFoundException, ScoreNotValidException {
@@ -372,4 +664,21 @@ public class EvaluationServiceTest {
         u2.setPassword("adios");
         return u2;
     }
+
+
+    @Test(expected = EvaluationNotFoundException.class)
+    public void getDocumentEvaluation_shouldFail() throws UserTypeNotSupported, ScoreNotValidException, EvaluationRecipientNotSupported, EvaluationNotFoundException {
+        when(documentEvaluationRepository.getOne(10)).thenThrow(new EntityNotFoundException());
+
+        EvaluationModel model = evaluationService.getDocumentEvaluationbyID(10);
+    }
+
+    @Test(expected = EvaluationNotFoundException.class)
+    public void getLessonEvaluation_shouldFail() throws UserTypeNotSupported, ScoreNotValidException, EvaluationRecipientNotSupported, EvaluationNotFoundException {
+        when(lessonEvaluationRepository.getOne(10)).thenThrow(new EntityNotFoundException());
+
+        EvaluationModel model = evaluationService.getLessonEvaluationbyID(10);
+    }
+
+
 }

@@ -1,7 +1,6 @@
 package it.unisalento.se.services;
 
 import it.unisalento.se.dao.*;
-import it.unisalento.se.exceptions.ExamNotFoundException;
 import it.unisalento.se.exceptions.ExamResultNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
 import it.unisalento.se.models.*;
@@ -27,7 +26,7 @@ public class ExamResultServiceTest {
     private ExamResultService examResultService;
 
     @Test
-    public void getExamResult_OK() throws ExamNotFoundException, UserTypeNotSupported, ExamResultNotFoundException {
+    public void getExamResult_OK() throws UserTypeNotSupported, ExamResultNotFoundException {
 
 
         AcademicYear ay = new AcademicYear();
@@ -49,9 +48,9 @@ public class ExamResultServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserType ut2 = new UserType();
         ut2.setId(2);
@@ -60,10 +59,10 @@ public class ExamResultServiceTest {
         User u2 = new User();
         u2.setId(2);
         u2.setName("Tom");
-        u2.setSurname("Nook");
-        u2.setEmail("tom.nook@n.jp");
+        u2.setSurname("Verdi");
+        u2.setEmail("tom.verdi@email.it");
         u2.setUserType(ut2);
-        u2.setPassword("money");
+        u2.setPassword("password123");
 
 
         Subject s = new Subject();
@@ -129,7 +128,6 @@ public class ExamResultServiceTest {
     public void createExamResult() throws UserTypeNotSupported {
 
 
-        //NORMALE
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -149,9 +147,9 @@ public class ExamResultServiceTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
         UserType ut2 = new UserType();
         ut2.setId(2);
@@ -160,10 +158,10 @@ public class ExamResultServiceTest {
         User u2 = new User();
         u2.setId(2);
         u2.setName("Tom");
-        u2.setSurname("Nook");
-        u2.setEmail("tom.nook@n.jp");
+        u2.setSurname("Verdi");
+        u2.setEmail("tom.verdi@email.it");
         u2.setUserType(ut2);
-        u2.setPassword("money");
+        u2.setPassword("password123");
 
 
         Subject s = new Subject();
@@ -205,9 +203,7 @@ public class ExamResultServiceTest {
         examResult.setDate(examDate);
         examResult.setExam(exam);
 
-        //FINE NORMALE
 
-        //MODEL
         AcademicYearModel ayM = new AcademicYearModel();
         ayM.setID(1);
         ayM.setStartYear(2017);
@@ -224,18 +220,18 @@ public class ExamResultServiceTest {
         uM.setId(1);
         uM.setName("Luigi");
         uM.setSurname("Mario");
-        uM.setEmail("mario.luigi@n.jp");
+        uM.setEmail("mario.luigi@email.it");
         uM.setUserType(UserTypeModel.PROFESSOR);
-        uM.setPassword("peach");
+        uM.setPassword("1234password4567");
 
 
         UserModel u2M = new UserModel();
         u2M.setId(2);
         u2M.setName("Tom");
-        u2M.setSurname("Nook");
-        u2M.setEmail("tom.nook@n.jp");
+        u2M.setSurname("Verdi");
+        u2M.setEmail("tom.verdi@email.it");
         u2M.setUserType(UserTypeModel.STUDENT);
-        u2M.setPassword("money");
+        u2M.setPassword("password123");
 
 
         SubjectModel sM = new SubjectModel();

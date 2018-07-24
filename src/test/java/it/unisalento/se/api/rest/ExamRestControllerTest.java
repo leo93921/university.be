@@ -169,7 +169,7 @@ public class ExamRestControllerTest {
 
         Date filter_before = new Date();
         Date filter_after = new Date();
-        filter_before.setTime(startDate.getTime() -1000);
+        filter_before.setTime(startDate.getTime() - 1000);
         filter_after.setTime(endTime.getTime() + 1000);
 
         TimeSlotModel ts_before = new TimeSlotModel();
@@ -265,7 +265,7 @@ public class ExamRestControllerTest {
 
         Date filter_before = new Date();
         Date filter_after = new Date();
-        filter_before.setTime(startDate.getTime() -1000);
+        filter_before.setTime(startDate.getTime() - 1000);
         filter_after.setTime(endTime.getTime() + 1000);
 
         TimeSlotModel ts_before = new TimeSlotModel();
@@ -302,9 +302,6 @@ public class ExamRestControllerTest {
         lista.add(exam);
 
 
-
-
-
         when(service.filterByTimeAndProfessor(any(ExamFilterModel.class))).thenReturn(lista);
 
         mockMvc.perform(post("/exam/daily-professor").contentType(MediaType.APPLICATION_JSON_UTF8).content(CommonUtils.toJson(filter)))
@@ -321,12 +318,6 @@ public class ExamRestControllerTest {
 
 
     }
-
-
-
-
-
-
 
 
     @Test

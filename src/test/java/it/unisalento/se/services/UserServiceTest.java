@@ -51,7 +51,6 @@ public class UserServiceTest {
         u.setPassword("ciaociaociao");
 
 
-
         UserModel um = new UserModel();
         um.setId(1);
         um.setName("Filippo");
@@ -69,7 +68,6 @@ public class UserServiceTest {
         assertEquals(u.getId(), model1.getId());
         assertEquals(u.getName(), model1.getName());
         assertEquals(u.getSurname(), model1.getSurname());
-
 
 
     }

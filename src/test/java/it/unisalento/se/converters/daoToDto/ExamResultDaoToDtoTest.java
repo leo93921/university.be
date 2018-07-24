@@ -36,9 +36,9 @@ public class ExamResultDaoToDtoTest {
         u.setId(1);
         u.setName("Luigi");
         u.setSurname("Mario");
-        u.setEmail("mario.luigi@n.jp");
+        u.setEmail("mario.luigi@email.it");
         u.setUserType(ut);
-        u.setPassword("peach");
+        u.setPassword("1234password4567");
 
 
         UserType ut2 = new UserType();
@@ -48,10 +48,10 @@ public class ExamResultDaoToDtoTest {
         User u2 = new User();
         u2.setId(2);
         u2.setName("Tom");
-        u2.setSurname("Nook");
-        u2.setEmail("tom.nook@n.jp");
+        u2.setSurname("Verdi");
+        u2.setEmail("tom.verdi@email.it");
         u2.setUserType(ut2);
-        u2.setPassword("money");
+        u2.setPassword("password123");
 
 
         Subject s = new Subject();
