@@ -22,9 +22,7 @@ public class FcmService implements IFcmService {
 
         Message message = Message.builder()
                 .setTopic(topicName)
-                .putData("title", title)
-                .putData("body", body)
-                .putData("additionalData", additionalData)
+                .putData("title", title).putData("body", body).putData("additionalData", additionalData)
                 .build();
 
         FirebaseMessaging.getInstance().send(message);
@@ -39,9 +37,7 @@ public class FcmService implements IFcmService {
         FirebaseAppSingleton.initApp();
 
         Message message = Message.builder()
-                .putData("title", title)
-                .putData("body", body)
-                .putData("additionalData", additionalData)
+                .putData("title", title).putData("body", body).putData("additionalData", additionalData)
                 .setToken(token)
                 .build();
 

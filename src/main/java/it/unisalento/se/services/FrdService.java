@@ -18,8 +18,7 @@ public class FrdService implements IFrdService {
     public void savePublicMessage(SubjectModel subject, String UUID, FirebaseChatMessageModel toSave) throws IOException {
         FirebaseAppSingleton.initApp();
 
-        DatabaseReference ref = FirebaseDatabase
-                .getInstance()
+        DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("/public-message/" + String.valueOf(subject.getID()) + "_" + subject.getName());
 
         DatabaseReference childRef = ref.child(UUID);
@@ -30,8 +29,7 @@ public class FrdService implements IFrdService {
     public void savePrivateMessage(FirebaseChatMessageModel message) throws IOException {
         FirebaseAppSingleton.initApp();
 
-        DatabaseReference ref = FirebaseDatabase
-                .getInstance()
+        DatabaseReference ref = FirebaseDatabase.getInstance()
                 .getReference("/private-message");
         DatabaseReference childRef = ref.push();
         childRef.setValueAsync(message);

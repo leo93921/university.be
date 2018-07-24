@@ -2,12 +2,13 @@ package it.unisalento.se.api.rest;
 
 import it.unisalento.se.common.CommonUtils;
 import it.unisalento.se.common.Constants;
+import it.unisalento.se.dao.Document;
+import it.unisalento.se.dao.User;
 import it.unisalento.se.dto.DocumentDto;
+import it.unisalento.se.dto.EvaluationDto;
 import it.unisalento.se.exceptions.ScoreNotValidException;
-import it.unisalento.se.models.DocumentModel;
-import it.unisalento.se.models.EvaluationModel;
-import it.unisalento.se.models.LessonModel;
-import it.unisalento.se.models.UserModel;
+import it.unisalento.se.models.*;
+import it.unisalento.se.repositories.DocumentEvaluationRepository;
 import it.unisalento.se.services.EvaluationService;
 import it.unisalento.se.test.utils.TestUtils;
 import org.hamcrest.Matchers;
@@ -37,6 +38,8 @@ public class EvaluationRestControllerTest {
     private EvaluationRestController controller;
     @Mock
     private EvaluationService evaluationService;
+    @Mock
+    private DocumentEvaluationRepository documentEvaluationRepository;
     @Captor
     private ArgumentCaptor<LessonModel> lessonModel;
     @Captor
@@ -169,5 +172,39 @@ public class EvaluationRestControllerTest {
 
         verify(evaluationService, times(1)).getEvaluationsByDocument(documentDto.capture());
         verifyNoMoreInteractions(evaluationService);
+    }
+
+    @Test
+    public void checkEvaluation_Document() throws Exception {
+
+        when(evaluationService.checkEvaluation(any(EvaluationFilterModel.class))).thenReturn(true);
+        when(documentEvaluationRepository.checkDocumentEvaluation(any(Integer.class), any(Integer.class))).thenReturn(true);
+
+        EvaluationFilterModel filter = new EvaluationFilterModel();
+        filter.setDocument(new Document());
+        filter.setObjectType(Constants.DOCUMENT);
+        filter.setUser(new User());
+
+        mockMvc.perform(
+                post("/evaluation/check")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(CommonUtils.toJson(filter))
+        ).andExpect(status().isOk()).andExpect(jsonPath("$", Matchers.is(true)));
+
+    }
+
+    @Test
+    public void saveEvaluation() throws ScoreNotValidException, Exception {
+        when(evaluationService.createEvaluation(any(EvaluationDto.class))).thenReturn(getLessonEvaluation());
+
+        mockMvc.perform(
+                post("/evaluation")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(CommonUtils.toJson(new EvaluationDto()))
+        ).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Matchers.is(2)))
+                .andExpect(jsonPath("$.note", Matchers.is("A note")))
+                .andExpect(jsonPath("$.score", Matchers.is(3)))
+                .andExpect(jsonPath("$.recipientType", Matchers.is(Constants.LESSON)));
     }
 }
