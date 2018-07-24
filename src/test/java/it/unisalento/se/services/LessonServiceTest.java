@@ -1,7 +1,6 @@
 package it.unisalento.se.services;
 
 
-import it.unisalento.se.common.Constants;
 import it.unisalento.se.dao.*;
 import it.unisalento.se.exceptions.LessonNotFoundException;
 import it.unisalento.se.exceptions.UserTypeNotSupported;
@@ -19,8 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LessonServiceTest {
@@ -30,11 +29,12 @@ public class LessonServiceTest {
     private LessonRepository lessonRepository;
     @InjectMocks
     private LessonService lessonService;
+    @Mock
+    private FcmService fcmService;
 
 
-/*
     @Test
-    public void getLessonsBySubjects_OK() throws LessonNotFoundException, UserTypeNotSupported {
+    public void getLessonsBySubjects_OK() throws UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -141,7 +141,7 @@ public class LessonServiceTest {
         lista.add(l);
 
 
-        when(lessonRepository.findBySubject(s)).thenReturn(lista);
+        when(lessonRepository.findBySubject(any(Subject.class))).thenReturn(lista);
 
         List<LessonModel> model = lessonService.getLessonsBySubjects(sm);
 
@@ -152,10 +152,9 @@ public class LessonServiceTest {
 
 
     }
-*/
 
     @Test
-    public void filterByTimeAndProfessor_OK() throws LessonNotFoundException, UserTypeNotSupported {
+    public void filterByTimeAndProfessor_OK() throws UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -277,7 +276,7 @@ public class LessonServiceTest {
 
 
     @Test
-    public void filterByTimeAndCourseOfStudy_OK() throws LessonNotFoundException, UserTypeNotSupported {
+    public void filterByTimeAndCourseOfStudy_OK() throws UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -398,7 +397,7 @@ public class LessonServiceTest {
 
 
     @Test
-    public void filterByTimeAndSubject_OK() throws LessonNotFoundException, UserTypeNotSupported {
+    public void filterByTimeAndSubject_OK() throws UserTypeNotSupported {
         AcademicYear ay = new AcademicYear();
         ay.setId(1);
         ay.setStartYear(2017);
@@ -702,12 +701,19 @@ public class LessonServiceTest {
 
         LessonModel lessonM = new LessonModel();
 
+        lessonM.setID(9);
         lessonM.setClassroom(crM);
         lessonM.setTimeSlot(tsM);
         lessonM.setSubject(sM);
 
 
         when(lessonRepository.save(any(Lesson.class))).thenReturn(lesson);
+        Classroom classroom = new Classroom();
+        classroom.setId(5);
+        classroom.setLongitude(1.);
+        classroom.setLatitude(2.);
+        lesson.setClassroom(classroom);
+        when(lessonRepository.getOne(any(Integer.class))).thenReturn(lesson);
 
         LessonModel model1 = lessonService.saveLesson(lessonM);
 
